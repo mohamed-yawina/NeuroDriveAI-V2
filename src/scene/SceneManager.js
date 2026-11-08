@@ -3,6 +3,8 @@ import { Track } from './Track.js';
 import { FormulaCar } from './FormulaCar.js';
 import { getRenderProfile } from '../settings/GameSettings.js';
 import { FrameRateMonitor } from './FrameRateMonitor.js';
+import { createTrackWaypoints } from './trackGeometry.js';
+import { createSafeSceneryLayout, isSceneryLayoutSafeForTrack, isTrackWithinGroundBounds } from './SceneryPlacement.js';
 
 export function releaseSceneResources(root) {
   const geometries = new Set();
@@ -42,7 +44,7 @@ export class SceneManager {
       this.renderer.toneMappingExposure = 1.08;
       container.appendChild(this.renderer.domElement);
       this.performanceMonitor = new FrameRateMonitor(getPerformanceOverlayContainer(container), { enabled: this.renderProfile.showFps, profile: this.renderProfile.quality });
-      this.addEnvironment();
+      this.addEnvironment(trackDefinition);
       this.track = new Track(this.scene, trackDefinition);
       this.car = new FormulaCar(this.scene);
       this.resizeObserver = new ResizeObserver(() => this.resize());
@@ -56,15 +58,33 @@ export class SceneManager {
   }
 
   setTrack(trackDefinition) {
+    const route = trackDefinition?.waypoints;
+    const halfWidth = trackDefinition?.halfWidth ?? (Number.isFinite(trackDefinition?.width) ? trackDefinition.width / 2 : 8.2);
+    if (!Array.isArray(route) || !isSceneryLayoutSafeForTrack(this.sceneryLayout, route, halfWidth)
+      || !isTrackWithinGroundBounds(route, this.groundCenter, this.groundSpan, 30)) {
+      this.scene.remove(this.environmentGroup); releaseSceneResources(this.environmentGroup);
+      this.addEnvironment(trackDefinition);
+    }
     const old = this.track.group;
     this.scene.remove(old);
     releaseSceneResources(old);
     this.track = new Track(this.scene, trackDefinition);
+    if (this.visualState) this.setVisualState(this.visualState);
   }
 
-  addEnvironment() {
+  addEnvironment(trackDefinition = null) {
+    this.environmentGroup = new THREE.Group(); this.environmentGroup.name = 'track-environment'; this.scene.add(this.environmentGroup);
+    const route = Array.isArray(trackDefinition?.waypoints) && trackDefinition.waypoints.length >= 3 ? trackDefinition : { waypoints: createTrackWaypoints(), halfWidth: 8.2 };
+    const halfWidth = route.halfWidth ?? (Number.isFinite(route.width) ? route.width / 2 : 8.2);
+    const scenery = createSafeSceneryLayout(route.waypoints, {
+      halfWidth, cameraClearance: 34,
+      treeCount: Math.max(16, Math.round(54 * this.renderProfile.sceneryDensity)),
+      hillCount: Math.max(14, Math.round(46 * this.renderProfile.sceneryDensity)),
+    });
+    this.environmentCenter = scenery.center;
+    this.sceneryLayout = scenery;
     this.hemisphere = new THREE.HemisphereLight(0xd9efff, 0x394639, 2.1);
-    this.scene.add(this.hemisphere);
+    this.environmentGroup.add(this.hemisphere);
     this.skyMaterial = new THREE.ShaderMaterial({
       side: THREE.BackSide, depthWrite: false, fog: false,
       uniforms: { daylight: { value: 1 } },
@@ -83,9 +103,9 @@ export class SceneManager {
         }`,
     });
     this.skyDome = new THREE.Mesh(new THREE.SphereGeometry(560, 32, 20), this.skyMaterial);
-    this.skyDome.frustumCulled = false; this.skyDome.renderOrder = -1; this.scene.add(this.skyDome);
+    this.skyDome.position.set(scenery.center.x, 0, scenery.center.z); this.skyDome.frustumCulled = false; this.skyDome.renderOrder = -1; this.environmentGroup.add(this.skyDome);
     this.sunDisc = new THREE.Mesh(new THREE.SphereGeometry(8, 16, 12), new THREE.MeshBasicMaterial({ color: 0xffd4a0, transparent: true, opacity: 1, depthWrite: false }));
-    this.sunDisc.position.copy(new THREE.Vector3(-95, 145, 70).normalize().multiplyScalar(420)); this.scene.add(this.sunDisc);
+    this.sunDisc.position.copy(new THREE.Vector3(-95, 145, 70).normalize().multiplyScalar(420)).add(new THREE.Vector3(scenery.center.x, 0, scenery.center.z)); this.environmentGroup.add(this.sunDisc);
     const sun = new THREE.DirectionalLight(0xfff1d5, 3.3);
     sun.position.set(-95, 145, 70);
     sun.castShadow = this.renderProfile.shadowsEnabled;
@@ -93,49 +113,53 @@ export class SceneManager {
     this.sun = sun;
     Object.assign(sun.shadow.camera, { left: -130, right: 130, top: 120, bottom: -120 });
     sun.shadow.bias = -0.00025;
-    this.scene.add(sun);
+    this.environmentGroup.add(sun);
 
-    const ground = new THREE.Mesh(new THREE.PlaneGeometry(1000, 1000), new THREE.MeshStandardMaterial({ color: 0x667b67, roughness: 1 }));
+    const groundSpan = Math.max(1000, scenery.extent * 2 + 500);
+    const ground = new THREE.Mesh(new THREE.PlaneGeometry(groundSpan, groundSpan), new THREE.MeshStandardMaterial({ color: 0x667b67, roughness: 1 }));
     ground.rotation.x = -Math.PI / 2;
-    ground.position.y = -0.14;
+    ground.position.set(scenery.center.x, -0.14, scenery.center.z);
     ground.receiveShadow = true;
     this.ground = ground;
-    this.scene.add(ground);
+    this.groundSpan = groundSpan; this.groundCenter = scenery.center;
+    this.environmentGroup.add(ground);
 
     const hillGeometry = new THREE.DodecahedronGeometry(1, 1);
     const hillMaterial = new THREE.MeshStandardMaterial({ color: 0x778b78, roughness: 1, flatShading: true });
     const hillCount = Math.max(14, Math.round(46 * this.renderProfile.sceneryDensity));
     const hills = new THREE.InstancedMesh(hillGeometry, hillMaterial, hillCount);
+    hills.name = 'environment-hills';
     const transform = new THREE.Object3D();
     for (let index = 0; index < hillCount; index += 1) {
-      const angle = index * Math.PI * (3 - Math.sqrt(5));
-      const radius = 125 + (index % 8) * 10;
+      const placement = scenery.hills[index];
       const height = 14 + (index % 7) * 5;
-      transform.position.set(Math.cos(angle) * radius, height / 2 - 0.12, Math.sin(angle) * radius);
+      const angle = index * Math.PI * (3 - Math.sqrt(5));
+      transform.position.set(placement.x, height / 2 - 0.12, placement.z);
       transform.rotation.set((index % 4) * 0.06, angle, (index % 3 - 1) * 0.045);
       transform.scale.set(8 + (index % 5) * 2, height, 8 + (index % 5) * 2);
       transform.updateMatrix(); hills.setMatrixAt(index, transform.matrix);
     }
     hills.instanceMatrix.needsUpdate = true;
-    this.scene.add(hills);
+    this.environmentGroup.add(hills);
 
     const treeMaterial = new THREE.MeshStandardMaterial({ color: 0x314f44, flatShading: true, roughness: 1 });
     const trunkMaterial = new THREE.MeshStandardMaterial({ color: 0x554637, roughness: 1 });
     const treeCount = Math.max(16, Math.round(54 * this.renderProfile.sceneryDensity));
     const trunks = new THREE.InstancedMesh(new THREE.CylinderGeometry(0.35, 0.55, 1, 5), trunkMaterial, treeCount);
     const crowns = new THREE.InstancedMesh(new THREE.IcosahedronGeometry(0.4, 1), treeMaterial, treeCount);
+    trunks.name = 'environment-tree-trunks'; crowns.name = 'environment-tree-crowns';
     for (let index = 0; index < treeCount; index += 1) {
-      const angle = index * 2.399;
-      const radius = 103 + (index % 6) * 6;
+      const placement = scenery.trees[index];
       const height = 5 + (index % 4) * 1.8;
-      const x = Math.cos(angle) * radius, z = Math.sin(angle) * radius;
+      const angle = index * 2.399;
+      const { x, z } = placement;
       transform.position.set(x, height * 0.21, z); transform.rotation.set(0, angle, 0);
       transform.scale.set(1, height * 0.42, 1); transform.updateMatrix(); trunks.setMatrixAt(index, transform.matrix);
       transform.position.set(x, height * 0.82, z); transform.scale.set(height * 0.4, height * 0.82, height * (0.32 + (index % 3) * 0.04));
       transform.updateMatrix(); crowns.setMatrixAt(index, transform.matrix);
     }
     trunks.instanceMatrix.needsUpdate = true; crowns.instanceMatrix.needsUpdate = true;
-    this.scene.add(trunks, crowns);
+    this.environmentGroup.add(trunks, crowns);
   }
 
   setVisualState({ daylight = 1, wetness = 0, fog = 0.45, exposure = 1.08 } = {}) {

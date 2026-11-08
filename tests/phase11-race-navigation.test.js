@@ -11,6 +11,7 @@ function stubRaceSession(navigation) {
     frameId: 41,
     listeners: new AbortController(),
     keys: new Set(['ArrowUp']),
+    turbo: { stop: vi.fn() },
     scene: { dispose: vi.fn() },
     ui: { remove: vi.fn() },
     app: { classList: { remove: vi.fn() } },

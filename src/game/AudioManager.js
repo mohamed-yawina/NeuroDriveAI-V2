@@ -22,6 +22,8 @@ export class AudioManager {
     this.musicFadeTimer = null;
     this.lastBrakeTone = -Infinity;
     this.lastEngineSpeed = 0;
+    this.turboAudioActive = false;
+    this.lastTurboAudioSpeed = -Infinity;
     this.engineMix = 0;
     this.crowdIntensity = 0;
     this.scene = 'menu';
@@ -64,14 +66,23 @@ export class AudioManager {
         const engineGain = context.createGain(); engineGain.gain.value = 0; engineGain.connect(master);
         const engineFilter = context.createBiquadFilter(); engineFilter.type = 'lowpass'; engineFilter.frequency.value = 700; engineFilter.connect(engineGain);
         const oscillator = context.createOscillator(); oscillator.type = 'sawtooth'; oscillator.frequency.value = 48; oscillator.connect(engineFilter); oscillator.start();
+        const engineHarmonic = context.createOscillator(); engineHarmonic.type = 'triangle'; engineHarmonic.frequency.value = 96;
+        const engineHarmonicGain = context.createGain(); engineHarmonicGain.gain.value = 0.16; engineHarmonic.connect(engineHarmonicGain); engineHarmonicGain.connect(engineFilter); engineHarmonic.start();
         const effectGain = context.createGain(); effectGain.gain.value = this.settings.effects; effectGain.connect(master);
+        const skidOscillator = context.createOscillator(); skidOscillator.type = 'sawtooth'; skidOscillator.frequency.value = 180;
+        const skidFilter = context.createBiquadFilter(); skidFilter.type = 'bandpass'; skidFilter.frequency.value = 1250; if (skidFilter.Q) skidFilter.Q.value = 1.2;
+        const skidGain = context.createGain(); skidGain.gain.value = 0; skidOscillator.connect(skidFilter); skidFilter.connect(skidGain); skidGain.connect(effectGain); skidOscillator.start();
+        const turboOscillator = context.createOscillator(); turboOscillator.type = 'sawtooth'; turboOscillator.frequency.value = 120;
+        const turboFilter = context.createBiquadFilter(); turboFilter.type = 'highpass'; turboFilter.frequency.value = 180;
+        const turboGain = context.createGain(); turboGain.gain.value = 0; turboOscillator.connect(turboFilter); turboFilter.connect(turboGain); turboGain.connect(effectGain); turboOscillator.start();
         const interfaceGain = context.createGain(); interfaceGain.gain.value = this.settings.interface; interfaceGain.connect(master);
         const ambienceGain = context.createGain(); ambienceGain.gain.value = 0; ambienceGain.connect(master);
         const ambienceFilter = context.createBiquadFilter(); ambienceFilter.type = 'lowpass'; ambienceFilter.frequency.value = 520; ambienceFilter.connect(ambienceGain);
+        const windFilter = context.createBiquadFilter(); windFilter.type = 'highpass'; windFilter.frequency.value = 260; const windGain = context.createGain(); windGain.gain.value = 0; windFilter.connect(windGain); windGain.connect(effectGain);
         const noiseBuffer = context.createBuffer(1, Math.max(1, Math.floor(context.sampleRate * 2)), context.sampleRate);
         const noiseData = noiseBuffer.getChannelData(0);
         for (let index = 0; index < noiseData.length; index += 1) noiseData[index] = (Math.random() * 2 - 1) * 0.55;
-        const noise = context.createBufferSource(); noise.buffer = noiseBuffer; noise.loop = true; noise.connect(ambienceFilter); noise.start();
+        const noise = context.createBufferSource(); noise.buffer = noiseBuffer; noise.loop = true; noise.connect(ambienceFilter); noise.connect(windFilter); noise.start();
         const musicGain = context.createGain(); musicGain.gain.value = 0; musicGain.connect(master);
         let musicElement = null, musicSource = null;
         if (this.AudioElementClass && typeof context.createMediaElementSource === 'function') {
@@ -87,7 +98,7 @@ export class AudioManager {
         }
         this.context = context;
         this.musicElement = musicElement; this.musicSource = musicSource;
-        this.nodes = { master, engineGain, engineFilter, oscillator, effectGain, interfaceGain, ambienceGain, ambienceFilter, noise, noiseBuffer, musicGain };
+        this.nodes = { master, engineGain, engineFilter, oscillator, engineHarmonic, engineHarmonicGain, skidOscillator, skidFilter, skidGain, turboOscillator, turboFilter, turboGain, windFilter, windGain, effectGain, interfaceGain, ambienceGain, ambienceFilter, noise, noiseBuffer, musicGain };
       } catch (error) {
         try { if (context && context.state !== 'closed') await context.close(); } catch { /* Keep Web Audio failure non-fatal. */ }
         this.context = null; this.nodes = null;
@@ -181,7 +192,7 @@ export class AudioManager {
     this.nodes.ambienceGain.gain.setTargetAtTime(level, this.context.currentTime, 0.3);
   }
 
-  updateEngine(speed, throttle = 0, braking = 0, rpm = null, proximity = 0) {
+  updateEngine(speed, throttle = 0, braking = 0, rpm = null, proximity = 0, lateralSlip = 0, turboActive = false) {
     if (!this.settings.enabled || !this.nodes || this.context?.state !== 'running') return;
     const normalized = LIMIT(speed / 58);
     const acceleration = Math.max(-1, Math.min(1, (speed - this.lastEngineSpeed) * 0.35));
@@ -190,15 +201,38 @@ export class AudioManager {
     const rpmLoad = Number.isFinite(rpm) ? LIMIT((rpm - 2500) / 9500) : normalized;
     const pitch = 42 + normalized * 48 + rpmLoad * 100 + load * 54 + nearCar * 6 - Math.max(0, braking) * 9;
     this.nodes.oscillator.frequency.setTargetAtTime(pitch, this.context.currentTime, 0.06);
+    this.nodes.engineHarmonic?.frequency.setTargetAtTime(pitch * 1.98, this.context.currentTime, 0.08);
     this.nodes.engineFilter.frequency.setTargetAtTime(280 + normalized * 700 + rpmLoad * 600 + load * 260, this.context.currentTime, 0.08);
     this.engineMix = 0.045 + normalized * 0.21 + load * 0.055 + nearCar * 0.025;
     this.nodes.engineGain.gain.setTargetAtTime(this.settings.engine * this.engineMix, this.context.currentTime, 0.1);
+    this.nodes.skidOscillator?.frequency.setTargetAtTime(155 + normalized * 190 + Math.max(0, braking) * 90, this.context.currentTime, 0.08);
+    this.nodes.skidGain?.gain.setTargetAtTime(this.settings.effects * (this.settings.enabled ? LIMIT((lateralSlip - 0.22) * 0.16) : 0), this.context.currentTime, 0.12);
+    const wind = LIMIT((normalized - 0.28) * 0.24);
+    this.nodes.windGain?.gain.setTargetAtTime(this.settings.effects * wind, this.context.currentTime, 0.2);
+    this.setTurboActive(turboActive, speed);
     this.engineActive = true;
     this.applyAmbienceLevel();
     if (braking > 0.65 && speed > 4 && this.context.currentTime - this.lastBrakeTone > 0.42) {
       this.lastBrakeTone = this.context.currentTime; this.tone(150 + normalized * 90, 0.12, 0.035, 'triangle', 'effects');
     }
     this.lastEngineSpeed = speed;
+  }
+
+  setTurboActive(active, speed = 0) {
+    if (!this.nodes || !this.context || this.context.state !== 'running') return false;
+    const enabled = Boolean(active && this.settings.enabled);
+    const normalized = LIMIT((Number(speed) || 0) / 70);
+    const now = this.context.currentTime;
+    if (enabled !== this.turboAudioActive) {
+      this.nodes.turboGain?.gain.setTargetAtTime(enabled ? this.settings.effects * 0.045 : 0, now, enabled ? 0.08 : 0.16);
+      this.turboAudioActive = enabled;
+    }
+    if (enabled && Math.abs(normalized - this.lastTurboAudioSpeed) >= 0.035) {
+      this.nodes.turboOscillator?.frequency.setTargetAtTime(105 + normalized * 125, now, 0.12);
+      this.nodes.turboFilter?.frequency.setTargetAtTime(170 + normalized * 330, now, 0.16);
+      this.lastTurboAudioSpeed = normalized;
+    }
+    return enabled;
   }
 
   tone(frequency = 440, duration = 0.12, volume = 0.12, type = 'sine', channel = 'effects') {
@@ -223,7 +257,7 @@ export class AudioManager {
       shift: [460 + (Number(payload.gear) || 1) * 35, 0.055, 0.075, 'square', 'effects', 0.1],
       crowd: [440, 0.24, 0.08, 'sine', 'effects', 0.6], collision: [88, 0.22, 0.24, 'sawtooth', 'effects', 0.16],
       offTrack: [170, 0.12, 0.09, 'triangle', 'effects', 0.25], 'tyre-squeal': [245, 0.18, 0.07, 'sawtooth', 'effects', 0.55], drs: [980, 0.1, 0.075, 'sine', 'effects', 0.2],
-      ers: [330, 0.12, 0.065, 'triangle', 'effects', 0.25], pit: [300, 0.16, 0.1, 'sine', 'effects', 0.35],
+      ers: [330, 0.12, 0.065, 'triangle', 'effects', 0.25], turbo: [310, 0.11, 0.065, 'sawtooth', 'effects', 0.35], pit: [300, 0.16, 0.1, 'sine', 'effects', 0.35],
       lap: [720, 0.15, 0.09, 'sine', 'effects', 0.3], 'last-lap': [784, 0.24, 0.12, 'triangle', 'effects', 0.4],
       arrival: [587.33, 0.28, 0.12, 'triangle', 'effects', 0.4], finish: [659.25, 0.34, 0.13, 'sine', 'effects', 0.6], victory: [783.99, 0.5, 0.15, 'triangle', 'effects', 2],
     };
@@ -265,7 +299,8 @@ export class AudioManager {
     this.musicFadeTimer = null;
     this.musicElement?.pause();
     const now = this.context.currentTime;
-    this.nodes.engineGain.gain.setTargetAtTime(0, now, 0.03); this.engineActive = false;
+    this.nodes.engineGain.gain.setTargetAtTime(0, now, 0.03); this.nodes.skidGain?.gain.setTargetAtTime(0, now, 0.03); this.nodes.turboGain?.gain.setTargetAtTime(0, now, 0.03); this.nodes.windGain?.gain.setTargetAtTime(0, now, 0.08); this.engineActive = false;
+    this.turboAudioActive = false;
     this.engineMix = 0;
     this.nodes.ambienceGain.gain.setTargetAtTime(0, now, 0.03);
     this.nodes.musicGain.gain.setTargetAtTime(0, now, 0.03);
@@ -288,7 +323,7 @@ export class AudioManager {
     if (this.musicFadeTimer !== null) clearTimeout(this.musicFadeTimer);
     this.musicFadeTimer = null; this.stopEffects(); this.musicElement?.pause();
     this.musicSource?.disconnect?.(); this.musicElement?.removeAttribute?.('src'); this.musicElement?.load?.();
-    this.nodes?.oscillator.stop(); this.nodes?.noise.stop();
+    this.nodes?.oscillator.stop(); this.nodes?.engineHarmonic?.stop(); this.nodes?.skidOscillator?.stop(); this.nodes?.turboOscillator?.stop(); this.nodes?.noise.stop();
     if (this.context && this.context.state !== 'closed') await this.context.close();
     this.nodes = null; this.context = null; this.musicSource = null; this.musicElement = null;
   }

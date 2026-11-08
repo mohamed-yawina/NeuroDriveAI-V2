@@ -10,9 +10,10 @@ function createAsphaltTexture() {
   for (let y = 0; y < size; y += 1) for (let x = 0; x < size; x += 1) {
     const index = (y * size + x) * 4;
     const noise = (Math.imul(x, 374761393) ^ Math.imul(y, 668265263) ^ Math.imul(x * y, 1442695041)) >>> 0;
-    const grain = (noise & 31) - 15;
-    const speckle = noise % 137 === 0 ? -25 : 0;
-    const value = Math.max(30, Math.min(95, 67 + grain + speckle));
+    const grain = (noise & 23) - 11;
+    const patch = Math.sin(x * 0.043 + Math.sin(y * 0.031) * 2.4) * 2.1 + Math.sin(y * 0.067 + Math.cos(x * 0.019) * 1.3) * 1.6;
+    const fineAggregate = noise % 137 === 0 ? -18 : noise % 113 === 0 ? 9 : 0;
+    const value = Math.max(32, Math.min(91, 66 + grain + patch + fineAggregate));
     data[index] = value; data[index + 1] = value + 4; data[index + 2] = value + 8; data[index + 3] = 255;
   }
   const texture = new THREE.DataTexture(data, size, size, THREE.RGBAFormat);
@@ -82,11 +83,30 @@ export class Track {
       this.group.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(points, true), SEGMENTS, 0.16, 5, true), lineMaterial));
     }
     this.addCurbs(curve);
+    this.addRubberLines(curve);
     this.addRunoff(curve);
     this.addBarriers(curve);
     this.addBrakingMarkers(curve);
     this.addStartFinish(curve);
     this.addWaypoints();
+  }
+
+  // Render-only racing-line deposits; they reuse the runtime spline and never
+  // participate in collision, projection, lap counting or steering geometry.
+  addRubberLines(curve) {
+    if (this.sceneryDensity < 0.7) return;
+    const sampleCount = Math.max(48, Math.round(112 * this.sceneryDensity));
+    const rubberMaterial = new THREE.MeshStandardMaterial({ color: 0x202226, roughness: 0.98, transparent: true, opacity: 0.32, depthWrite: false });
+    for (const lateralOffset of [-0.92, 0.92]) {
+      const points = [];
+      for (let index = 0; index <= sampleCount; index += 1) {
+        const t = index / sampleCount, point = curve.getPointAt(t), tangent = curve.getTangentAt(t);
+        const normal = new THREE.Vector3(-tangent.z, 0, tangent.x).normalize();
+        points.push(point.addScaledVector(normal, lateralOffset).setY(0.126));
+      }
+      const line = new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(points, true, 'centripetal'), sampleCount, 0.12, 4, true), rubberMaterial);
+      line.name = 'render-only-rubber-line'; line.renderOrder = 2; this.group.add(line);
+    }
   }
 
   setWetness(wetness) {

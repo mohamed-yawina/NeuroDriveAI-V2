@@ -22,6 +22,7 @@ import { createRaceReplay, ReplayRecorder } from '../neural-lab/ReplayProtocol.j
 import { RaceTutorial, TUTORIAL_GUIDANCE } from './RaceTutorial.js';
 import { bindRaceFocusSafety, readRaceInput } from './RaceControls.js';
 import { createMinimapProjector, formatRaceGap } from './RaceMinimap.js';
+import { ArcadeTurbo, isArcadeTurboAllowed } from './ArcadeTurbo.js';
 
 const FIXED_STEP = 1 / 60;
 const MAX_STEPS_PER_FRAME = 8;
@@ -44,12 +45,14 @@ export function setIntegratedLabInstructions(ui, type) {
     : '↑/W accélérer · ↓/S freiner · ←/→/A/D braquer · Espace pause · C caméra.';
 }
 
-export function getRaceCarAppearance(car, { isHuman = false, liveryColor = car.color, secondaryColor = 0xf5f5f5, driverNumber = 7 } = {}) {
-  return {
+export function getRaceCarAppearance(car, { isHuman = false, liveryColor = car.color, secondaryColor = 0xf5f5f5, driverNumber = 7, model = 'apex', driver = null } = {}) {
+  const appearance = {
     primaryColor: isHuman && Number.isFinite(liveryColor) ? liveryColor : car.color,
     secondaryColor: isHuman && Number.isInteger(secondaryColor) && secondaryColor >= 0 && secondaryColor <= 0xffffff ? secondaryColor : 0xf0bf66,
     driverNumber: isHuman && Number.isInteger(driverNumber) && driverNumber >= 0 && driverNumber <= 99 ? driverNumber : null,
   };
+  if (isHuman) { appearance.model = ['apex', 'velocity', 'titan', 'phantom'].includes(model) ? model : 'apex'; appearance.driver = driver; }
+  return appearance;
 }
 
 export class RaceSession {
@@ -62,6 +65,8 @@ export class RaceSession {
     this.onReturn = onReturn;
     this.driverAssignments = driverAssignments;
     this.laboratory = laboratory;
+    this.turboEnabled = isArcadeTurboAllowed({ laboratory, driverAssignments });
+    this.turbo = new ArcadeTurbo();
     this.labTimeScale = 1;
     this.raceSeed = raceSeed;
     this.laps = laps;
@@ -77,6 +82,13 @@ export class RaceSession {
     const secondaryColorValue = Number.parseInt(String(driverProfile.preferences?.secondaryLivery ?? '#f5f5f5').replace('#', ''), 16);
     this.driverSecondaryColor = Number.isInteger(secondaryColorValue) ? secondaryColorValue : 0xf5f5f5;
     this.driverNumber = Number.isInteger(driverProfile.preferences?.driverNumber) && driverProfile.preferences.driverNumber >= 0 && driverProfile.preferences.driverNumber <= 99 ? driverProfile.preferences.driverNumber : 7;
+    this.driverModel = ['apex', 'velocity', 'titan', 'phantom'].includes(driverProfile.preferences?.carModel) ? driverProfile.preferences.carModel : 'apex';
+    const colorValue = (value, fallback) => /^#[0-9a-f]{6}$/i.test(value ?? '') ? Number.parseInt(value.slice(1), 16) : fallback;
+    this.driverAppearance = {
+      avatar: ['classic', 'nova', 'vector'].includes(driverProfile.preferences?.driverAvatar) ? driverProfile.preferences.driverAvatar : 'classic',
+      helmetColor: colorValue(driverProfile.preferences?.helmetColor, 0xf5f5f5), suitColor: colorValue(driverProfile.preferences?.suitColor, 0x222832),
+      skinColor: colorValue(driverProfile.preferences?.skinTone, 0xb77955),
+    };
     this.replayRecorder = new ReplayRecorder({ maxFrames: this.careerStore.maxReplayFrames });
     this.gameSettings = readGameSettings();
     this.renderProfile = getRenderProfile(this.gameSettings);
@@ -123,6 +135,7 @@ export class RaceSession {
       this.carViews = this.world.cars.map((car, index) => new FormulaCar(this.scene.scene, getRaceCarAppearance(car, {
         isHuman: !this.driverAssignments && index === playerIndex,
         liveryColor: this.liveryColor, secondaryColor: this.driverSecondaryColor, driverNumber: this.driverNumber,
+        model: this.driverModel, driver: this.driverAppearance,
       })));
       this.cameras = new RaceCameras(this.scene.camera, this.track);
       this.cameras.mode = this.gameSettings.cameraMode;
@@ -210,9 +223,17 @@ export class RaceSession {
     mechanicsButton.setAttribute('aria-label', 'Ouvrir les mécaniques et conditions de course');
     mechanicsButton.setAttribute('aria-expanded', 'false');
     actions.append(hudButton, mechanicsButton);
+    const keyGuide = this.ui.querySelector('.race-key-guide');
+    if (this.turboEnabled) keyGuide?.insertAdjacentHTML('beforeend', ' <b>SHIFT</b> TURBO');
     header.append(actions);
     const lap = this.ui.querySelector('#race-lap').closest('.race-metric');
     const telemetry = this.ui.querySelector('.race-telemetry');
+    if (this.turboEnabled) {
+      const turbo = document.createElement('div'); turbo.className = 'race-turbo'; turbo.id = 'race-turbo'; turbo.setAttribute('role', 'meter');
+      turbo.setAttribute('aria-label', 'Énergie Turbo'); turbo.setAttribute('aria-valuemin', '0'); turbo.setAttribute('aria-valuemax', '100');
+      turbo.innerHTML = '<span><b>TURBO</b><small id="race-turbo-state">READY · SHIFT</small></span><strong><i id="race-turbo-bar"></i></strong><em id="race-turbo-value">100%</em>';
+      telemetry.querySelector('.race-speedbar').after(turbo);
+    }
     const positionMetric = document.createElement('div'); positionMetric.className = 'race-metric'; positionMetric.innerHTML = '<span>POSITION EN COURSE</span><b id="race-player-position">— / 6</b>';
     state.append(lap, positionMetric);
     const currentLapMetric = document.createElement('div'); currentLapMetric.className = 'race-metric';
@@ -606,11 +627,14 @@ export class RaceSession {
   }
 
   getPlayerInput() {
-    return readRaceInput(this.keys, {
+    const input = readRaceInput(this.keys, {
       paused: this.paused,
       raceState: this.world?.director?.state,
       ersDeploy: this.ui?.querySelector?.('#race-ers-toggle')?.checked ?? false,
+      turboAllowed: this.turboEnabled,
     });
+    if (this.turboEnabled) input.arcadeSpeedMultiplier = 1.1;
+    return input;
   }
 
   playerCar() { return this.world.cars.find((car) => car.isPlayer) ?? null; }
@@ -667,6 +691,7 @@ export class RaceSession {
     this.observeTutorial('pause-cycle', { paused: this.paused });
     this.world.paused = this.paused;
     this.keys.clear();
+    if (this.paused) { this.turbo.stop(); audioManager.setTurboActive(false); }
     this.ui.querySelector('#race-pause-label').textContent = this.paused ? 'REPRENDRE' : 'PAUSE';
     this.ui.querySelector('#race-pause-overlay').classList.toggle('hidden', !this.paused);
     audioManager.pause(this.paused);
@@ -680,6 +705,7 @@ export class RaceSession {
     this.cameras.mode = 'chase'; this.ui.querySelector('#race-camera-label').textContent = 'POURSUITE';
     this.rearViewPreviousMode = null;
     this.world.reset(); this.applyAiDifficulty();
+    this.turbo.reset();
     this.accumulator = 0;
     this.keys.clear();
     this.pause(false);
@@ -747,6 +773,12 @@ export class RaceSession {
         const focusFinishedBefore = audioFocusBefore?.finished ?? false;
         const focusPitBefore = this.world.pitStops.get(audioFocusBefore?.id)?.phase ?? null;
         const input = this.getPlayerInput();
+        const turboBefore = this.turbo.active;
+        const turboState = this.turboEnabled
+          ? this.turbo.update(FIXED_STEP, { requested: input.turboRequested && !this.world.pitStops.has(playerBefore?.id), allowed: true, paused: this.paused, racing: this.world.director.state === 'racing', speed: playerBefore?.velocity.length() ?? 0, throttle: input.throttle })
+          : this.turbo.stop();
+        input.turboActive = turboState.active;
+        if (turboBefore !== turboState.active && turboState.active) audioManager.event('turbo');
         this.observeTutorial('throttle', { value: input.throttle }); this.observeTutorial('brake', { value: input.brake }); this.observeTutorial('steer', { value: input.steer });
         const mechanicsBefore = playerBefore?.raceMechanics;
         const ersBefore = mechanicsBefore?.ersCharge ?? 0, damageBefore = mechanicsBefore?.damage ?? 0;
@@ -817,6 +849,7 @@ export class RaceSession {
   updateHud(dt) {
     this.syncPitVisualization();
     this.uiTime += dt;
+    if (this.world.director.state !== 'racing' && this.turbo.active) { this.turbo.stop(); audioManager.setTurboActive(false); }
     const player = this.world.cars.find((car) => car.isPlayer) ?? this.world.cars.find((car) => car.id === this.cameras.targetId) ?? this.world.cars[0];
     const speed = player?.velocity.length() ?? 0;
     const input = player?.isPlayer ? this.getPlayerInput() : { throttle: 0, brake: 0, steer: 0 };
@@ -827,9 +860,10 @@ export class RaceSession {
     let nearestCar = Infinity;
     for (const other of this.world.cars) if (other !== audioCar) nearestCar = Math.min(nearestCar, audioCar.position.distanceTo(other.position));
     const proximity = Number.isFinite(nearestCar) ? Math.max(0, Math.min(1, (18 - nearestCar) / 18)) : 0;
-    audioManager.setEngineFocus(audioCar?.id, audioSpeed);
-    audioManager.updateEngine(audioSpeed, audioInput.throttle, audioInput.brake, audioCar?.raceMechanics?.engineRpm, proximity);
     const lateralSlip = audioCar && audioSpeed > 7 ? Math.abs(audioCar.forward.x * audioCar.velocity.z - audioCar.forward.z * audioCar.velocity.x) / audioSpeed : 0;
+    audioManager.setEngineFocus(audioCar?.id, audioSpeed);
+    audioManager.updateEngine(audioSpeed, audioInput.throttle, audioInput.brake, audioCar?.raceMechanics?.engineRpm, proximity, lateralSlip, this.turbo.active);
+    this.updateTurboHud();
     if (lateralSlip > 0.42) audioManager.event('tyre-squeal');
     const speedEffect = this.gameSettings.effects ? Math.min(1, speed / (player?.maxSpeed ?? 58)) : 0;
     this.ui.style.setProperty('--race-speed-effect', String(speedEffect));
@@ -902,6 +936,18 @@ export class RaceSession {
       this.updateMechanicsHud();
       this.updateIntegratedLabPanel();
     }
+  }
+
+  updateTurboHud() {
+    if (!this.turboEnabled) return;
+    const state = this.turbo.snapshot();
+    const bar = this.ui.querySelector('#race-turbo-bar');
+    if (!bar) return;
+    bar.style.width = `${(state.fraction * 100).toFixed(1)}%`;
+    this.ui.querySelector('#race-turbo-value').textContent = `${Math.round(state.fraction * 100)}%`;
+    this.ui.querySelector('#race-turbo-state').textContent = state.active ? 'ACTIVE · SHIFT' : state.state === 'READY' ? 'READY · SHIFT' : 'RECHARGE';
+    this.ui.querySelector('#race-turbo').setAttribute('aria-valuenow', String(Math.round(state.fraction * 100)));
+    this.ui.classList.toggle('turbo-active', state.active);
   }
 
   saveCareerRace(ranked) {
@@ -1023,6 +1069,7 @@ export class RaceSession {
     await audioManager.stopSession();
     audioManager.setCrowdIntensity(0);
     this.keys.clear();
+    this.turbo.stop(); audioManager.setTurboActive?.(false);
     if (this.pitLaneLine) { this.scene.scene.remove(this.pitLaneLine); this.pitLaneLine.geometry.dispose(); this.pitLaneLine.material.dispose(); this.pitLaneLine = null; }
     this.particles?.dispose();
     this.aiTelemetryCenter?.dispose(); this.aiTelemetryCenter = null;

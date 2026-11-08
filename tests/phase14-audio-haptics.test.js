@@ -90,6 +90,20 @@ describe('Phase 14 audio and haptics', () => {
     await audio.dispose();
   });
 
+  it('adds a low-level tire-slip layer driven by measured lateral slip and silences it on session cleanup', async () => {
+    const context = createAudioContextMock();
+    const audio = new AudioManager({ AudioContextClass: vi.fn(() => context), storage: null });
+    await audio.unlock();
+    audio.updateEngine(24, .4, 0, 6500, 0, 0.1);
+    const straightLevel = audio.nodes.skidGain.gain.setTargetAtTime.mock.calls.at(-1)[0];
+    audio.updateEngine(24, .4, 0, 6500, 0, 0.9);
+    const slideLevel = audio.nodes.skidGain.gain.setTargetAtTime.mock.calls.at(-1)[0];
+    expect(slideLevel).toBeGreaterThan(straightLevel);
+    audio.silence();
+    expect(audio.nodes.skidGain.gain.setTargetAtTime.mock.calls.at(-1)[0]).toBe(0);
+    await audio.dispose();
+  });
+
   it('keeps REDLINE menu-only across navigation, pause, fast transitions and launch errors', async () => {
     vi.useFakeTimers();
     const context = createAudioContextMock();
