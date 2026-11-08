@@ -14,6 +14,8 @@ import { ComplianceReport } from './game/ComplianceReport.js';
 import { bindMainMenuEntries } from './ui/MainMenuSections.js';
 import { CircuitLibrary } from './circuits/CircuitLibrary.js';
 import { resolveTrackSelection, USER_TRACK_SELECTION_PREFIX } from './circuits/TrackSelection.js';
+import { measureTrackDefinition, trackPreviewSvg } from './ui/TrackGallery.js';
+import { GameVehicleDynamics } from './game/GameVehicleDynamics.js';
 const { MenuShowroom } = await import('./scene/MenuShowroom.js');
 
 const app = document.querySelector('#app');
@@ -64,10 +66,13 @@ labTrackSelect.value = menu.querySelector('#menu-track')?.value ?? 'original';
 labTrackSelect.addEventListener('change', () => {
   menu.querySelector('#menu-track').value = labTrackSelect.value;
   menu.querySelectorAll('[data-track]').forEach((button) => button.classList.toggle('selected', button.dataset.track === labTrackSelect.value));
+  updateRaceReadySummary();
   previewCircuit(labTrackSelect.value).catch((error) => { menu.querySelector('.menu-copy').textContent = `Circuit indisponible : ${error.message}`; });
 });
 menu.querySelector('#menu-track')?.addEventListener('change', () => {
   labTrackSelect.value = menu.querySelector('#menu-track').value;
+  menu.querySelectorAll('[data-track]').forEach((button) => button.classList.toggle('selected', button.dataset.track === labTrackSelect.value));
+  updateRaceReadySummary();
   previewCircuit(labTrackSelect.value).catch((error) => { menu.querySelector('.menu-copy').textContent = `Circuit indisponible : ${error.message}`; });
 });
 labTrackLabel.append(labTrackSelect); aiLabsPanel?.insertBefore(labTrackLabel, aiLabsPanel.querySelector('.integrated-lab-options'));
@@ -77,6 +82,14 @@ menu.querySelector('.menu-foot')?.remove();
 menu.querySelector('.camera-presets')?.insertAdjacentHTML('afterend', '<button id="camera-reset" class="camera-reset" type="button">RÉINITIALISER LA CAMÉRA</button>');
 menu.querySelector('[data-panel="settings"]').insertAdjacentHTML('beforeend', `<div class="settings-divider"></div><h3>Graphismes</h3><label class="menu-field">QUALITÉ<select id="graphics-quality"><option value="low">Basse</option><option value="medium">Moyenne</option><option value="high">Haute</option></select></label><label class="toggle-setting"><input id="graphics-shadows" type="checkbox"><span>Ombres</span></label><label class="menu-field">DENSITÉ DU DÉCOR<select id="graphics-scenery"><option value="low">Réduite</option><option value="medium">Normale</option><option value="high">Complète</option></select></label><label class="toggle-setting"><input id="graphics-effects" type="checkbox"><span>Effets visuels de vitesse et collision</span></label><div class="settings-divider"></div><h3>Caméra et commandes</h3><label class="menu-field">CAMÉRA DE COURSE<select id="camera-default"><option value="chase">Poursuite</option><option value="trackside">Bord de piste</option><option value="cockpit">Cockpit</option><option value="overview">Aérienne</option></select></label><label class="menu-field">SENSIBILITÉ ORBITALE<input id="camera-sensitivity" type="range" min="0.003" max="0.02" step="0.001"></label><label class="menu-field">VITESSE DU ZOOM<input id="zoom-sensitivity" type="range" min="0.3" max="1.6" step="0.1"></label><p class="availability-note">Course au clavier : ↑ accélérer · ↓ freiner · ← → braquer · Espace pause · R redémarrer · C caméra · 1–6 suivre.</p><details class="showroom-help"><summary>Aide showroom</summary><p>Glissez horizontalement pour orbiter autour de la voiture sur 360°. La molette ajuste progressivement le zoom. Le bouton de réinitialisation revient au trois-quarts avant.</p></details><label class="menu-field">MODÈLE PAR DÉFAUT POUR ESSAI NEURAL<select id="default-model"><option>A</option><option>B</option><option>C</option></select></label><button id="haptics-test" class="settings-action" type="button">TESTER LES VIBRATIONS</button><button id="settings-reset" class="settings-action secondary" type="button">RESTAURER LES PARAMÈTRES PAR DÉFAUT</button>`);
 app.append(menu);
+const garageDynamics = new GameVehicleDynamics();
+menu.querySelector('[data-panel="garage"] .menu-copy')?.insertAdjacentHTML('afterend', `<div class="garage-specs"><span class="menu-kicker">FICHE TECHNIQUE · PHYSIQUE ARCADE</span><div><b>${(garageDynamics.maxSpeed * 3.6).toFixed(0)} <small>km/h max.</small></b><b>${garageDynamics.acceleration.toFixed(0)} <small>m/s² · accélération</small></b><b>${garageDynamics.braking.toFixed(0)} <small>m/s² · freinage</small></b><b>${garageDynamics.turnRate.toFixed(1)} <small>rad/s · braquage</small></b></div><p>Réglages communs aux six voitures; les mécaniques de course peuvent réduire l'adhérence ou la vitesse.</p></div>`);
+const circuitLapsSelect = menu.querySelector('#menu-laps').cloneNode(true);
+circuitLapsSelect.id = 'circuit-ready-laps'; circuitLapsSelect.setAttribute('aria-label', 'Nombre de tours pour la course rapide');
+const circuitLapsField = document.createElement('label'); circuitLapsField.className = 'menu-field'; circuitLapsField.textContent = 'NOMBRE DE TOURS'; circuitLapsField.append(circuitLapsSelect);
+menu.querySelector('[data-panel="circuits"] .launch-from-panel')?.before(circuitLapsField);
+menu.querySelector('#circuit-ready-laps').addEventListener('change', (event) => { menu.querySelector('#menu-laps').value = event.target.value; updateRaceReadySummary(); });
+menu.querySelector('.camera-presets')?.insertAdjacentHTML('afterend', `<section class="garage-personalization"><span class="menu-kicker">PERSONNALISATION PILOTE</span><label class="menu-field">NOM DU PILOTE<input id="garage-driver-name" maxlength="32" autocomplete="name"></label><label class="menu-field">NUMÉRO<input id="garage-driver-number" type="number" min="0" max="99" step="1"></label><span class="garage-option-label">COULEUR SECONDAIRE</span><div class="livery-row accent-row" role="group" aria-label="Choisir la couleur secondaire"><button data-accent="#f5f5f5" aria-label="Blanc" class="selected"></button><button data-accent="#e10600" aria-label="Rouge compétition"></button><button data-accent="#1684ff" aria-label="Bleu"></button><button data-accent="#d6b14d" aria-label="Or"></button></div><p class="availability-note">La couleur, le nom et le numéro s’appliquent à votre voiture joueur. Les performances physiques sont communes à toutes les voitures.</p><button id="garage-reset" class="settings-action secondary" type="button">RÉINITIALISER LA PERSONNALISATION</button></section>`);
 const userCircuitLibrary = new CircuitLibrary();
 function resolveSelectedTrack(trackId) {
   if (!String(trackId).startsWith(USER_TRACK_SELECTION_PREFIX)) return null;
@@ -111,8 +124,23 @@ let tutorialGuide = new RaceTutorial();
 let professorDemo = null;
 const showroom = new MenuShowroom(menu.querySelector('#showroom-stage'));
 const preferences = (() => { try { return JSON.parse(localStorage.getItem('neurodrive-game-preferences') ?? '{}'); } catch { return {}; } })();
-let selectedLivery = preferences.livery ?? careerStore.read().profile.livery ?? '#e10600'; showroom.setColor(selectedLivery);
-menu.querySelector('.profile-chip b').textContent = careerStore.read().profile.name;
+const savedDriverProfile = careerStore.read().profile;
+const requestedPrimaryLivery = preferences.livery ?? savedDriverProfile.livery ?? '#e10600';
+const requestedSecondaryLivery = preferences.secondaryLivery ?? savedDriverProfile.preferences?.secondaryLivery ?? '#f5f5f5';
+let selectedLivery = /^#[0-9a-f]{6}$/i.test(requestedPrimaryLivery) ? requestedPrimaryLivery : '#e10600';
+let selectedSecondaryLivery = /^#[0-9a-f]{6}$/i.test(requestedSecondaryLivery) ? requestedSecondaryLivery : '#f5f5f5';
+const requestedDriverNumber = Number(preferences.driverNumber ?? savedDriverProfile.preferences?.driverNumber ?? 7);
+let selectedDriverNumber = Number.isInteger(requestedDriverNumber) && requestedDriverNumber >= 0 && requestedDriverNumber <= 99 ? requestedDriverNumber : 7;
+let selectedDriverName = savedDriverProfile.name;
+function applyGarageCustomization() {
+  const primaryColor = Number.parseInt(selectedLivery.slice(1), 16), secondaryColor = Number.parseInt(selectedSecondaryLivery.slice(1), 16);
+  showroom.setCustomization({ primaryColor, secondaryColor, driverNumber: selectedDriverNumber });
+}
+applyGarageCustomization();
+menu.querySelector('.profile-chip b').textContent = selectedDriverName;
+menu.querySelector('#garage-driver-name').value = selectedDriverName;
+menu.querySelector('#garage-driver-number').value = String(selectedDriverNumber);
+menu.querySelectorAll('[data-accent]').forEach((button) => button.classList.toggle('selected', button.dataset.accent === selectedSecondaryLivery));
 let gameSettings = readGameSettings();
 const settingsControls = {
   quality: menu.querySelector('#graphics-quality'), shadows: menu.querySelector('#graphics-shadows'), scenery: menu.querySelector('#graphics-scenery'),
@@ -167,10 +195,38 @@ menu.querySelectorAll('.launch-from-panel').forEach((button) => button.addEventL
   if (getPanelCtaAction(button.closest('[data-panel]')?.dataset.panel) === 'circuits') menu.querySelector('[data-view="circuits"]').click();
   else menu.querySelector('#launch-simulation').click();
 }));
-menu.querySelectorAll('[data-color]').forEach((button) => button.addEventListener('click', () => { selectedLivery = button.dataset.color; showroom.setColor(selectedLivery); menu.querySelectorAll('[data-color]').forEach((item) => item.classList.toggle('selected', item === button)); preferences.livery = selectedLivery; careerStore.setProfile({ livery: selectedLivery }); localStorage.setItem('neurodrive-game-preferences', JSON.stringify(preferences)); }));
+menu.querySelectorAll('[data-color]').forEach((button) => button.addEventListener('click', () => { selectedLivery = button.dataset.color; applyGarageCustomization(); menu.querySelectorAll('[data-color]').forEach((item) => item.classList.toggle('selected', item === button)); preferences.livery = selectedLivery; careerStore.setProfile({ livery: selectedLivery }); localStorage.setItem('neurodrive-game-preferences', JSON.stringify(preferences)); updateRaceReadySummary(); }));
+menu.querySelectorAll('[data-accent]').forEach((button) => button.addEventListener('click', () => { selectedSecondaryLivery = button.dataset.accent; applyGarageCustomization(); menu.querySelectorAll('[data-accent]').forEach((item) => item.classList.toggle('selected', item === button)); preferences.secondaryLivery = selectedSecondaryLivery; careerStore.setProfile({ preferences: { secondaryLivery: selectedSecondaryLivery } }); localStorage.setItem('neurodrive-game-preferences', JSON.stringify(preferences)); }));
+menu.querySelector('#garage-driver-name').addEventListener('change', (event) => {
+  selectedDriverName = String(event.target.value).trim().slice(0, 32) || 'Pilote ND'; event.target.value = selectedDriverName;
+  careerStore.setProfile({ name: selectedDriverName }); menu.querySelector('.profile-chip b').textContent = selectedDriverName; updateRaceReadySummary();
+});
+menu.querySelector('#garage-driver-number').addEventListener('change', (event) => {
+  const value = Number(event.target.value);
+  if (!Number.isInteger(value) || value < 0 || value > 99) { event.target.value = String(selectedDriverNumber); return; }
+  selectedDriverNumber = value; preferences.driverNumber = value; applyGarageCustomization(); updateRaceReadySummary();
+  careerStore.setProfile({ preferences: { driverNumber: value } }); localStorage.setItem('neurodrive-game-preferences', JSON.stringify(preferences));
+});
+menu.querySelector('#garage-reset').addEventListener('click', () => {
+  selectedLivery = '#e10600'; selectedSecondaryLivery = '#f5f5f5'; selectedDriverNumber = 7; selectedDriverName = 'Pilote ND';
+  preferences.livery = selectedLivery; preferences.secondaryLivery = selectedSecondaryLivery; preferences.driverNumber = selectedDriverNumber;
+  careerStore.setProfile({ name: selectedDriverName, livery: selectedLivery, preferences: { secondaryLivery: selectedSecondaryLivery, driverNumber: selectedDriverNumber } });
+  localStorage.setItem('neurodrive-game-preferences', JSON.stringify(preferences));
+  menu.querySelector('#garage-driver-name').value = selectedDriverName; menu.querySelector('#garage-driver-number').value = String(selectedDriverNumber);
+  menu.querySelectorAll('[data-color]').forEach((item) => item.classList.toggle('selected', item.dataset.color === selectedLivery));
+  menu.querySelectorAll('[data-accent]').forEach((item) => item.classList.toggle('selected', item.dataset.accent === selectedSecondaryLivery));
+  menu.querySelector('.profile-chip b').textContent = selectedDriverName; applyGarageCustomization(); updateRaceReadySummary();
+});
 menu.querySelectorAll('[data-camera]').forEach((button) => button.addEventListener('click', () => { showroom.setView(button.dataset.camera); menu.querySelectorAll('[data-camera]').forEach((item) => item.classList.toggle('selected', item === button)); }));
 menu.querySelector('#camera-reset').addEventListener('click', () => { showroom.resetCamera(); menu.querySelectorAll('[data-camera]').forEach((item) => item.classList.toggle('selected', item.dataset.camera === 'threeQuarter')); });
-menu.querySelectorAll('[data-track]').forEach((button) => button.addEventListener('click', () => { menu.querySelector('#menu-track').value = button.dataset.track; if (labTrackSelect) labTrackSelect.value = button.dataset.track; menu.querySelectorAll('[data-track]').forEach((item) => item.classList.toggle('selected', item === button)); previewCircuit(button.dataset.track); }));
+menu.querySelector('.track-cards').addEventListener('click', (event) => {
+  const button = event.target.closest('[data-track]'); if (!button || button.disabled) return;
+  menu.querySelector('#menu-track').value = button.dataset.track;
+  if (labTrackSelect) labTrackSelect.value = button.dataset.track;
+  menu.querySelectorAll('[data-track]').forEach((item) => item.classList.toggle('selected', item === button));
+  updateRaceReadySummary();
+  previewCircuit(button.dataset.track).catch((error) => { button.disabled = true; button.dataset.status = 'error'; menu.querySelector('#race-ready-summary').textContent = `Circuit indisponible : ${error.message}`; });
+});
 menu.querySelector('#audio-enabled').checked = audioManager.settings.enabled;
 menu.querySelectorAll('[data-volume]').forEach((input) => { input.value = audioManager.settings[input.dataset.volume]; input.addEventListener('input', () => audioManager.setVolume(input.dataset.volume, input.value)); });
 menu.querySelector('#audio-enabled').addEventListener('change', (event) => { audioManager.setEnabled(event.target.checked); if (event.target.checked) audioManager.unlock(); });
@@ -214,7 +270,7 @@ bindCareerPanel(menu, careerStore, {
     return careerStore.importReplay(compatible);
   },
   onCompliance: () => openComplianceReport(),
-  onUpdate: (profile) => { menu.querySelector('.profile-chip b').textContent = profile.name; selectedLivery = profile.livery; showroom.setColor(selectedLivery); },
+  onUpdate: (profile) => { menu.querySelector('.profile-chip b').textContent = profile.name; selectedDriverName = profile.name; selectedLivery = profile.livery; preferences.livery = selectedLivery; careerStore.setProfile({ preferences: { secondaryLivery: selectedSecondaryLivery, driverNumber: selectedDriverNumber } }); localStorage.setItem('neurodrive-game-preferences', JSON.stringify(preferences)); applyGarageCustomization(); menu.querySelector('#garage-driver-name').value = profile.name; menu.querySelectorAll('[data-color]').forEach((item) => item.classList.toggle('selected', item.dataset.color === selectedLivery)); },
 });
 
 bindMainMenuEntries(menu, {
@@ -280,9 +336,45 @@ async function previewCircuit(trackId) {
   const userTrack = resolveSelectedTrack(trackId);
   if (userTrack) { showroom.setCircuit(userTrack); return; }
   const { createGeneralizationTracks } = await import('./ai/training/GeneralizationTracks.js');
-  const circuit = createGeneralizationTracks().find((track) => track.id === trackId) ?? createGeneralizationTracks()[0];
+  const circuit = createGeneralizationTracks().find((track) => track.id === trackId);
+  if (!circuit) throw new RangeError(`Le circuit « ${trackId} » n'est pas disponible.`);
   showroom.setCircuit(circuit);
 }
+
+function escapeMarkup(value) { return String(value).replace(/[&<>"']/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[char]); }
+
+function updateRaceReadySummary() {
+  const summary = menu.querySelector('#race-ready-summary');
+  if (!summary) return;
+  const trackSelect = menu.querySelector('#menu-track');
+  const selected = trackSelect.options[trackSelect.selectedIndex];
+  const laps = Number(menu.querySelector('#menu-laps').value) || 3;
+  summary.innerHTML = `<b>PRÊT POUR LA COURSE</b><span><i style="--garage-car-color:${selectedLivery}"></i>${escapeMarkup(selectedDriverName)} · N° ${selectedDriverNumber}</span><span>${escapeMarkup(selected?.textContent ?? 'Circuit')} · ${laps} tours · 6 voitures</span><small>Course rapide · physique arcade commune</small>`;
+}
+
+async function refreshTrackGallery() {
+  const gallery = menu.querySelector('.track-cards');
+  if (!gallery) return;
+  if (!menu.querySelector('#race-ready-summary')) {
+    const summary = document.createElement('div'); summary.id = 'race-ready-summary'; summary.className = 'race-ready-summary'; gallery.after(summary);
+  }
+  const { createGeneralizationTracks } = await import('./ai/training/GeneralizationTracks.js');
+  const builtIns = createGeneralizationTracks().map((track) => ({ track, kind: 'builtin', difficulty: ({ original: 'Entraînement', technical: 'Avancé', 'fast-oval': 'Intermédiaire' })[track.id] ?? 'Indicative' }));
+  const custom = userCircuitLibrary.list().map((circuit) => ({ track: resolveTrackSelection(`user:${circuit.id}`, { library: userCircuitLibrary }), kind: 'custom', difficulty: circuit.metadata?.difficulty ?? 'Personnalisé' }));
+  const selectedId = menu.querySelector('#menu-track').value;
+  gallery.innerHTML = [...builtIns, ...custom].map(({ track, kind, difficulty }, index) => {
+    const { length, turns } = measureTrackDefinition(track);
+    const selected = (kind === 'custom' ? `user:${track.id}` : track.id) === selectedId;
+    const selection = kind === 'custom' ? `user:${track.id}` : track.id;
+    return `<button type="button" data-track="${escapeMarkup(selection)}" data-kind="${kind}" class="${selected ? 'selected' : ''}" aria-pressed="${selected}" aria-label="Sélectionner ${escapeMarkup(track.label)}"><span class="track-card-preview">${trackPreviewSvg(track)}</span><b>${String(index + 1).padStart(2, '0')}</b><strong>${escapeMarkup(track.label)}</strong><small>${(length / 1000).toFixed(2)} km · ${turns} virages · ${escapeMarkup(difficulty)}</small><em>${kind === 'custom' ? 'PERSONNALISÉ' : 'PRÊT À JOUER'}</em></button>`;
+  }).join('');
+  updateRaceReadySummary();
+}
+
+void refreshTrackGallery().catch((error) => { const gallery = menu.querySelector('.track-cards'); if (gallery) gallery.textContent = `Galerie indisponible : ${error.message}`; });
+menu.querySelector('#menu-track').addEventListener('change', () => { updateRaceReadySummary(); if (labTrackSelect) labTrackSelect.value = menu.querySelector('#menu-track').value; });
+menu.querySelector('#menu-laps').addEventListener('change', () => { menu.querySelector('#circuit-ready-laps').value = menu.querySelector('#menu-laps').value; updateRaceReadySummary(); });
+menu.querySelector('[data-panel="circuits"] .launch-from-panel').innerHTML = 'LANCER LA COURSE <span>↗</span>';
 
 const launchButton = document.querySelector('#launch-simulation');
 const navigation = new SessionNavigation({ onStateChange(state) {
@@ -337,7 +429,7 @@ async function launch({ mode = 'race', tutorial = false, tutorialSession = tutor
         }
         if (mode === 'circuit-studio') {
         const { CircuitStudio } = await import('./circuits/CircuitStudio.js');
-          return new CircuitStudio({ onReturn, initialCircuit, onLibraryChange: refreshUserCircuitOptions, onTest: (request) => launchCircuitTest(request), onTutorialEvent: tutorial ? (event, details) => tutorialSession.observe(event, { mode: 'circuit-studio', ...details }) : null });
+          return new CircuitStudio({ onReturn, initialCircuit, onLibraryChange: () => { refreshUserCircuitOptions(); void refreshTrackGallery(); }, onTest: (request) => launchCircuitTest(request), onTutorialEvent: tutorial ? (event, details) => tutorialSession.observe(event, { mode: 'circuit-studio', ...details }) : null });
         }
         throw new Error(`Mode de jeu inconnu : ${mode}`);
       });

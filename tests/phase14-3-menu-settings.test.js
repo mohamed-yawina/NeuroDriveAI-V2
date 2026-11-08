@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
-import { Group, PerspectiveCamera, Scene, Vector3 } from 'three';
-import { MenuShowroom, adjustShowroomZoom, applyOrbitDrag, getShowroomViewAngle, shouldAutoRotate } from '../src/scene/MenuShowroom.js';
+import { Box3, Frustum, Group, Matrix4, PerspectiveCamera, Scene, Vector3 } from 'three';
+import { MenuShowroom, adjustShowroomZoom, applyOrbitDrag, getShowroomCameraPosition, getShowroomViewAngle, shouldAutoRotate, SHOWROOM_BACKDROP_Z } from '../src/scene/MenuShowroom.js';
 import { getRenderProfile, readGameSettings, resetGameSettings, writeGameSettings } from '../src/settings/GameSettings.js';
 import { RaceSession } from '../src/game/RaceSession.js';
 import { createGeneralizationTracks } from '../src/ai/training/GeneralizationTracks.js';
@@ -29,6 +29,59 @@ describe('Phase 14.3 showroom and real settings', () => {
     expect(shouldAutoRotate('custom', false)).toBe(false);
     expect(shouldAutoRotate('circuit', false)).toBe(true);
     expect(shouldAutoRotate('threeQuarter', true)).toBe(false);
+  });
+
+  it('keeps every garage camera aimed at the car and the rear camera in front of the paddock wall', () => {
+    const focus = new Vector3(0, 0.7, 0);
+    const scene = new Scene();
+    const car = new FormulaCar(scene, { primaryColor: 0x1755cc, secondaryColor: 0xf0d070, driverNumber: 18 });
+    car.root.position.y = 0.27;
+    car.root.scale.setScalar(1.15);
+    car.root.updateMatrixWorld(true);
+    const carBounds = new Box3().setFromObject(car.root);
+    const views = ['threeQuarter', 'front', 'side', 'rear', 'top'];
+    for (const view of views) {
+      const rotation = getShowroomViewAngle(view);
+      const position = getShowroomCameraPosition(view, rotation, 20, focus);
+      const camera = new PerspectiveCamera(34, 16 / 9, 0.1, 600);
+      camera.position.copy(position);
+      camera.lookAt(focus);
+      camera.updateMatrixWorld(true);
+      const towardCar = focus.clone().sub(position).normalize();
+      expect(camera.getWorldDirection(new Vector3()).dot(towardCar)).toBeCloseTo(1, 6);
+      expect(position.distanceTo(focus)).toBeGreaterThanOrEqual(19.9);
+      const frustum = new Frustum().setFromProjectionMatrix(new Matrix4().multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse));
+      expect(frustum.intersectsBox(carBounds)).toBe(true);
+    }
+
+    const rear = getShowroomCameraPosition('rear', getShowroomViewAngle('rear'), 20, focus);
+    const wallNearFace = SHOWROOM_BACKDROP_Z - 0.4;
+    expect(rear.z).toBeLessThan(wallNearFace);
+    expect(adjustShowroomZoom(20, 1, 1)).toBe(20);
+    let visiblePrimary = false, visibleSecondary = false;
+    car.root.traverse((object) => {
+      const materials = Array.isArray(object.material) ? object.material : [object.material];
+      for (const material of materials) {
+        if (material?.color?.getHex() === 0x1755cc) visiblePrimary = true;
+        if (material?.color?.getHex() === 0xf0d070) visibleSecondary = true;
+      }
+    });
+    expect(visiblePrimary).toBe(true);
+    expect(visibleSecondary).toBe(true);
+  });
+
+  it('keeps the garage vehicle visible when each camera preset is selected', () => {
+    const showroom = Object.create(MenuShowroom.prototype);
+    showroom.setVehicle = vi.fn(() => { showroom.car.root.visible = true; });
+    showroom.car = { root: new Group() };
+    showroom.car.root.visible = true;
+    showroom.setView = MenuShowroom.prototype.setView;
+    for (const view of ['threeQuarter', 'front', 'side', 'rear', 'top']) {
+      showroom.setView(view);
+      expect(showroom.car.root.visible).toBe(true);
+      expect(showroom.targetRotation).toBe(getShowroomViewAngle(view));
+      expect(showroom.view).toBe(view);
+    }
   });
 
   it('automatically rotates the camera around the front three-quarter car instead of spinning the car with it', () => {

@@ -5,14 +5,24 @@ import { releaseSceneResources } from './SceneManager.js';
 import { getRenderProfile, readGameSettings } from '../settings/GameSettings.js';
 
 const VIEW_ANGLES = Object.freeze({ threeQuarter: Math.PI - 0.52, front: Math.PI, side: Math.PI / 2, rear: 0, top: 0.52 });
+// Keep the paddock wall beyond the furthest camera position allowed by the
+// showroom zoom. Previously it sat at z=16, exactly where the rear preset
+// placed the camera, putting the camera inside the wall mesh.
+export const SHOWROOM_BACKDROP_Z = 27;
+const SHOWROOM_MAX_CAMERA_DISTANCE = 20;
 
 export function getShowroomViewAngle(view) { return VIEW_ANGLES[view]; }
+export function getShowroomCameraPosition(view, rotation, distance, focus = { x: 0, y: 0.7, z: 0 }) {
+  if (view === 'top') return new THREE.Vector3(focus.x, focus.y + distance, focus.z);
+  const elevation = focus.y + (4.6 - 0.7);
+  return new THREE.Vector3(focus.x + Math.sin(rotation) * distance, elevation, focus.z + Math.cos(rotation) * distance);
+}
 export function shouldAutoRotate(view, dragging) { return !dragging && (view === undefined || view === 'threeQuarter' || view === 'circuit'); }
 export function applyOrbitDrag(targetRotation, previousX, currentX, sensitivity = readGameSettings().orbitSensitivity) {
   return targetRotation + (currentX - previousX) * sensitivity;
 }
 export function adjustShowroomZoom(distance, deltaY, sensitivity = readGameSettings().zoomSensitivity) {
-  return THREE.MathUtils.clamp(distance + Math.sign(deltaY) * sensitivity, 8.5, 20);
+  return THREE.MathUtils.clamp(distance + Math.sign(deltaY) * sensitivity, 8.5, SHOWROOM_MAX_CAMERA_DISTANCE);
 }
 
 /** Lightweight showroom reused by the home and garage views. */
@@ -37,7 +47,8 @@ export class MenuShowroom {
     this.addPaddockBackdrop();
     const platform = new THREE.Mesh(new THREE.CylinderGeometry(5.2, 5.45, 0.26, 64), new THREE.MeshStandardMaterial({ color: 0x272a30, roughness: 0.42, metalness: 0.58 })); platform.position.y = 0.08; platform.receiveShadow = true; platform.castShadow = true; this.scene.add(platform);
     const stripe = new THREE.Mesh(new THREE.TorusGeometry(5.1, 0.035, 8, 96), new THREE.MeshBasicMaterial({ color: 0xe10600 })); stripe.rotation.x = Math.PI / 2; stripe.position.y = 0.22; this.scene.add(stripe);
-    this.car = new FormulaCar(this.scene, { primaryColor: 0xe10600 }); this.car.root.position.y = 0.27; this.car.root.scale.setScalar(1.15);
+    this.carCustomization = { primaryColor: 0xe10600, secondaryColor: 0xf5f5f5, driverNumber: 7 };
+    this.car = new FormulaCar(this.scene, this.carCustomization); this.car.root.position.y = 0.27; this.car.root.scale.setScalar(1.15);
     this.circuitGroup = null; this.focus = new THREE.Vector3(0, 0.7, 0);
     this.pointerDown = (event) => { this.dragging = true; this.pointerX = event.clientX; this.renderer.domElement.setPointerCapture?.(event.pointerId); };
     this.pointerMove = (event) => { if (!this.dragging) return; this.targetRotation = applyOrbitDrag(this.targetRotation, this.pointerX, event.clientX); if (this.view !== 'circuit') this.view = 'custom'; this.pointerX = event.clientX; };
@@ -48,27 +59,38 @@ export class MenuShowroom {
     this.previous = performance.now(); this.running = true; this.frameId = requestAnimationFrame((now) => this.animate(now));
   }
   addPaddockBackdrop() {
+    const backdropOffset = SHOWROOM_BACKDROP_Z - 16;
     const carbon = new THREE.MeshStandardMaterial({ color: 0x111317, roughness: 0.74, metalness: 0.25 });
     const graphite = new THREE.MeshStandardMaterial({ color: 0x292d33, roughness: 0.64, metalness: 0.35 });
     const red = new THREE.MeshStandardMaterial({ color: 0x8c080c, roughness: 0.52, metalness: 0.25 });
     const glass = new THREE.MeshStandardMaterial({ color: 0x6f7d86, roughness: 0.23, metalness: 0.45, transparent: true, opacity: 0.62 });
-    const wall = new THREE.Mesh(new THREE.BoxGeometry(27, 8.5, 0.8), carbon); wall.position.set(0, 4.25, 16); this.scene.add(wall);
-    const fascia = new THREE.Mesh(new THREE.BoxGeometry(28, 0.42, 1.1), red); fascia.position.set(0, 8.72, 16); this.scene.add(fascia);
+    const wall = new THREE.Mesh(new THREE.BoxGeometry(27, 8.5, 0.8), carbon); wall.position.set(0, 4.25, SHOWROOM_BACKDROP_Z); this.scene.add(wall);
+    const fascia = new THREE.Mesh(new THREE.BoxGeometry(28, 0.42, 1.1), red); fascia.position.set(0, 8.72, SHOWROOM_BACKDROP_Z); this.scene.add(fascia);
     for (const x of [-13.2, 13.2]) {
-      const pillar = new THREE.Mesh(new THREE.BoxGeometry(0.42, 8.2, 1.2), graphite); pillar.position.set(x, 4.1, 15.7); this.scene.add(pillar);
-      const window = new THREE.Mesh(new THREE.BoxGeometry(0.1, 6.4, 0.15), glass); window.position.set(x * 0.92, 4.25, 15.55); this.scene.add(window);
+      const pillar = new THREE.Mesh(new THREE.BoxGeometry(0.42, 8.2, 1.2), graphite); pillar.position.set(x, 4.1, 15.7 + backdropOffset); this.scene.add(pillar);
+      const window = new THREE.Mesh(new THREE.BoxGeometry(0.1, 6.4, 0.15), glass); window.position.set(x * 0.92, 4.25, 15.55 + backdropOffset); this.scene.add(window);
     }
-    const garageBand = new THREE.Mesh(new THREE.BoxGeometry(21, 2.7, 0.16), graphite); garageBand.position.set(0, 3.5, 15.48); this.scene.add(garageBand);
+    const garageBand = new THREE.Mesh(new THREE.BoxGeometry(21, 2.7, 0.16), graphite); garageBand.position.set(0, 3.5, 15.48 + backdropOffset); this.scene.add(garageBand);
     const lights = new THREE.InstancedMesh(new THREE.BoxGeometry(2.8, 0.06, 0.1), new THREE.MeshBasicMaterial({ color: 0xf4e9da }), 7);
     const transform = new THREE.Object3D();
-    for (let index = 0; index < 7; index += 1) { transform.position.set((index - 3) * 3.3, 7.8, 14.9); transform.updateMatrix(); lights.setMatrixAt(index, transform.matrix); }
+    for (let index = 0; index < 7; index += 1) { transform.position.set((index - 3) * 3.3, 7.8, 14.9 + backdropOffset); transform.updateMatrix(); lights.setMatrixAt(index, transform.matrix); }
     lights.instanceMatrix.needsUpdate = true; this.scene.add(lights);
     const cabinetGeometry = new THREE.BoxGeometry(1.1, 1.35, 0.9);
     const cabinets = new THREE.InstancedMesh(cabinetGeometry, red, 4);
-    for (let index = 0; index < 4; index += 1) { transform.position.set(-9 + index * 1.65, 0.68, 12.1); transform.rotation.set(0, 0.08, 0); transform.updateMatrix(); cabinets.setMatrixAt(index, transform.matrix); }
+    for (let index = 0; index < 4; index += 1) { transform.position.set(-9 + index * 1.65, 0.68, 12.1 + backdropOffset); transform.rotation.set(0, 0.08, 0); transform.updateMatrix(); cabinets.setMatrixAt(index, transform.matrix); }
     cabinets.instanceMatrix.needsUpdate = true; this.scene.add(cabinets);
   }
-  setColor(color) { const value = Number.parseInt(String(color).replace('#', ''), 16); if (Number.isFinite(value)) { this.car.root.removeFromParent(); releaseSceneResources(this.car.root); this.car = new FormulaCar(this.scene, { primaryColor: value }); this.car.root.position.y = 0.27; this.car.root.scale.setScalar(1.15); } }
+  setColor(color) { this.setCustomization({ ...this.carCustomization, primaryColor: Number.parseInt(String(color).replace('#', ''), 16) }); }
+  setCustomization(patch = {}) {
+    const next = { primaryColor: 0xe10600, secondaryColor: 0xf5f5f5, driverNumber: 7, ...this.carCustomization, ...patch };
+    for (const key of ['primaryColor', 'secondaryColor']) if (!Number.isInteger(next[key]) || next[key] < 0 || next[key] > 0xffffff) return false;
+    if (!Number.isInteger(next.driverNumber) || next.driverNumber < 0 || next.driverNumber > 99) return false;
+    const visible = this.car.root.visible;
+    this.car.root.removeFromParent(); releaseSceneResources(this.car.root);
+    this.carCustomization = next;
+    this.car = new FormulaCar(this.scene, next); this.car.root.position.y = 0.27; this.car.root.scale.setScalar(1.15); this.car.root.visible = visible;
+    return true;
+  }
   setCircuit(definition) {
     if (this.circuitGroup) { this.scene.remove(this.circuitGroup); releaseSceneResources(this.circuitGroup); this.circuitGroup = null; }
     const circuit = new Track(this.scene, definition); this.circuitGroup = circuit.group; this.car.root.visible = false;
@@ -105,7 +127,10 @@ export class MenuShowroom {
     if (shouldAutoRotate(this.view, this.dragging)) this.targetRotation += dt * 0.08;
     this.rotation += (this.targetRotation - this.rotation) * Math.min(1, dt * 4); this.car.root.rotation.y = 0;
     if (this.view === 'circuit') { const radius = this.circuitSpan * 0.55; this.camera.position.set(this.focus.x + Math.sin(this.rotation) * radius, this.circuitSpan * 1.45, this.focus.z + Math.cos(this.rotation) * radius); this.camera.lookAt(this.focus); }
-    else { const elevation = this.view === 'top' ? 17 : 4.6; this.camera.position.set(Math.sin(this.rotation) * this.distance, elevation, Math.cos(this.rotation) * this.distance); this.camera.lookAt(this.focus); }
+    else {
+      this.camera.position.copy(getShowroomCameraPosition(this.view, this.rotation, Math.min(this.distance, SHOWROOM_MAX_CAMERA_DISTANCE), this.focus));
+      this.camera.lookAt(this.focus);
+    }
     this.renderer.render(this.scene, this.camera);
   }
   dispose() {

@@ -43,6 +43,14 @@ export function setIntegratedLabInstructions(ui, type) {
     : '↑/W accélérer · ↓/S freiner · ←/→/A/D braquer · Espace pause · C caméra.';
 }
 
+export function getRaceCarAppearance(car, { isHuman = false, liveryColor = car.color, secondaryColor = 0xf5f5f5, driverNumber = 7 } = {}) {
+  return {
+    primaryColor: isHuman && Number.isFinite(liveryColor) ? liveryColor : car.color,
+    secondaryColor: isHuman && Number.isInteger(secondaryColor) && secondaryColor >= 0 && secondaryColor <= 0xffffff ? secondaryColor : 0xf0bf66,
+    driverNumber: isHuman && Number.isInteger(driverNumber) && driverNumber >= 0 && driverNumber <= 99 ? driverNumber : null,
+  };
+}
+
 export class RaceSession {
   constructor({ trackId = 'original', trackDefinition = null, onReturn, onRaceFinished = () => {}, onChampionshipAdvance = () => {}, championshipRound = null, aiDifficulty = 'balanced', initialConditions = null, driverAssignments = null, laboratory = null, raceSeed = 1, laps = 3, formationLap = false, returnLabel = 'Retour au menu', liveryColor = 0xe10600, tutorial = false, professorMode = false, persistResults = true } = {}) {
     const availableTracks = createGeneralizationTracks();
@@ -64,6 +72,10 @@ export class RaceSession {
     this.onChampionshipAdvance = onChampionshipAdvance;
     this.liveryColor = liveryColor;
     this.careerStore = new CareerStore(); this.onRaceFinished = onRaceFinished;
+    const driverProfile = this.careerStore.read().profile;
+    const secondaryColorValue = Number.parseInt(String(driverProfile.preferences?.secondaryLivery ?? '#f5f5f5').replace('#', ''), 16);
+    this.driverSecondaryColor = Number.isInteger(secondaryColorValue) ? secondaryColorValue : 0xf5f5f5;
+    this.driverNumber = Number.isInteger(driverProfile.preferences?.driverNumber) && driverProfile.preferences.driverNumber >= 0 && driverProfile.preferences.driverNumber <= 99 ? driverProfile.preferences.driverNumber : 7;
     this.replayRecorder = new ReplayRecorder({ maxFrames: this.careerStore.maxReplayFrames });
     this.gameSettings = readGameSettings();
     this.returnLabel = returnLabel;
@@ -99,15 +111,16 @@ export class RaceSession {
         : new RaceWorld(this.track, { carCount: 6, laps: this.laps, playerIndex: 0, trackHalfWidth: this.track.halfWidth ?? 8.2, onDiagnostic: (record) => this.raceDiagnostics.emit(record, this.displayedRanks) });
       this.applyAiDifficulty();
       if (this.tutorialGuide) this.world.setGameplayMechanics(true);
-      this.carViews = this.world.cars.map((car) => new FormulaCar(this.scene.scene, { primaryColor: car.color }));
       const playerIndex = this.world.cars.findIndex((car) => car.isPlayer);
-      if (!this.driverAssignments && playerIndex >= 0) this.world.cars[playerIndex].name = this.careerStore.read().profile.name;
-      if (!this.driverAssignments && playerIndex >= 0 && Number.isFinite(this.liveryColor)) {
-        this.carViews[playerIndex].root.traverse((object) => {
-          const material = object.material;
-          if (material?.color && material.color.getHex() === 0xe83c48) material.color.setHex(this.liveryColor);
-        });
+      if (!this.driverAssignments && playerIndex >= 0) {
+        const player = this.world.cars[playerIndex];
+        player.name = driverProfile.name;
+        if (Number.isFinite(this.liveryColor)) player.color = this.liveryColor;
       }
+      this.carViews = this.world.cars.map((car, index) => new FormulaCar(this.scene.scene, getRaceCarAppearance(car, {
+        isHuman: !this.driverAssignments && index === playerIndex,
+        liveryColor: this.liveryColor, secondaryColor: this.driverSecondaryColor, driverNumber: this.driverNumber,
+      })));
       this.cameras = new RaceCameras(this.scene.camera, this.track);
       this.cameras.mode = this.gameSettings.cameraMode;
       this.cameras.setTarget(this.world.cars[0].id);
