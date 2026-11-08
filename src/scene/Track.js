@@ -32,6 +32,7 @@ export class Track {
     this.id = selected.id ?? 'original';
     this.label = selected.label ?? selected.name ?? 'Circuit Azur';
     this.waypoints = selected.waypoints;
+    this.controlPoints = selected.controlPoints ?? null;
     this.boundaries = selected.boundaries;
     this.halfWidth = selected.halfWidth ?? (Number.isFinite(selected.width) ? selected.width / 2 : 8.2);
     this.sceneryDensity = getRenderProfile().sceneryDensity;
@@ -370,7 +371,7 @@ export class Track {
     // Path references remain available in Steering Academy, while race line decoration stays understated.
     const geometry = new THREE.SphereGeometry(0.24, 8, 5);
     const material = new THREE.MeshBasicMaterial({ color: 0x8c080c, transparent: true, opacity: 0.48 });
-    for (const point of this.waypoints) {
+    for (const point of this.controlPoints ?? this.waypoints) {
       const marker = new THREE.Mesh(geometry, material);
       marker.position.copy(point).setY(0.85);
       group.add(marker);

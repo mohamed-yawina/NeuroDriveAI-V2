@@ -8,6 +8,10 @@ const MIN_SEGMENT = 6;
 const MAX_SEGMENT = 140;
 const MIN_TURN_RADIUS = 6;
 const CAR_RADIUS = 1.65;
+const issueList = (errors, warnings = []) => [
+  ...errors.map((message) => ({ severity: 'error', message })),
+  ...warnings.map((message) => ({ severity: 'warning', message })),
+];
 
 function projectToSegment(point, start, end) {
   const dx = end.x - start.x, dz = end.z - start.z;
@@ -41,6 +45,22 @@ function circumradius(a, b, c) {
 function segmentDistance(a, b, c, d) {
   if (segmentsIntersect(a, b, c, d)) return 0;
   return Math.min(pointSegmentDistance(a, c, d), pointSegmentDistance(b, c, d), pointSegmentDistance(c, a, b), pointSegmentDistance(d, a, b));
+}
+
+export function cumulativeTrackDistances(sampledTrack) {
+  if (!Array.isArray(sampledTrack) || sampledTrack.length < 2) return [0];
+  const distances = [0];
+  for (let index = 0; index < sampledTrack.length - 1; index++) {
+    const a = sampledTrack[index], b = sampledTrack[index + 1];
+    distances.push(distances.at(-1) + Math.hypot(b.x - a.x, b.z - a.z));
+  }
+  return distances;
+}
+
+export function cyclicArcDistance(a, b, totalLength) {
+  if (!(totalLength > 0)) return 0;
+  const difference = Math.abs(a - b) % totalLength;
+  return Math.min(difference, totalLength - difference);
 }
 
 function gridSafety(points, width, sampledTrack) {
@@ -84,18 +104,20 @@ export function validateCircuit(circuit, { samples = 360 } = {}) {
   const errors = [];
   const warnings = [];
   const points = circuit?.controlPoints;
-  if (!Array.isArray(points)) return { valid: false, errors: ['Liste de points manquante.'], warnings, metrics: null };
+  if (!Array.isArray(points)) { const errors = ['Liste de points manquante.']; return { valid: false, errors, warnings, issues: issueList(errors), metrics: null }; }
   if (points.length < MIN_POINTS || points.length > MAX_POINTS) errors.push(`Le circuit doit contenir de ${MIN_POINTS} à ${MAX_POINTS} points.`);
   if (!Number.isFinite(circuit.width) || circuit.width < MIN_WIDTH || circuit.width > MAX_WIDTH) errors.push(`La largeur doit être comprise entre ${MIN_WIDTH} et ${MAX_WIDTH} m.`);
   if (circuit.closed !== true) errors.push('La boucle doit être fermée avant validation.');
   if (!Number.isInteger(circuit.startLine?.controlPointIndex) || circuit.startLine.controlPointIndex < 0 || circuit.startLine.controlPointIndex >= points.length) errors.push('La ligne de départ référence un point inexistant.');
-  if (points.some((point) => !Number.isFinite(point?.x) || !Number.isFinite(point?.z) || Math.abs(point.x) > 5000 || Math.abs(point.z) > 5000)) errors.push('Chaque point doit avoir des coordonnées x/z finies dans ±5000 m.');
-  if (errors.length) return { valid: false, errors, warnings, metrics: null };
+  const invalidPointIndex = points.findIndex((point) => !Number.isFinite(point?.x) || !Number.isFinite(point?.z) || Math.abs(point.x) > 5000 || Math.abs(point.z) > 5000);
+  if (invalidPointIndex >= 0) errors.push(`Point de contrôle ${invalidPointIndex + 1} : coordonnées x/z invalides ou hors limites ±5000 m.`);
+  if (errors.length) return { valid: false, errors, warnings, issues: issueList(errors), metrics: null };
 
   const lengths = points.map((point, index) => Math.hypot(points[(index + 1) % points.length].x - point.x, points[(index + 1) % points.length].z - point.z));
   const minSegment = Math.min(...lengths), maxSegment = Math.max(...lengths);
-  if (minSegment < MIN_SEGMENT) errors.push(`Segment dégénéré ou trop court : ${minSegment.toFixed(1)} m (minimum ${MIN_SEGMENT} m).`);
-  if (maxSegment > MAX_SEGMENT) errors.push(`Segment discontinu : ${maxSegment.toFixed(1)} m (maximum ${MAX_SEGMENT} m).`);
+  const minSegmentIndex = lengths.indexOf(minSegment), maxSegmentIndex = lengths.indexOf(maxSegment);
+  if (minSegment < MIN_SEGMENT) errors.push(`Segment dégénéré ou trop court (${minSegmentIndex + 1} → ${minSegmentIndex + 2 > points.length ? 1 : minSegmentIndex + 2}) : ${minSegment.toFixed(1)} m (minimum ${MIN_SEGMENT} m).`);
+  if (maxSegment > MAX_SEGMENT) errors.push(`Segment discontinu (${maxSegmentIndex + 1} → ${maxSegmentIndex + 2 > points.length ? 1 : maxSegmentIndex + 2}) : ${maxSegment.toFixed(1)} m (maximum ${MAX_SEGMENT} m).`);
 
   const radii = points.map((point, index) => circumradius(points[(index - 1 + points.length) % points.length], point, points[(index + 1) % points.length]));
   let minRadius = Math.min(...radii);
@@ -105,7 +127,11 @@ export function validateCircuit(circuit, { samples = 360 } = {}) {
     const outgoing = new Vector3(next.x - point.x, 0, next.z - point.z).normalize();
     return Math.max(maximum, incoming.angleTo(outgoing));
   }, 0);
-  if (maxTurn > Math.PI * 0.82) errors.push(`Virage trop brutal : ${(maxTurn * 180 / Math.PI).toFixed(0)}° de changement de cap.`);
+  const maxTurnIndex = points.findIndex((point, index) => {
+    const previous = points[(index - 1 + points.length) % points.length], next = points[(index + 1) % points.length];
+    return new Vector3(point.x - previous.x, 0, point.z - previous.z).normalize().angleTo(new Vector3(next.x - point.x, 0, next.z - point.z).normalize()) === maxTurn;
+  });
+  if (maxTurn > Math.PI * 0.82) errors.push(`Virage au point ${maxTurnIndex + 1} trop brutal : ${(maxTurn * 180 / Math.PI).toFixed(0)}° de changement de cap.`);
 
   const curve = new CatmullRomCurve3(points.map(({ x, z }) => new Vector3(x, 0, z)), true, 'centripetal');
   const sampled = curve.getPoints(samples);
@@ -121,21 +147,23 @@ export function validateCircuit(circuit, { samples = 360 } = {}) {
     length += Math.hypot(end.x - start.x, end.z - start.z);
     sampledSegments.push({ start, end });
   }
-  let intersection = false;
-  let corridorOverlap = false;
+  const cumulative = cumulativeTrackDistances(sampled.map((point) => ({ x: point.x, z: point.z })));
+  const midpointDistances = sampledSegments.map(({ start, end }, index) => cumulative[index] + Math.hypot(end.x - start.x, end.z - start.z) / 2);
+  let intersection = null;
+  let corridorOverlap = null;
   for (let i = 0; i < sampledSegments.length && !intersection && !corridorOverlap; i++) {
     for (let j = i + 1; j < sampledSegments.length; j++) {
       const gap = Math.min(j - i, samples - (j - i));
       if (gap <= 3) continue;
       const a = sampledSegments[i], b = sampledSegments[j];
       const sharedPoint = [a.start, a.end].some((point) => [b.start, b.end].some((other) => Math.hypot(point.x - other.x, point.z - other.z) < 1e-5));
-      if (sharedPoint || segmentsIntersect(a.start, a.end, b.start, b.end)) { intersection = true; break; }
-      const routeDistance = gap * length / samples;
-      if (routeDistance > circuit.width * 1.75 && segmentDistance(a.start, a.end, b.start, b.end) < circuit.width + 1) { corridorOverlap = true; break; }
+      if (sharedPoint || segmentsIntersect(a.start, a.end, b.start, b.end)) { intersection = [i, j]; break; }
+      const routeDistance = cyclicArcDistance(midpointDistances[i], midpointDistances[j], length);
+      if (routeDistance > circuit.width * 1.75 && segmentDistance(a.start, a.end, b.start, b.end) < circuit.width + 1) { corridorOverlap = [i, j]; break; }
     }
   }
-  if (intersection) errors.push('La ligne centrale se croise elle-même.');
-  if (corridorOverlap) errors.push('Deux portions distinctes sont trop proches : les bandes de piste se chevaucheraient.');
+  if (intersection) errors.push(`La ligne centrale se croise entre les échantillons ${intersection[0] + 1} et ${intersection[1] + 1}.`);
+  if (corridorOverlap) errors.push(`Les segments ${corridorOverlap[0] + 1} et ${corridorOverlap[1] + 1} sont trop proches : les bandes de piste se chevaucheraient.`);
 
   const startIndex = circuit.startLine.controlPointIndex;
   const startOrder = [...points.slice(startIndex), ...points.slice(0, startIndex)];
@@ -143,10 +171,20 @@ export function validateCircuit(circuit, { samples = 360 } = {}) {
   if (!grid.safe) errors.push(`Grille dangereuse : ${grid.reason}`);
   const gridPoints = points.length;
   if (minRadius < 12) warnings.push('Virages serrés : la vitesse devra être adaptée dans les simulateurs.');
+  const estimatedTurns = radii.reduce((count, radius, index) => {
+    const angle = maxTurnIndex >= 0 ? (() => {
+      const point = points[index], previous = points[(index - 1 + points.length) % points.length], next = points[(index + 1) % points.length];
+      return new Vector3(point.x - previous.x, 0, point.z - previous.z).normalize().angleTo(new Vector3(next.x - point.x, 0, next.z - point.z).normalize());
+    })() : 0;
+    const before = radii[(index - 1 + radii.length) % radii.length], after = radii[(index + 1) % radii.length];
+    return angle >= 0.2 && radius <= before && radius < after ? count + 1 : count;
+  }, 0);
+  const issues = issueList(errors, warnings);
   return {
     valid: errors.length === 0,
     errors,
     warnings,
-    metrics: { controlPoints: gridPoints, centerlineLength: length, minSegmentLength: minSegment, maxSegmentLength: maxSegment, minimumTurnRadius: minRadius, maximumTurnAngleRadians: maxTurn, gridSlots: 6, gridSafe: grid.safe },
+    issues,
+    metrics: { controlPoints: gridPoints, centerlineLength: length, estimatedTurns, minSegmentLength: minSegment, maxSegmentLength: maxSegment, minimumTurnRadius: minRadius, maximumTurnAngleRadians: maxTurn, gridSlots: 6, gridSafe: grid.safe },
   };
 }

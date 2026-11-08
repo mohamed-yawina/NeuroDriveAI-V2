@@ -1,5 +1,14 @@
 import * as THREE from 'three';
 
+export const USER_TRACK_PATH_SAMPLES = 240;
+
+/** Canonical arc-length samples used by game timing/physics for editable splines. */
+export function sampleClosedTrackPath(waypoints, samples = USER_TRACK_PATH_SAMPLES) {
+  if (!Array.isArray(waypoints) || waypoints.length < 3 || !Number.isInteger(samples) || samples < 32) throw new TypeError('Track sampling needs a closed path with at least three points and 32 samples.');
+  const curve = new THREE.CatmullRomCurve3(waypoints, true, 'centripetal');
+  return curve.getSpacedPoints(samples).slice(0, -1).map((point) => point.setY(0.08));
+}
+
 export function createTrackWaypoints(count = 44) {
   const points = [];
   for (let i = 0; i < count; i++) {

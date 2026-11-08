@@ -44,7 +44,10 @@ export function setIntegratedLabInstructions(ui, type) {
 }
 
 export class RaceSession {
-  constructor({ trackId = 'original', trackDefinition = null, onReturn, onRaceFinished = () => {}, onChampionshipAdvance = () => {}, championshipRound = null, aiDifficulty = 'balanced', initialConditions = null, driverAssignments = null, laboratory = null, raceSeed = 1, laps = 3, formationLap = false, returnLabel = 'Retour au menu', liveryColor = 0xe10600, tutorial = false, professorMode = false } = {}) {
+  constructor({ trackId = 'original', trackDefinition = null, onReturn, onRaceFinished = () => {}, onChampionshipAdvance = () => {}, championshipRound = null, aiDifficulty = 'balanced', initialConditions = null, driverAssignments = null, laboratory = null, raceSeed = 1, laps = 3, formationLap = false, returnLabel = 'Retour au menu', liveryColor = 0xe10600, tutorial = false, professorMode = false, persistResults = true } = {}) {
+    const availableTracks = createGeneralizationTracks();
+    const resolvedTrack = trackDefinition ?? availableTracks.find((entry) => entry.id === trackId);
+    if (!resolvedTrack) throw new RangeError(`Circuit « ${trackId} » introuvable ou non chargé; aucun circuit de remplacement n’a été choisi.`);
     this.app = document.querySelector('#app');
     this.app.classList.add('race-session');
     this.onReturn = onReturn;
@@ -53,6 +56,7 @@ export class RaceSession {
     this.labTimeScale = 1;
     this.raceSeed = raceSeed;
     this.laps = laps;
+    this.persistResults = Boolean(persistResults);
     this.formationLap = Boolean(formationLap && !driverAssignments);
     this.aiDifficulty = ['prudent', 'balanced', 'aggressive'].includes(aiDifficulty) ? aiDifficulty : 'balanced';
     this.initialConditions = initialConditions;
@@ -81,7 +85,7 @@ export class RaceSession {
     this.podiumElapsed = 0;
     this.cameraShake = 0;
     this.cameraShakePhase = 0;
-    this.track = trackDefinition ?? createGeneralizationTracks().find((entry) => entry.id === trackId) ?? createGeneralizationTracks()[0];
+    this.track = resolvedTrack;
     try {
       this.mountUi();
       this.scene = new SceneManager(document.querySelector('#viewport'), this.track);
@@ -846,7 +850,7 @@ export class RaceSession {
   }
 
   saveCareerRace(ranked) {
-    if (this.laboratory) return;
+    if (this.laboratory || !this.persistResults) return;
     if (this.replaySaved) return;
     ranked ??= this.finalStandings ?? RaceLeaderboard.rank(this.world.cars);
     this.replaySaved = true;

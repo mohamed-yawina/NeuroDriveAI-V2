@@ -10,12 +10,13 @@ export function createIntegratedLabEntryActions({ steering, neural }) {
   return { 'steering-lab': steering, 'neural-lab': neural };
 }
 
-export function launchSteeringLab(navigation, { documentRef, livery, onReturn, professorMode = false, createSession }) {
+export function launchSteeringLab(navigation, { documentRef, livery, onReturn, professorMode = false, createSession, trackResolver = null }) {
   if (typeof createSession !== 'function') throw new TypeError('A RaceSession factory is required.');
   return launchMenuRace(navigation, {
     documentRef, livery, onReturn,
     createSession: (options) => createSession({
       ...options,
+      trackDefinition: trackResolver?.(options.trackId) ?? undefined,
       laboratory: { type: 'steering', trackLabel: options.trackId },
       professorMode,
       returnLabel: 'Retour aux Laboratoires IA',
@@ -26,7 +27,7 @@ export function launchSteeringLab(navigation, { documentRef, livery, onReturn, p
 
 export async function launchNeuralLab(navigation, {
   documentRef, livery, onReturn, configurations, seed = 13013, trackDefinition = null,
-  tutorial = false, professorMode = false, createSession,
+  tutorial = false, professorMode = false, createSession, trackResolver = null,
   trackFactory = createGeneralizationTracks,
   modelLoader = loadHistoricalBrain,
 } = {}) {
@@ -34,7 +35,7 @@ export async function launchNeuralLab(navigation, {
   if (!Array.isArray(configurations) || configurations.length === 0) throw new TypeError('Select at least one historical model A, B, or C.');
   const options = getRaceLaunchOptions(documentRef, livery);
   const tracks = trackFactory();
-  const track = trackDefinition ?? tracks.find((entry) => entry.id === options.trackId) ?? tracks[0];
+  const track = trackDefinition ?? trackResolver?.(options.trackId) ?? tracks.find((entry) => entry.id === options.trackId);
   if (!track) throw new TypeError('No compatible race circuit is available.');
   const validSeed = Number.isInteger(seed) && seed >= 0 && seed <= 0xffffffff ? seed >>> 0 : 13013;
   const classification = classifyIntegratedTrack(track);

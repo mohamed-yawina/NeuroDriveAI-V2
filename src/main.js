@@ -12,6 +12,8 @@ import { RaceTutorial } from './game/RaceTutorial.js';
 import { ProfessorDemo } from './game/ProfessorDemo.js';
 import { ComplianceReport } from './game/ComplianceReport.js';
 import { bindMainMenuEntries } from './ui/MainMenuSections.js';
+import { CircuitLibrary } from './circuits/CircuitLibrary.js';
+import { resolveTrackSelection, USER_TRACK_SELECTION_PREFIX } from './circuits/TrackSelection.js';
 const { MenuShowroom } = await import('./scene/MenuShowroom.js');
 
 const app = document.querySelector('#app');
@@ -62,9 +64,12 @@ labTrackSelect.value = menu.querySelector('#menu-track')?.value ?? 'original';
 labTrackSelect.addEventListener('change', () => {
   menu.querySelector('#menu-track').value = labTrackSelect.value;
   menu.querySelectorAll('[data-track]').forEach((button) => button.classList.toggle('selected', button.dataset.track === labTrackSelect.value));
-  previewCircuit(labTrackSelect.value);
+  previewCircuit(labTrackSelect.value).catch((error) => { menu.querySelector('.menu-copy').textContent = `Circuit indisponible : ${error.message}`; });
 });
-menu.querySelector('#menu-track')?.addEventListener('change', () => { labTrackSelect.value = menu.querySelector('#menu-track').value; });
+menu.querySelector('#menu-track')?.addEventListener('change', () => {
+  labTrackSelect.value = menu.querySelector('#menu-track').value;
+  previewCircuit(labTrackSelect.value).catch((error) => { menu.querySelector('.menu-copy').textContent = `Circuit indisponible : ${error.message}`; });
+});
 labTrackLabel.append(labTrackSelect); aiLabsPanel?.insertBefore(labTrackLabel, aiLabsPanel.querySelector('.integrated-lab-options'));
 menu.querySelector('.showroom-hint')?.remove();
 menu.querySelector('.menu-index')?.remove();
@@ -72,6 +77,35 @@ menu.querySelector('.menu-foot')?.remove();
 menu.querySelector('.camera-presets')?.insertAdjacentHTML('afterend', '<button id="camera-reset" class="camera-reset" type="button">RÉINITIALISER LA CAMÉRA</button>');
 menu.querySelector('[data-panel="settings"]').insertAdjacentHTML('beforeend', `<div class="settings-divider"></div><h3>Graphismes</h3><label class="menu-field">QUALITÉ<select id="graphics-quality"><option value="low">Basse</option><option value="medium">Moyenne</option><option value="high">Haute</option></select></label><label class="toggle-setting"><input id="graphics-shadows" type="checkbox"><span>Ombres</span></label><label class="menu-field">DENSITÉ DU DÉCOR<select id="graphics-scenery"><option value="low">Réduite</option><option value="medium">Normale</option><option value="high">Complète</option></select></label><label class="toggle-setting"><input id="graphics-effects" type="checkbox"><span>Effets visuels de vitesse et collision</span></label><div class="settings-divider"></div><h3>Caméra et commandes</h3><label class="menu-field">CAMÉRA DE COURSE<select id="camera-default"><option value="chase">Poursuite</option><option value="trackside">Bord de piste</option><option value="cockpit">Cockpit</option><option value="overview">Aérienne</option></select></label><label class="menu-field">SENSIBILITÉ ORBITALE<input id="camera-sensitivity" type="range" min="0.003" max="0.02" step="0.001"></label><label class="menu-field">VITESSE DU ZOOM<input id="zoom-sensitivity" type="range" min="0.3" max="1.6" step="0.1"></label><p class="availability-note">Course au clavier : ↑ accélérer · ↓ freiner · ← → braquer · Espace pause · R redémarrer · C caméra · 1–6 suivre.</p><details class="showroom-help"><summary>Aide showroom</summary><p>Glissez horizontalement pour orbiter autour de la voiture sur 360°. La molette ajuste progressivement le zoom. Le bouton de réinitialisation revient au trois-quarts avant.</p></details><label class="menu-field">MODÈLE PAR DÉFAUT POUR ESSAI NEURAL<select id="default-model"><option>A</option><option>B</option><option>C</option></select></label><button id="haptics-test" class="settings-action" type="button">TESTER LES VIBRATIONS</button><button id="settings-reset" class="settings-action secondary" type="button">RESTAURER LES PARAMÈTRES PAR DÉFAUT</button>`);
 app.append(menu);
+const userCircuitLibrary = new CircuitLibrary();
+function resolveSelectedTrack(trackId) {
+  if (!String(trackId).startsWith(USER_TRACK_SELECTION_PREFIX)) return null;
+  return resolveTrackSelection(trackId, { library: userCircuitLibrary });
+}
+function refreshUserCircuitOptions() {
+  const trackSelect = menu.querySelector('#menu-track');
+  const labSelect = menu.querySelector('#integrated-lab-track');
+  if (!trackSelect) return;
+  const selected = trackSelect.value;
+  trackSelect.querySelector('optgroup[data-user-circuits]')?.remove();
+  let circuits = [];
+  try { circuits = userCircuitLibrary.list(); } catch (error) { console.warn('Circuit library could not be read', error); }
+  if (circuits.length) {
+    const group = document.createElement('optgroup'); group.label = 'Circuits personnalisés'; group.dataset.userCircuits = 'true';
+    for (const circuit of circuits) {
+      const option = document.createElement('option'); option.value = `user:${circuit.id}`; option.textContent = `${circuit.name} · personnalisé`; group.append(option);
+    }
+    trackSelect.append(group);
+  }
+  if ([...trackSelect.options].some((option) => option.value === selected)) trackSelect.value = selected;
+  if (labSelect) {
+    const labSelected = labSelect.value;
+    labSelect.innerHTML = '';
+    for (const option of trackSelect.options) labSelect.add(option.cloneNode(true));
+    labSelect.value = [...labSelect.options].some((option) => option.value === labSelected) ? labSelected : trackSelect.value;
+  }
+}
+refreshUserCircuitOptions();
 const careerStore = new CareerStore();
 let tutorialGuide = new RaceTutorial();
 let professorDemo = null;
@@ -196,7 +230,7 @@ async function returnToIntegratedLabs() {
   menu.querySelector('[data-view="ai-labs"]')?.click();
 }
 
-function launchIntegratedSteeringLab({ professorMode = false } = {}) {
+function launchIntegratedSteeringLab({ professorMode = false, trackDefinition = null, onReturn = returnToIntegratedLabs } = {}) {
   if (labLaunchPending || navigation.state !== 'menu') return Promise.resolve(null);
   labLaunchPending = true;
   labLaunchStatus.hidden = false;
@@ -205,10 +239,10 @@ function launchIntegratedSteeringLab({ professorMode = false } = {}) {
   labLaunchStatus.textContent = 'Initialisation de la scène F1 et des contrôleurs Steering…';
   syncLabLaunchButtons();
   return launchSteeringLab(navigation, {
-    documentRef: document, livery: selectedLivery, onReturn: returnToIntegratedLabs, professorMode,
+    documentRef: document, livery: selectedLivery, onReturn, professorMode, trackResolver: resolveSelectedTrack,
     createSession: async (options) => {
       const { RaceSession } = await import('./game/RaceSession.js');
-      return new RaceSession(options);
+      return new RaceSession({ ...options, trackDefinition: trackDefinition ?? resolveSelectedTrack(options.trackId) ?? undefined });
     },
   }).catch((error) => { showLabLaunchError('Steering Lab', error); return null; });
 }
@@ -234,6 +268,7 @@ function launchIntegratedNeuralLab({ trackDefinition = null, configurations = nu
   audioManager.unlock();
   return launchNeuralLab(navigation, {
     documentRef: document, livery: selectedLivery, onReturn, configurations: selectedModels, seed, trackDefinition, tutorial, professorMode,
+    trackResolver: resolveSelectedTrack,
     createSession: async (options) => {
       const { RaceSession } = await import('./game/RaceSession.js');
       return new RaceSession(options);
@@ -242,6 +277,8 @@ function launchIntegratedNeuralLab({ trackDefinition = null, configurations = nu
 }
 
 async function previewCircuit(trackId) {
+  const userTrack = resolveSelectedTrack(trackId);
+  if (userTrack) { showroom.setCircuit(userTrack); return; }
   const { createGeneralizationTracks } = await import('./ai/training/GeneralizationTracks.js');
   const circuit = createGeneralizationTracks().find((track) => track.id === trackId) ?? createGeneralizationTracks()[0];
   showroom.setCircuit(circuit);
@@ -271,7 +308,7 @@ const navigation = new SessionNavigation({ onStateChange(state) {
   syncLabLaunchButtons();
 } });
 
-async function launch({ mode = 'race', tutorial = false, tutorialSession = tutorialGuide, professorMode = false, initialScenario = null, championshipRound = null } = {}) {
+async function launch({ mode = 'race', tutorial = false, tutorialSession = tutorialGuide, professorMode = false, initialScenario = null, championshipRound = null, initialCircuit = null } = {}) {
   audioManager.unlock(); audioManager.event('menu');
   if (mode === 'neural-racing') return launchIntegratedNeuralLab({ tutorial, professorMode });
   try {
@@ -279,7 +316,7 @@ async function launch({ mode = 'race', tutorial = false, tutorialSession = tutor
     if (mode === 'race') {
       await launchMenuRace(navigation, { documentRef: document, livery: selectedLivery, onReturn, createSession: async (options) => {
         const { RaceSession } = await import('./game/RaceSession.js');
-        if (!championshipRound) return new RaceSession(options);
+        if (!championshipRound) return new RaceSession({ ...options, trackDefinition: resolveSelectedTrack(options.trackId) ?? undefined });
         const season = championshipRound.season;
         return new RaceSession({
           ...options,
@@ -300,7 +337,7 @@ async function launch({ mode = 'race', tutorial = false, tutorialSession = tutor
         }
         if (mode === 'circuit-studio') {
         const { CircuitStudio } = await import('./circuits/CircuitStudio.js');
-          return new CircuitStudio({ onReturn, onTest: (request) => launchCircuitTest(request), onTutorialEvent: tutorial ? (event, details) => tutorialSession.observe(event, { mode: 'circuit-studio', ...details }) : null });
+          return new CircuitStudio({ onReturn, initialCircuit, onLibraryChange: refreshUserCircuitOptions, onTest: (request) => launchCircuitTest(request), onTutorialEvent: tutorial ? (event, details) => tutorialSession.observe(event, { mode: 'circuit-studio', ...details }) : null });
         }
         throw new Error(`Mode de jeu inconnu : ${mode}`);
       });
@@ -347,24 +384,29 @@ async function openSavedReplay(replay) {
 
 function openComplianceReport() { new ComplianceReport({ host: document.body }); }
 
-async function launchCircuitTest({ mode, trackDefinition }) {
+async function launchCircuitTest({ mode, circuit, trackDefinition }) {
   await navigation.returnToMenu();
+  const returnToEditor = async () => {
+    if (navigation.state === 'simulation') await navigation.returnToMenu();
+    return launch({ mode: 'circuit-studio', initialCircuit: circuit });
+  };
   if (mode === 'neural') {
     return launchIntegratedNeuralLab({
       trackDefinition,
       configurations: [preferences.configuration ?? 'A'],
-      onReturn: () => navigation.returnToMenu(),
+      onReturn: returnToEditor,
     });
   }
+  if (mode === 'steering') return launchIntegratedSteeringLab({ trackDefinition, onReturn: returnToEditor });
   try {
     await navigation.launch(async () => {
       if (mode === 'race') {
         const { RaceSession } = await import('./game/RaceSession.js');
-        return new RaceSession({ trackDefinition, onReturn: () => navigation.returnToMenu() });
+        return new RaceSession({ trackDefinition, persistResults: false, returnLabel: 'Retour à Circuit Studio', onReturn: returnToEditor });
       }
       if (mode === 'academy') {
         const { SteeringAcademy } = await import('./academy/SteeringAcademy.js');
-        return new SteeringAcademy({ trackDefinition, onReturn: () => navigation.returnToMenu() });
+        return new SteeringAcademy({ trackDefinition, onReturn: returnToEditor });
       }
     });
   } catch (error) {

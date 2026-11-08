@@ -61,6 +61,36 @@ describe('integrated AI laboratories', () => {
     expect(neural.driverAssignments.every((driver) => typeof driver.createController === 'function')).toBe(true);
   });
 
+  it('uses the resolved saved user TrackDefinition in both integrated laboratory launch paths', async () => {
+    const custom = circuitToTrackDefinition(generateCircuit(812, 'easy'));
+    const documentRef = { querySelector: (selector) => selector === '#menu-track' ? { value: `user:${custom.id}` } : null };
+    const createSession = async (options) => options;
+    const steering = await launchSteeringLab(new SessionNavigation(), {
+      documentRef, createSession, trackResolver: (id) => id === `user:${custom.id}` ? custom : null,
+    });
+    expect(steering.trackDefinition).toBe(custom);
+    expect(steering.trackDefinition.waypoints).toEqual(custom.waypoints);
+    const neural = await launchNeuralLab(new SessionNavigation(), {
+      documentRef, configurations: ['A'], trackResolver: (id) => id === `user:${custom.id}` ? custom : null,
+      createSession, modelLoader: async () => ({
+        network: { architecture: [7, 16, 16, 2], forward: () => new Float32Array([0, 0]) },
+        provenance: { configuration: 'A', seed: 2026, source: '/phase8-model-a.json' },
+      }),
+    });
+    expect(neural.trackDefinition).toBe(custom);
+  });
+
+  it('rejects an unknown circuit identifier before touching the menu DOM instead of substituting a built-in track', () => {
+    expect(() => new RaceSession({ trackId: 'user:deleted-circuit' })).toThrow(/aucun circuit de remplacement/);
+  });
+
+  it('keeps Circuit Studio race tests out of career persistence', () => {
+    const session = Object.create(RaceSession.prototype), saveRace = vi.fn();
+    Object.assign(session, { persistResults: false, laboratory: null, replaySaved: false, careerStore: { saveRace } });
+    expect(session.saveCareerRace()).toBeUndefined();
+    expect(saveRace).not.toHaveBeenCalled();
+  });
+
   it('routes the professor Steering demonstration into the shared F1 RaceSession', async () => {
     const navigation = { launch: async (create) => create() };
     const options = await launchSteeringLab(navigation, {

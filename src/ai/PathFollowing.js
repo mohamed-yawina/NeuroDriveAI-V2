@@ -52,13 +52,21 @@ export class PathFollowing {
   }
 
   project(position, out = new Vector3()) {
-    let best = null;
+    let bestDistanceSquared = Infinity, bestT = 0, bestIndex = 0, bestX = 0, bestY = 0, bestZ = 0;
     for (let i = 0; i < this.waypoints.length; i++) {
-      const candidate = projectPointToSegment(position, this.waypoints[i], this.waypoints[wrapIndex(i + 1, this.waypoints.length)]);
-      if (!best || candidate.distance < best.distance) best = { ...candidate, segmentIndex: i };
+      const start = this.waypoints[i], end = this.waypoints[wrapIndex(i + 1, this.waypoints.length)];
+      const dx = end.x - start.x, dy = end.y - start.y, dz = end.z - start.z;
+      const lengthSquared = dx * dx + dy * dy + dz * dz;
+      const t = lengthSquared < EPSILON ? 0 : Math.max(0, Math.min(1, ((position.x - start.x) * dx + (position.y - start.y) * dy + (position.z - start.z) * dz) / lengthSquared));
+      const x = start.x + dx * t, y = start.y + dy * t, z = start.z + dz * t;
+      const offsetX = position.x - x, offsetY = position.y - y, offsetZ = position.z - z;
+      const distanceSquared = offsetX * offsetX + offsetY * offsetY + offsetZ * offsetZ;
+      if (distanceSquared < bestDistanceSquared) {
+        bestDistanceSquared = distanceSquared; bestT = t; bestIndex = i; bestX = x; bestY = y; bestZ = z;
+      }
     }
-    out.copy(best.point);
-    return { point: out, t: best.t, distance: best.distance, segmentIndex: best.segmentIndex };
+    out.set(bestX, bestY, bestZ);
+    return { point: out, t: bestT, distance: Math.sqrt(bestDistanceSquared), segmentIndex: bestIndex };
   }
 
   pointAhead(segmentIndex, t, distance, out = new Vector3()) {

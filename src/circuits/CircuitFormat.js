@@ -1,5 +1,5 @@
 import { Vector3 } from 'three';
-import { createTrackBoundaries } from '../scene/trackGeometry.js';
+import { createTrackBoundaries, sampleClosedTrackPath } from '../scene/trackGeometry.js';
 import { validateCircuit } from './CircuitValidator.js';
 
 export const CIRCUIT_SCHEMA = 'neurodriveai.circuit';
@@ -11,7 +11,7 @@ export class CircuitFormatError extends Error {
 
 export function validateCircuitFormat(value) {
   const errors = [];
-  if (!value || typeof value !== 'object' || Array.isArray(value)) return { valid: false, errors: ['Le document doit être un objet JSON.'] };
+  if (!value || typeof value !== 'object' || Array.isArray(value)) { const malformed = ['Le document doit être un objet JSON.']; return { valid: false, errors: malformed, warnings: [], issues: malformed.map((message) => ({ severity: 'error', message })) }; }
   if (value.schema !== CIRCUIT_SCHEMA) errors.push(`Schéma incompatible : attendu « ${CIRCUIT_SCHEMA} ».`);
   if (value.version !== CIRCUIT_VERSION) errors.push(`Version incompatible : version ${CIRCUIT_VERSION} attendue.`);
   if (typeof value.id !== 'string' || !/^[a-zA-Z0-9][a-zA-Z0-9._-]{0,63}$/.test(value.id)) errors.push('Identifiant de circuit invalide.');
@@ -21,7 +21,7 @@ export function validateCircuitFormat(value) {
   if (!Array.isArray(value.controlPoints)) errors.push('Les points de contrôle doivent être un tableau.');
   if (!value.startLine || !Number.isInteger(value.startLine.controlPointIndex)) errors.push('La ligne de départ doit référencer un point de contrôle.');
   if (value.startLine?.direction !== 'forward') errors.push('La ligne de départ v1 doit utiliser la direction « forward ».');
-  if (errors.length) return { valid: false, errors };
+  if (errors.length) return { valid: false, errors, warnings: [], issues: errors.map((message) => ({ severity: 'error', message })) };
   const geometry = validateCircuit(value);
   return { ...geometry, valid: geometry.valid, errors: [...errors, ...geometry.errors] };
 }
@@ -56,13 +56,19 @@ export function circuitToTrackDefinition(circuit) {
   const points = circuit.controlPoints;
   const startIndex = circuit.startLine.controlPointIndex;
   const rotated = [...points.slice(startIndex), ...points.slice(0, startIndex)];
-  const waypoints = rotated.map(({ x, z }) => new Vector3(x, 0.08, z));
+  const controlVectors = rotated.map(({ x, z }) => new Vector3(x, 0.08, z));
+  const waypoints = sampleClosedTrackPath(controlVectors);
   const halfWidth = circuit.width / 2;
   return {
+    schema: circuit.schema,
+    version: circuit.version,
     id: circuit.id,
     label: circuit.name,
     name: circuit.name,
     waypoints,
+    controlPoints: controlVectors,
+    closed: true,
+    startLine: { controlPointIndex: 0, direction: 'forward' },
     boundaries: createTrackBoundaries(waypoints, { halfWidth }),
     width: circuit.width,
     halfWidth,
