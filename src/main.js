@@ -9,7 +9,7 @@ import { CareerStore } from './game/CareerStore.js';
 import { mountCareerPanel, refreshCareerPanel, bindCareerPanel } from './game/CareerPanel.js';
 import { upgradeRaceReplay } from './neural-lab/ReplayProtocol.js';
 import { RaceTutorial } from './game/RaceTutorial.js';
-import { ProfessorDemo } from './game/ProfessorDemo.js';
+import { ProfessorDemo, shouldReuseProfessorSession } from './game/ProfessorDemo.js';
 import { ComplianceReport } from './game/ComplianceReport.js';
 import { bindMainMenuEntries } from './ui/MainMenuSections.js';
 import { CircuitLibrary } from './circuits/CircuitLibrary.js';
@@ -88,13 +88,13 @@ performanceSettingsHeading.insertAdjacentHTML('afterend', '<p class="availabilit
 menu.querySelector('#graphics-effects').closest('.toggle-setting').insertAdjacentHTML('afterend', '<p class="availability-note" id="graphics-effects-note">Effets désactivés avec le profil Faible.</p><label class="toggle-setting"><input id="performance-fps" type="checkbox"><span>Afficher le moniteur FPS</span></label><p class="availability-note">FPS et ms/RAF mesurent la cadence d’image, pas le temps CPU ou GPU.</p>');
 app.append(menu);
 const garageDynamics = new GameVehicleDynamics();
-menu.querySelector('[data-panel="garage"] .menu-copy')?.insertAdjacentHTML('afterend', `<div class="garage-specs"><span class="menu-kicker">FICHE TECHNIQUE · PHYSIQUE ARCADE</span><div><b>${(garageDynamics.maxSpeed * 3.6).toFixed(0)} <small>km/h max.</small></b><b>${garageDynamics.acceleration.toFixed(0)} <small>m/s² · accélération</small></b><b>${garageDynamics.braking.toFixed(0)} <small>m/s² · freinage</small></b><b>${garageDynamics.turnRate.toFixed(1)} <small>rad/s · braquage</small></b></div><p>Réglages communs aux six voitures; les mécaniques de course peuvent réduire l'adhérence ou la vitesse.</p></div>`);
+menu.querySelector('[data-panel="garage"] .menu-copy')?.insertAdjacentHTML('afterend', `<div class="garage-specs"><span class="menu-kicker">FICHE TECHNIQUE · PHYSIQUE ARCADE</span><div><b>${(56 * 1.1 * 3.6).toFixed(0)} <small>km/h max. joueur</small></b><b>${garageDynamics.acceleration.toFixed(0)} <small>m/s² · accélération</small></b><b>${garageDynamics.braking.toFixed(0)} <small>m/s² · freinage</small></b><b>${garageDynamics.turnRate.toFixed(1)} <small>rad/s · braquage</small></b></div><p>Physique de base commune; la vitesse maximale du joueur est majorée de 10 % en course arcade. Les IA conservent leur réglage de base.</p></div>`);
 const circuitLapsSelect = menu.querySelector('#menu-laps').cloneNode(true);
 circuitLapsSelect.id = 'circuit-ready-laps'; circuitLapsSelect.setAttribute('aria-label', 'Nombre de tours pour la course rapide');
 const circuitLapsField = document.createElement('label'); circuitLapsField.className = 'menu-field'; circuitLapsField.textContent = 'NOMBRE DE TOURS'; circuitLapsField.append(circuitLapsSelect);
 menu.querySelector('[data-panel="circuits"] .launch-from-panel')?.before(circuitLapsField);
 menu.querySelector('#circuit-ready-laps').addEventListener('change', (event) => { menu.querySelector('#menu-laps').value = event.target.value; updateRaceReadySummary(); });
-menu.querySelector('.camera-presets')?.insertAdjacentHTML('afterend', `<section class="garage-personalization"><span class="menu-kicker">PERSONNALISATION PILOTE</span><label class="menu-field">NOM DU PILOTE<input id="garage-driver-name" maxlength="32" autocomplete="name"></label><label class="menu-field">NUMÉRO<input id="garage-driver-number" type="number" min="0" max="99" step="1"></label><span class="garage-option-label">COULEUR SECONDAIRE</span><div class="livery-row accent-row" role="group" aria-label="Choisir la couleur secondaire"><button data-accent="#f5f5f5" aria-label="Blanc" class="selected"></button><button data-accent="#e10600" aria-label="Rouge compétition"></button><button data-accent="#1684ff" aria-label="Bleu"></button><button data-accent="#d6b14d" aria-label="Or"></button></div><p class="availability-note">La couleur, le nom et le numéro s’appliquent à votre voiture joueur. Les performances physiques sont communes à toutes les voitures.</p><button id="garage-reset" class="settings-action secondary" type="button">RÉINITIALISER LA PERSONNALISATION</button></section>`);
+menu.querySelector('.camera-presets')?.insertAdjacentHTML('afterend', `<section class="garage-personalization"><span class="menu-kicker">PERSONNALISATION GARAGE</span><label class="menu-field">MODÈLE VISUEL<select id="garage-car-model"><option value="apex">APEX · équilibrée</option><option value="velocity">VELOCITY · profil aérodynamique</option><option value="titan">TITAN · carrosserie large</option><option value="phantom">PHANTOM · silhouette furtive</option></select></label><label class="menu-field">NOM DU PILOTE<input id="garage-driver-name" maxlength="32" autocomplete="name"></label><label class="menu-field">NUMÉRO<input id="garage-driver-number" type="number" min="0" max="99" step="1"></label><span class="garage-option-label">COULEUR SECONDAIRE</span><div class="livery-row accent-row" role="group" aria-label="Choisir la couleur secondaire"><button data-accent="#f5f5f5" aria-label="Blanc" class="selected"></button><button data-accent="#e10600" aria-label="Rouge compétition"></button><button data-accent="#1684ff" aria-label="Bleu"></button><button data-accent="#d6b14d" aria-label="Or"></button></div><span class="garage-option-label">APPARENCE DU PILOTE</span><div class="garage-driver-options"><label class="menu-field">AVATAR<select id="garage-driver-avatar"><option value="classic">CLASSIC</option><option value="nova">NOVA</option><option value="vector">VECTOR</option></select></label><label class="menu-field">CASQUE<input id="garage-helmet-color" type="color" aria-label="Couleur du casque"></label><label class="menu-field">COMBINAISON<input id="garage-suit-color" type="color" aria-label="Couleur de la combinaison"></label></div><label class="menu-field">TEINTE DE PEAU<select id="garage-skin-tone" aria-label="Teinte de peau"><option value="#6b422e">Brun profond</option><option value="#925f42">Brun</option><option value="#b77955">Moyen</option><option value="#d5a27f">Clair</option><option value="#f0c9a7">Très clair</option></select></label><p class="availability-note">Les variantes de carrosserie et l’avatar sont visuels. Physique, capteurs et performances restent identiques.</p><button id="garage-reset" class="settings-action secondary" type="button">RÉINITIALISER LA PERSONNALISATION</button></section>`);
 const userCircuitLibrary = new CircuitLibrary();
 function resolveSelectedTrack(trackId) {
   if (!String(trackId).startsWith(USER_TRACK_SELECTION_PREFIX)) return null;
@@ -144,14 +144,31 @@ let selectedSecondaryLivery = /^#[0-9a-f]{6}$/i.test(requestedSecondaryLivery) ?
 const requestedDriverNumber = Number(preferences.driverNumber ?? savedDriverProfile.preferences?.driverNumber ?? 7);
 let selectedDriverNumber = Number.isInteger(requestedDriverNumber) && requestedDriverNumber >= 0 && requestedDriverNumber <= 99 ? requestedDriverNumber : 7;
 let selectedDriverName = savedDriverProfile.name;
+const savedVisualPreferences = savedDriverProfile.preferences ?? {};
+let selectedCarModel = ['apex', 'velocity', 'titan', 'phantom'].includes(preferences.carModel ?? savedVisualPreferences.carModel) ? (preferences.carModel ?? savedVisualPreferences.carModel) : 'apex';
+let selectedDriverAvatar = ['classic', 'nova', 'vector'].includes(preferences.driverAvatar ?? savedVisualPreferences.driverAvatar) ? (preferences.driverAvatar ?? savedVisualPreferences.driverAvatar) : 'classic';
+let selectedHelmetColor = /^#[0-9a-f]{6}$/i.test(preferences.helmetColor ?? savedVisualPreferences.helmetColor ?? '') ? (preferences.helmetColor ?? savedVisualPreferences.helmetColor) : '#f5f5f5';
+let selectedSuitColor = /^#[0-9a-f]{6}$/i.test(preferences.suitColor ?? savedVisualPreferences.suitColor ?? '') ? (preferences.suitColor ?? savedVisualPreferences.suitColor) : '#222832';
+const skinTones = ['#6b422e', '#925f42', '#b77955', '#d5a27f', '#f0c9a7'];
+let selectedSkinTone = skinTones.includes(preferences.skinTone ?? savedVisualPreferences.skinTone) ? (preferences.skinTone ?? savedVisualPreferences.skinTone) : '#b77955';
 function applyGarageCustomization() {
   const primaryColor = Number.parseInt(selectedLivery.slice(1), 16), secondaryColor = Number.parseInt(selectedSecondaryLivery.slice(1), 16);
-  showroom.setCustomization({ primaryColor, secondaryColor, driverNumber: selectedDriverNumber });
+  showroom.setCustomization({ primaryColor, secondaryColor, driverNumber: selectedDriverNumber, model: selectedCarModel, driver: { avatar: selectedDriverAvatar, helmetColor: Number.parseInt(selectedHelmetColor.slice(1), 16), suitColor: Number.parseInt(selectedSuitColor.slice(1), 16), skinColor: Number.parseInt(selectedSkinTone.slice(1), 16) } });
+}
+function persistVisualCustomization() {
+  Object.assign(preferences, { carModel: selectedCarModel, driverAvatar: selectedDriverAvatar, helmetColor: selectedHelmetColor, suitColor: selectedSuitColor, skinTone: selectedSkinTone });
+  localStorage.setItem('neurodrive-game-preferences', JSON.stringify(preferences));
+  careerStore.setProfile({ preferences: { carModel: selectedCarModel, driverAvatar: selectedDriverAvatar, helmetColor: selectedHelmetColor, suitColor: selectedSuitColor, skinTone: selectedSkinTone } });
 }
 applyGarageCustomization();
 menu.querySelector('.profile-chip b').textContent = selectedDriverName;
 menu.querySelector('#garage-driver-name').value = selectedDriverName;
 menu.querySelector('#garage-driver-number').value = String(selectedDriverNumber);
+menu.querySelector('#garage-car-model').value = selectedCarModel;
+menu.querySelector('#garage-driver-avatar').value = selectedDriverAvatar;
+menu.querySelector('#garage-helmet-color').value = selectedHelmetColor;
+menu.querySelector('#garage-suit-color').value = selectedSuitColor;
+menu.querySelector('#garage-skin-tone').value = selectedSkinTone;
 menu.querySelectorAll('[data-accent]').forEach((button) => button.classList.toggle('selected', button.dataset.accent === selectedSecondaryLivery));
 let gameSettings = readGameSettings();
 const settingsControls = {
@@ -222,6 +239,11 @@ menu.querySelectorAll('.launch-from-panel').forEach((button) => button.addEventL
 }));
 menu.querySelectorAll('[data-color]').forEach((button) => button.addEventListener('click', () => { selectedLivery = button.dataset.color; applyGarageCustomization(); menu.querySelectorAll('[data-color]').forEach((item) => item.classList.toggle('selected', item === button)); preferences.livery = selectedLivery; careerStore.setProfile({ livery: selectedLivery }); localStorage.setItem('neurodrive-game-preferences', JSON.stringify(preferences)); updateRaceReadySummary(); }));
 menu.querySelectorAll('[data-accent]').forEach((button) => button.addEventListener('click', () => { selectedSecondaryLivery = button.dataset.accent; applyGarageCustomization(); menu.querySelectorAll('[data-accent]').forEach((item) => item.classList.toggle('selected', item === button)); preferences.secondaryLivery = selectedSecondaryLivery; careerStore.setProfile({ preferences: { secondaryLivery: selectedSecondaryLivery } }); localStorage.setItem('neurodrive-game-preferences', JSON.stringify(preferences)); }));
+menu.querySelector('#garage-car-model').addEventListener('change', (event) => { selectedCarModel = ['apex', 'velocity', 'titan', 'phantom'].includes(event.target.value) ? event.target.value : 'apex'; event.target.value = selectedCarModel; persistVisualCustomization(); applyGarageCustomization(); });
+menu.querySelector('#garage-driver-avatar').addEventListener('change', (event) => { selectedDriverAvatar = ['classic', 'nova', 'vector'].includes(event.target.value) ? event.target.value : 'classic'; event.target.value = selectedDriverAvatar; persistVisualCustomization(); applyGarageCustomization(); });
+menu.querySelector('#garage-helmet-color').addEventListener('input', (event) => { if (!/^#[0-9a-f]{6}$/i.test(event.target.value)) return; selectedHelmetColor = event.target.value; persistVisualCustomization(); applyGarageCustomization(); });
+menu.querySelector('#garage-suit-color').addEventListener('input', (event) => { if (!/^#[0-9a-f]{6}$/i.test(event.target.value)) return; selectedSuitColor = event.target.value; persistVisualCustomization(); applyGarageCustomization(); });
+menu.querySelector('#garage-skin-tone').addEventListener('change', (event) => { selectedSkinTone = skinTones.includes(event.target.value) ? event.target.value : '#b77955'; event.target.value = selectedSkinTone; persistVisualCustomization(); applyGarageCustomization(); });
 menu.querySelector('#garage-driver-name').addEventListener('change', (event) => {
   selectedDriverName = String(event.target.value).trim().slice(0, 32) || 'Pilote ND'; event.target.value = selectedDriverName;
   careerStore.setProfile({ name: selectedDriverName }); menu.querySelector('.profile-chip b').textContent = selectedDriverName; updateRaceReadySummary();
@@ -233,14 +255,15 @@ menu.querySelector('#garage-driver-number').addEventListener('change', (event) =
   careerStore.setProfile({ preferences: { driverNumber: value } }); localStorage.setItem('neurodrive-game-preferences', JSON.stringify(preferences));
 });
 menu.querySelector('#garage-reset').addEventListener('click', () => {
-  selectedLivery = '#e10600'; selectedSecondaryLivery = '#f5f5f5'; selectedDriverNumber = 7; selectedDriverName = 'Pilote ND';
+  selectedLivery = '#e10600'; selectedSecondaryLivery = '#f5f5f5'; selectedDriverNumber = 7; selectedDriverName = 'Pilote ND'; selectedCarModel = 'apex'; selectedDriverAvatar = 'classic'; selectedHelmetColor = '#f5f5f5'; selectedSuitColor = '#222832'; selectedSkinTone = '#b77955';
   preferences.livery = selectedLivery; preferences.secondaryLivery = selectedSecondaryLivery; preferences.driverNumber = selectedDriverNumber;
   careerStore.setProfile({ name: selectedDriverName, livery: selectedLivery, preferences: { secondaryLivery: selectedSecondaryLivery, driverNumber: selectedDriverNumber } });
   localStorage.setItem('neurodrive-game-preferences', JSON.stringify(preferences));
   menu.querySelector('#garage-driver-name').value = selectedDriverName; menu.querySelector('#garage-driver-number').value = String(selectedDriverNumber);
+  menu.querySelector('#garage-car-model').value = selectedCarModel; menu.querySelector('#garage-driver-avatar').value = selectedDriverAvatar; menu.querySelector('#garage-helmet-color').value = selectedHelmetColor; menu.querySelector('#garage-suit-color').value = selectedSuitColor; menu.querySelector('#garage-skin-tone').value = selectedSkinTone;
   menu.querySelectorAll('[data-color]').forEach((item) => item.classList.toggle('selected', item.dataset.color === selectedLivery));
   menu.querySelectorAll('[data-accent]').forEach((item) => item.classList.toggle('selected', item.dataset.accent === selectedSecondaryLivery));
-  menu.querySelector('.profile-chip b').textContent = selectedDriverName; applyGarageCustomization(); updateRaceReadySummary();
+  menu.querySelector('.profile-chip b').textContent = selectedDriverName; persistVisualCustomization(); applyGarageCustomization(); updateRaceReadySummary();
 });
 menu.querySelectorAll('[data-camera]').forEach((button) => button.addEventListener('click', () => { showroom.setView(button.dataset.camera); menu.querySelectorAll('[data-camera]').forEach((item) => item.classList.toggle('selected', item === button)); }));
 menu.querySelector('#camera-reset').addEventListener('click', () => { showroom.resetCamera(); menu.querySelectorAll('[data-camera]').forEach((item) => item.classList.toggle('selected', item.dataset.camera === 'threeQuarter')); });
@@ -480,16 +503,42 @@ async function continueTutorial() {
 
 async function startProfessorDemo() {
   if (professorDemo) professorDemo.dispose();
+  const closeProfessorDemo = async () => {
+    const activeDemo = professorDemo;
+    professorDemo = null;
+    activeDemo?.dispose();
+    if (navigation.state === 'simulation') await navigation.returnToMenu();
+  };
   professorDemo = new ProfessorDemo({
     host: document.body,
-    onExit: async () => { if (navigation.state === 'simulation') await navigation.returnToMenu(); professorDemo = null; },
+    onExit: closeProfessorDemo,
+    onPause: (paused) => {
+      if (navigation.session && navigation.session.paused !== paused) navigation.session.pause?.(paused);
+    },
     onNavigate: async (step) => {
+      const wantedType = step.mode === 'steering-lab' ? 'steering' : step.mode === 'neural-lab' ? 'neural' : null;
+      if (!wantedType) {
+        if (navigation.state === 'simulation') await navigation.returnToMenu();
+        return;
+      }
+      if (navigation.state === 'simulation' && shouldReuseProfessorSession(navigation.session, step)) {
+        navigation.session.setProfessorStep?.(step);
+        const paused = professorDemo?.timeline.paused ?? false;
+        if (navigation.session.paused !== paused) navigation.session.pause?.(paused);
+        return;
+      }
       if (navigation.state === 'simulation') await navigation.returnToMenu();
       const routes = {
-        'steering-lab': () => launchIntegratedSteeringLab({ professorMode: true }),
-        'neural-lab': () => launchIntegratedNeuralLab({ configurations: ['A', 'B', 'C'], professorMode: true, onReturn: returnToIntegratedLabs }),
+        'steering-lab': () => launchIntegratedSteeringLab({ professorMode: true, onReturn: closeProfessorDemo }),
+        'neural-lab': () => launchIntegratedNeuralLab({ configurations: ['A', 'B', 'C'], professorMode: true, onReturn: closeProfessorDemo }),
       };
       if (routes[step.mode]) await routes[step.mode]();
+      if (navigation.state !== 'simulation' || navigation.session?.laboratory?.type !== wantedType) {
+        throw new Error(`Le ${wantedType === 'steering' ? 'Steering Lab' : 'Neural Lab'} ne s’est pas ouvert.`);
+      }
+      navigation.session.setProfessorStep?.(step);
+      const paused = professorDemo?.timeline.paused ?? false;
+      if (navigation.session.paused !== paused) navigation.session.pause?.(paused);
     },
   });
 }

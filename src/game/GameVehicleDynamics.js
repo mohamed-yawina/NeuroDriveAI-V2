@@ -25,8 +25,20 @@ export class GameVehicleDynamics {
     const brake = Math.max(0, Math.min(1, input.brake ?? 0));
     const systems = vehicle.raceMechanics;
     const grip = systems?.enabled ? systems.tyreGrip : 1;
-    const acceleration = this.acceleration * (systems?.accelerationMultiplier ?? 1) * grip;
-    const targetSpeed = Math.max(-8, Math.min((vehicle.maxSpeed ?? this.maxSpeed) * (systems?.speedMultiplier ?? 1) * (vehicle.raceFlags?.speedMultiplier ?? 1), signedSpeed + throttle * acceleration * dt - brake * this.braking * dt));
+    const arcadeSpeedMultiplier = Math.max(1, Math.min(1.2, input.arcadeSpeedMultiplier ?? 1));
+    const boostSpeedMultiplier = input.turboActive ? 1.06 : 1;
+    const boostAccelerationMultiplier = input.turboActive ? 1.22 : 1;
+    const acceleration = this.acceleration * (systems?.accelerationMultiplier ?? 1) * grip * boostAccelerationMultiplier;
+    const baseLimit = (vehicle.maxSpeed ?? this.maxSpeed) * (systems?.speedMultiplier ?? 1) * (vehicle.raceFlags?.speedMultiplier ?? 1) * arcadeSpeedMultiplier;
+    const desiredSpeedLimit = baseLimit * boostSpeedMultiplier;
+    let speedLimit = desiredSpeedLimit;
+    if (arcadeSpeedMultiplier > 1) {
+      vehicle.arcadeSpeedLimit ??= baseLimit;
+      vehicle.arcadeSpeedLimit += Math.max(-8 * dt, Math.min(8 * dt, desiredSpeedLimit - vehicle.arcadeSpeedLimit));
+      speedLimit = vehicle.arcadeSpeedLimit;
+    }
+    const targetSpeed = Math.max(-8, Math.min(speedLimit, signedSpeed + throttle * acceleration * dt - brake * this.braking * dt));
+    vehicle.steeringInput = Math.max(-1, Math.min(1, input.steer ?? 0));
     vehicle.yaw += (input.steer ?? 0) * this.turnRate * grip * (0.2 + Math.min(speed / 20, 1)) * dt;
     vehicle.forward.set(Math.sin(vehicle.yaw), 0, -Math.cos(vehicle.yaw)).normalize();
     vehicle.velocity.copy(vehicle.forward).multiplyScalar(targetSpeed * (1 - Math.min(this.drag * dt, 0.9)));

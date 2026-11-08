@@ -49,7 +49,7 @@ export class MenuShowroom {
     this.addPaddockBackdrop();
     const platform = new THREE.Mesh(new THREE.CylinderGeometry(5.2, 5.45, 0.26, 64), new THREE.MeshStandardMaterial({ color: 0x272a30, roughness: 0.42, metalness: 0.58 })); platform.position.y = 0.08; platform.receiveShadow = true; platform.castShadow = true; this.scene.add(platform);
     const stripe = new THREE.Mesh(new THREE.TorusGeometry(5.1, 0.035, 8, 96), new THREE.MeshBasicMaterial({ color: 0xe10600 })); stripe.rotation.x = Math.PI / 2; stripe.position.y = 0.22; this.scene.add(stripe);
-    this.carCustomization = { primaryColor: 0xe10600, secondaryColor: 0xf5f5f5, driverNumber: 7 };
+    this.carCustomization = { primaryColor: 0xe10600, secondaryColor: 0xf5f5f5, driverNumber: 7, model: 'apex', driver: null };
     this.car = new FormulaCar(this.scene, this.carCustomization); this.car.root.position.y = 0.27; this.car.root.scale.setScalar(1.15);
     this.circuitGroup = null; this.focus = new THREE.Vector3(0, 0.7, 0);
     this.pointerDown = (event) => { this.dragging = true; this.pointerX = event.clientX; this.renderer.domElement.setPointerCapture?.(event.pointerId); };
@@ -85,9 +85,10 @@ export class MenuShowroom {
   }
   setColor(color) { this.setCustomization({ ...this.carCustomization, primaryColor: Number.parseInt(String(color).replace('#', ''), 16) }); }
   setCustomization(patch = {}) {
-    const next = { primaryColor: 0xe10600, secondaryColor: 0xf5f5f5, driverNumber: 7, ...this.carCustomization, ...patch };
+    const next = { primaryColor: 0xe10600, secondaryColor: 0xf5f5f5, driverNumber: 7, model: 'apex', driver: null, ...this.carCustomization, ...patch };
     for (const key of ['primaryColor', 'secondaryColor']) if (!Number.isInteger(next[key]) || next[key] < 0 || next[key] > 0xffffff) return false;
     if (!Number.isInteger(next.driverNumber) || next.driverNumber < 0 || next.driverNumber > 99) return false;
+    if (!['apex', 'velocity', 'titan', 'phantom'].includes(next.model)) return false;
     const visible = this.car.root.visible;
     this.car.root.removeFromParent(); releaseSceneResources(this.car.root);
     this.carCustomization = next;

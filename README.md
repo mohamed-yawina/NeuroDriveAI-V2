@@ -1,151 +1,143 @@
-# NeuroDriveAI V2 - Voiture suit circuit
+# NeuroDriveAI V2 — F1 Ultimate Edition
 
-Simulation autonome de course en Three.js pour le Master IA2. La voiture low-poly est guidee par des forces de steering et un suivi de chemin avec anticipation. L'IA, la dynamique physique et le rendu restent separes afin de preparer une future phase d'apprentissage neuronal.
+NeuroDriveAI est un projet pédagogique en JavaScript qui réunit une course arcade en 3D, des démonstrations de Steering Behaviors et l’inspection de réseaux neuronaux historiques. Les courses et laboratoires intégrés partagent le rendu NeuroDrive F1; les moteurs et protocoles scientifiques historiques restent séparés du gameplay arcade.
 
-## Installation et lancement
+> **État académique :** ce dépôt documente des notions et des démonstrations. Il ne prétend pas certifier les exigences officielles ou le barème de Casablanca G1. La matrice de preuves et les éléments non vérifiables sont dans [`docs/modification-28-final-academic-audit.md`](docs/modification-28-final-academic-audit.md).
 
-Prerequis : Node.js 20.19+ ou 22.12+, npm.
+## Objectifs pédagogiques
 
-```bash
-npm install
-npm run dev
+- Comprendre comment une force de direction est construite à partir d’une vitesse souhaitée et de la vitesse actuelle.
+- Observer Path Following, obstacle avoidance, séparation et leur combinaison.
+- Examiner les observations, activations et sorties d’un MLP 7→16→16→2.
+- Distinguer l’expérience scientifique historique d’une partie de démonstration arcade.
+- Étudier les choix d’architecture, la reproductibilité, les tests et les limites des résultats.
+
+## Fonctionnalités
+
+- **Course rapide** : six voitures, conduite clavier, contrôleurs Steering, classement, chronométrage, caméras et mini-carte.
+- **Carrière locale** : saison et résultats sauvegardés localement, avec points issus des courses terminées.
+- **Garage** : quatre silhouettes esthétiques de monoplaces, couleurs, numéro, nom et profil pilote.
+- **Circuit Studio** : modèles, dessin libre, validation, brouillons et bibliothèque de circuits. Les circuits invalides ne sont pas proposés en course.
+- **Steering Lab** : session F1 partagée avec vecteurs Steering publiés par les contrôleurs, paramètres disponibles et AI Telemetry Center.
+- **Neural Lab** : sessions F1 avec Steering AI et les vrais modèles historiques A/B/C; observations, activations, sorties et adaptation arcade affichées séparément.
+- **Mode Professeur** : parcours guidé de 180 secondes, étape par étape, avec pause, reprise, navigation manuelle et script oral.
+- **Audio et accessibilité** : musique REDLINE limitée aux menus, sons de course, réglages audio, profils graphiques, moniteur FPS facultatif et haptique lorsqu’elle est prise en charge.
+
+Les effets visuels, la météo, les avatars et les variantes de carrosserie n’altèrent pas les résultats expérimentaux. Le turbo est une mécanique arcade; il est désactivé dans les laboratoires IA.
+
+## Steering Behaviors
+
+Le jeu F1 utilise un sous-ensemble des comportements : Path Following, Obstacle Avoidance et Separation; Pursuit est activé conditionnellement par le planificateur de dépassement. Seek sert notamment au calcul de la force de suivi de cible. Flee, Arrive, Evade, Wander, Alignment, Cohesion et Leader Following sont disponibles dans les scénarios pédagogiques, mais ne sont pas tous des contrôleurs actifs de course F1.
+
+Les forces sont calculées et pondérées par `BehaviorManager`, puis la résultante est plafonnée à `maxForce`. Le gestionnaire applique une somme pondérée, pas un système de priorités. Voir [`docs/steering-behaviors-audit.md`](docs/steering-behaviors-audit.md) et [`docs/phase10-steering-academy.md`](docs/phase10-steering-academy.md).
+
+## Réseaux neuronaux et résultats scientifiques
+
+Les artefacts historiques A/B/C utilisent l’architecture MLP `7–16–16–2` et sont servis depuis `public/phase8-model-{a,b,c}.json`. Le vecteur d’observation est formé de cinq distances de capteurs normalisées, d’un ratio de vitesse et d’une erreur de cap normalisée. Les sorties bornées représentent le braquage et la commande longitudinale accélération/freinage. Le Neural Lab les adapte au moteur arcade; ces parties ne reproduisent pas automatiquement les conditions physiques historiques.
+
+Les protocoles, métriques brutes, interprétations et limites sont décrits dans :
+
+- [`docs/scientific-methodology.md`](docs/scientific-methodology.md) — séparation des moteurs et méthodologie.
+- [`docs/scientific-validation.md`](docs/scientific-validation.md) — validation phase 4 et limites.
+- [`docs/multitrack-training.md`](docs/multitrack-training.md) — phase 7 multi-circuits.
+- [`docs/phase8-configuration-b.md`](docs/phase8-configuration-b.md) et [`docs/phase8-configuration-c.md`](docs/phase8-configuration-c.md) — configurations B/C, validations et test réservé.
+- [`docs/generalization-validation.md`](docs/generalization-validation.md) — généralisation et incertitudes.
+
+La validation phase 4 consignée dans la documentation couvre 250 générations × 16 candidats × 3 graines, soit 12 000 épisodes. Les terminaisons incluent des sorties de piste, des blocages et des limites de temps; une fitness élevée seule ne démontre donc pas un pilotage robuste. En phase 8, C termine 267/270 essais sur les trois circuits connus décrits et 60/90 sur le circuit final réservé; une graine C obtient 0/30 sur ce test. Ces échantillons limités ne démontrent pas une généralisation universelle ou une supériorité statistique.
+
+Les poids et résultats historiques ne sont pas modifiés par les modes arcade. Aucun entraînement n’est lancé au démarrage de l’application, par `npm.cmd test` ou par `npm.cmd run build`. Les scripts `train:*` et `recover:*` peuvent écrire des artefacts de résultats; ne les lancez pas pour une démonstration.
+
+## Architecture
+
+```mermaid
+flowchart LR
+  Menu[src/main.js + SessionNavigation] --> Session[RaceSession]
+  Session --> World[RaceWorld]
+  World --> Arcade[GameVehicleDynamics]
+  World --> Steering[RaceController + BehaviorManager]
+  World --> Scene[SceneManager + Track + FormulaCar]
+  Session --> HUD[HUD + AI Telemetry Center]
+  Lab[IntegratedLab] --> Adapter[HistoricalBrainAdapter]
+  Adapter --> Sensors[TrackSensors + ObservationBuilder]
+  Adapter --> Network[NeuralController + MLP 7-16-16-2]
+  Network --> Arcade
+  Research[TrainingEnvironment + VehicleDynamics] --> Artifacts[Modèles et résultats historiques]
 ```
 
-Ouvrez l'adresse locale affichee par Vite.
+Les responsabilités des modules, les frontières de données et le cycle de vie sont détaillés dans [`docs/architecture-overview.md`](docs/architecture-overview.md).
 
-### NeuroDrive F1 — Red Racing Edition (Phase 14)
+## Technologies
 
-Le menu principal présente une monoplace dans un showroom Three.js : glissez pour la faire pivoter, utilisez la molette pour zoomer, puis choisissez une livrée et une vue depuis Garage. Circuits permet de choisir l'une des trois pistes du moteur et une course de 3, 5 ou 8 tours. Jouer lance le moteur F1 arcade contre cinq pilotes autonomes. Les commandes sont ↑/W (accélérer), ↓/S (freiner), ←/A et →/D (braquer), Espace (pause), R (redémarrer) et C (changer de caméra). Le HUD fournit vitesse, tours, meilleur tour, classement, mini-carte et incidents relevés par la télémétrie. La fin de course affiche un podium 3D et le classement.
+- JavaScript ES Modules.
+- Three.js pour le rendu WebGL.
+- Vite pour le serveur de développement et le build.
+- Vitest pour les tests unitaires, déterministes et d’intégration headless.
+- Web Audio API et Gamepad/Vibration API si le navigateur et le matériel les exposent.
 
-L'audio est synthétisé avec Web Audio après une interaction utilisateur. Les volumes moteur, effets, ambiance et interface sont réglables. Haptique utilise Gamepad API ou `navigator.vibrate` quand le navigateur et le contrôleur les exposent ; l'option se désactive sans API détectée. Aucun fichier audio tiers n'est nécessaire.
+Les seules dépendances directes déclarées sont `three` et, pour le développement, `vite` et `vitest`.
 
-Carrière, stratégie pneus/ERS, boîte de vitesses, météo et replay ne sont pas disponibles. Ces options n'influencent pas la course. Steering Academy, Circuit Studio et Neural Racing Lab restent accessibles depuis le menu. Les détails de correspondance du wireframe se trouvent dans [docs/phase14-red-racing-edition.md](docs/phase14-red-racing-edition.md).
+## Prérequis et installation
 
-### Démonstration Phase 9
-
-L'écran d'accueil permet de choisir le circuit, Steering Behaviors ou Neural, et la configuration A, B ou C avant de lancer la simulation. Le pilote neuronal charge le réseau public préservé de la configuration choisie. Les commandes en course sont Espace (pause/reprise), R (redémarrage), C (caméra de poursuite/vue aérienne) et **Retour au menu** (ferme la session et libère la scène 3D). Le circuit et le modèle actifs sont affichés dans le HUD. Les trois circuits interactifs réutilisent les géométries de généralisation déjà présentes dans le projet.
-
-Pour lancer l'application avec npm sous Windows :
+Node.js 20.19+ ou 22.12+ et npm (version requise par Vite 7). Sous Windows :
 
 ```powershell
 npm.cmd install
 npm.cmd run dev
 ```
 
-Pour servir le build localement après compilation :
-
-```powershell
-npm.cmd run build
-npm.cmd run preview
-```
-
-Le panneau AI Lab conserve l'entraînement dans un Web Worker, l'import/export JSON/CSV, les comparaisons appariées et les résultats A/B/C. Retour au menu demande l'arrêt du worker d'entraînement de cette session à la fin de l'épisode courant; les commandes d'entraînement lancées dans un autre processus restent indépendantes. L'export de présentation lit la configuration C complète dans `results/phase8-c-recovered-resume-20261102-2231/` et peut recevoir un autre dossier complet via `npm.cmd run export:phase8-ai-lab -- --phase8-c-dir=<dossier>`.
+Ouvrez l’URL locale indiquée par Vite. Le projet n’exige pas de service en ligne pour démarrer. Le premier geste utilisateur peut être nécessaire pour autoriser l’audio dans le navigateur.
 
 ## Commandes
 
-- **Espace** : pause / reprise
-- **R** : redemarrer la simulation
-- **C** : camera de poursuite / vue aerienne
-- **D** : afficher / masquer le debug du chemin
-- **S** : afficher / masquer les cinq rayons des capteurs
+| Commande | Fonction |
+|---|---|
+| `npm.cmd run dev` | Serveur Vite de développement |
+| `npm.cmd test` | Suite Vitest complète |
+| `npm.cmd run build` | Build de production |
+| `npm.cmd run preview` | Prévisualiser le build Vite |
+| `npm.cmd run validate:training` | Lancer la validation scientifique phase 4; écrit des résultats |
+| `npm.cmd run validate:generalization` | Rejouer l’évaluation documentée de généralisation |
+| `npm.cmd run train:multitrack` | Entraînement multi-circuits; écrit des artefacts |
+| `npm.cmd run train:phase8-b` / `train:phase8-c` | Lancer les entraînements B/C; opérations longues et persistantes |
+| `npm.cmd run validate:phase8-b` / `validate:phase8-abc` | Valider les modèles existants sans les réentraîner |
+| `npm.cmd run test:phase8-heldout` / `test:phase8-c-heldout` | Lancer les scripts de test final documentés |
+| `npm.cmd run export:phase8-ai-lab` | Exporter les artefacts de présentation A/B/C |
+| `npm.cmd run recover:phase8-c` | Reprise/rejeu contrôlé de C; écrit un nouvel artefact |
 
-## AI Lab et pilote neuronal
+Consultez la documentation de chaque protocole avant les commandes scientifiques. Elles ne sont pas requises pour lancer le jeu ou vérifier le build.
 
-Le panneau AI Lab lance une neuro-evolution dans un Web Worker. Chaque individu est execute dans `TrainingEnvironment`, qui reutilise le modele de piste, les capteurs, l'observateur, les forces et l'integration physique du jeu sans creer de renderer. Les episodes utilisent un pas fixe de 1/30 s, une limite de 45 s, et se terminent sur un tour valide, 3.5 s hors piste, 4 s bloque ou la limite de temps.
+## Commandes en course
 
-Les reglages par defaut sont 250 generations, 16 individus, 4 elites, mutation gaussienne de taux 0.08 et ecart-type 0.12. La graine par defaut est 2026. Les 16 individus sont evalues a chaque generation; la recompense combine progression signee physiquement plausible, tours valides, maintien sur piste, vitesse avant, sorties, blocage et variations de braquage. Ce sont des parametres de depart pedagogiques, pas une garantie de convergence ni de performance de course. L'entrainement peut prendre plusieurs minutes selon le navigateur et les episodes.
+| Action | Commande |
+|---|---|
+| Accélérer / marche arrière | `↑` ou `W` / `↓` ou `S` |
+| Freiner | `↓` ou `S` |
+| Tourner | `←`/`A` et `→`/`D` |
+| Pause / reprise | `Espace` |
+| Changer de caméra | `C` |
+| Regard arrière temporaire | maintenir `B` |
+| Recommencer | `R` |
+| Suivre une voiture | `1`–`6` ou le sélecteur du HUD |
+| Rapport manuel, si mécaniques arcade activées | `Q` / `E` |
+| DRS, si disponible dans cette course | `F` |
+| ERS, si disponible dans cette course | `V` |
+| Turbo arcade | maintenir `Shift`; non disponible dans les laboratoires IA |
+| Mode HUD | `H` |
 
-Apres une generation, **Tester le meilleur** charge le vrai reseau dans la simulation en direct. Le pilote `Neural` est aussi selectionnable apres entrainement ou import. **Exporter JSON** et **Importer un modele JSON** sauvegardent ou valident l'architecture fixe `7-16-16-2`. Les poids exportes sont le meilleur individu evalue, sans entrainement simule ni substitution du pilote classique.
+Les touches maintenues sont effacées lors de la perte de focus. Le tutoriel interactif indique également ses commandes selon l’étape.
 
-## Validation scientifique
+## Démonstration universitaire
 
-Le bouton **Entraîner x3 seeds** lance trois runs sequentiels aux graines de base, base+1 et base+2. Pour chaque generation, les 16 episodes sont termines avant de calculer le meilleur score de generation, le meilleur global, la moyenne et les agregats physiques. Le graphique trace le meilleur score de generation (vert) et la moyenne de population (bleu); pour plusieurs graines, chaque courbe est la moyenne entre les runs aux generations correspondantes. **Exporter statistiques CSV** produit une ligne par generation et par graine, avec les metriques agregees et les metriques de l'episode gagnant, notamment sa cause de fin, ses tours, sa progression signee, ses sorties et blocages. Un tour valide exige un franchissement avant de la ligne et au moins 95% de longueur signee; ce seuil empeche de compter comme tour le segment partiel initial lorsque le spawn est aleatoire.
+- **Mode Professeur** : depuis Carrière locale, ouvre le parcours guidé. Il distingue les mesures de course des données de recherche et la chronologie prend environ trois minutes sans pause ni délai de chargement.
+- **Circuit Studio** : créez ou modifiez une définition de piste, sauvegardez un brouillon, validez puis testez la géométrie valide dans le moteur F1 partagé.
+- **Guide 5 minutes** : [`docs/final-demo-guide.md`](docs/final-demo-guide.md).
+- **Questions de soutenance** : [`docs/professor-questions-answers.md`](docs/professor-questions-answers.md).
+- **Audit académique** : [`docs/modification-28-final-academic-audit.md`](docs/modification-28-final-academic-audit.md).
 
-**Comparer Steering / Neural x3** execute les deux pilotes avec le meme depart, cap, circuit, pas de temps et limites pour chacune de trois graines. Le runner hors interface reproduit le protocole complet et ecrit les fichiers de resultats:
+## Captures
 
-```bash
-npm run validate:training
-```
+Aucune capture d’écran du jeu validée visuellement n’est incluse actuellement. Le wireframe de conception est une référence d’interface, pas une capture du produit; il se trouve dans `docs/design/NeuroDrive F1 3D Wireframes.pdf`.
 
-Par defaut, ce script execute 250 generations, 16 individus et les graines 2026, 2027 et 2028. Il enregistre `results/phase4-scientific-validation.json` et `results/phase4-generation-statistics.csv`. Options: `node scripts/run-scientific-validation.js --seeds=2026,2027,2028 --generations=250 --population=16`. Le meilleur score peut varier avec la graine; ces runs mesurent cette variabilite et ne constituent pas, seuls, une validation de generalisation hors de ce circuit.
+## Auteur et contexte
 
-## Verification
-
-```bash
-npm test
-npm run build
-```
-
-## Validation de generalisation
-
-Apres la validation d'entrainement, executez `npm run validate:generalization`. Le protocole charge sans les modifier les trois meilleurs reseaux sauvegardes, puis les compare a Steering sur 30 scenarios apparies du circuit original et de deux variantes. Les resultats scenario par scenario sont enregistres dans `results/phase6-generalization-validation.json` et `results/phase6-generalization-validation.csv`; le protocole, les intervalles de confiance et l'interpretation sont dans `docs/generalization-validation.md`.
-
-## Entrainement multi-circuits
-
-Pour reproduire la phase 7, executez `npm run train:multitrack -- --generations=50 --population=8 --seeds=2026,2027,2028`. Le processus entraine un reseau par graine sur l'original, le circuit technique et l'ovale, puis produit des jeux de validation et de test independants. Les artefacts `results/phase7-*` et la documentation scientifique sont dans `docs/multitrack-training.md`; les fichiers historiques des phases precedentes restent separes.
-
-## Phase 8 : configurations A/B/C
-
-La configuration C a ete terminee pour les trois graines et validee sur les circuits original, technique, fast oval et le circuit final inedit. L'ancien checkpoint incomplet reste conserve; le jeu complet et ses exports sont dans `results/phase8-c-recovered-resume-20261102-2231/`. Le protocole, la reprise deterministe de 2028, les resultats et leurs limites sont decrits dans `docs/phase8-configuration-c.md`. Pour une future reprise interrompue de C, utilisez `npm run recover:phase8-c -- --attempt=<identifiant-unique>`; les checkpoints complets sont versionnes et les resultats precedents ne sont pas remplaces.
-
-## Phase 10 : Steering Academy
-
-Depuis le menu, **Steering Academy** ouvre le laboratoire interactif Seek, Flee, Arrive, Pursuit, Evade, Wander, Obstacle Avoidance, Separation, Alignment, Cohesion, Boids, Leader Following et Path Following. Les comportements peuvent être activés ensemble et réglés par poids. Le panneau montre leurs forces, leurs forces pondérées et la résultante plafonnée à `maxForce`. La simulation utilise un pas fixe de 1/60 s et un générateur aléatoire réinitialisable par graine.
-
-Les formules, références aux diapositives du support du professeur, choix du BehaviorManager et tests sont documentés dans `docs/phase10-steering-academy.md`. Cette phase ne modifie ni le moteur des expériences historiques, ni les modèles/résultats A/B/C, et ne lance aucun entraînement.
-
-## Phase 11 : Formula 1 Racing Engine
-
-Le bouton **Lancer la course** ouvre une course de trois tours sur le circuit choisi. La grille contient six voitures, dont une voiture joueur et cinq pilotes autonomes. Le départ utilise cinq feux rouges et un compte à rebours de trois secondes. Les commandes sont **Flèches / WASD** pour accélérer, freiner et braquer, **Espace** pour pause/reprise, **R** pour recommencer, **C** pour changer de caméra, **1–6** ou le sélecteur pour suivre une voiture, et **Retour au menu** pour fermer proprement la session. Le HUD affiche la vitesse, le tour, le meilleur temps, le classement et une mini-carte.
-
-Le moteur jouable est isolé dans `src/game/`. Sa dynamique arcade utilise un pas fixe de 1/60 s et ses propres réponses aux collisions. Les IA composent Path Following, Obstacle Avoidance, Separation et Pursuit via le `BehaviorManager`; le planificateur vérifie les voies, gère le décalage de dépassement et revient vers la ligne de course. Le moteur de `src/physics/VehicleDynamics.js` et les protocoles scientifiques historiques restent séparés.
-
-**Ouvrir Neural AI Lab** conserve la simulation individuelle, le choix Steering/Neural et les modèles A/B/C historiques. **Steering Academy** reste accessible depuis le menu. Les formules, classes, limites connues et tests sont documentés dans `docs/phase11-f1-racing-engine.md`.
-
-## Phase 12 : Circuit Studio
-
-Le menu **Circuit Studio** permet d'éditer des points de contrôle, fermer la boucle, régler la largeur et la ligne de départ, annuler/rétablir, réinitialiser, importer/exporter du JSON et gérer une bibliothèque locale de circuits utilisateur. Le générateur crée des circuits Easy, Medium ou Hard de façon déterministe à partir d'une graine. La validation vérifie la courbe Catmull-Rom, les intersections, la largeur et la sécurité de la grille de six voitures avant d'autoriser les tests.
-
-Les commandes **Tester Steering**, **Tester F1 Racing**, **Préparer Neural** et **Path Following Academy** passent le même circuit à leurs moteurs respectifs. Le mode Neural utilise seulement les artefacts choisis dans Neural AI Lab; Circuit Studio ne lance pas d'entraînement. Le format, les seuils de validation et les adaptations sont détaillés dans `docs/phase12-circuit-studio.md`.
-
-## Architecture
-
-- `src/main.js` : menu, chargement dynamique des modes et navigation de session
-- `src/game/` : grille F1, dynamique arcade, IA de course, collisions, dépassement, temps et classement
-- `src/scene/` : scene, circuit, monoplace, camera et visualisation debug
-- `src/ai/` : seek, suivi anticipe, capteurs, observations, telemetry et controleurs
-- `src/ai/TrackSensors.js` : intersections rayon-segments sur les bords reels du circuit
-- `src/ai/ObservationBuilder.js` : vecteur d'entree a sept valeurs normalisees
-- `src/ai/TelemetryRecorder.js` : progression signee, tours valides et statistiques sans rendu
-- `src/ai/SteeringController.js` et `src/ai/NeuralController.js` : controleurs interchangeables qui emettent des forces physiques
-- `src/ai/neural/NeuralNetwork.js` : perceptron 7-16-16-2, mutation, copie et JSON valide
-- `src/ai/training/` : environnement physique sans rendu, recompense, PRNG et trainer genetique
-- `src/ai/training/ControllerComparison.js` et `TrainingCsv.js` : episodes apparies et export des agregats par generation
-- `src/ai/training/trainingWorker.js` : execution asynchrone de l'entrainement
-- `src/ui/AiLabPanel.js` : controles, graphique, selection, import et export du pilote
-- `scripts/run-scientific-validation.js` : protocole reproductible multi-graines et sauvegarde des resultats
-- `src/physics/VehicleDynamics.js` : integration temporelle et orchestration du controleur
-- `src/ui/HUD.js` : AI Lab, telemetrie et avertissement de sortie de piste
-- `tests/` : tests des forces, capteurs, observations, tours, telemetrie et integration
-
-## Pilotage
-
-La vitesse desiree pointe vers la cible et est reduite en amont des virages selon la courbure. La force suit `steering = desiredVelocity - currentVelocity`, est limitee par `maxForce`, puis l'integration physique utilise `deltaTime` et des sous-pas stables. Le follower projette une position predite sur le segment le plus proche, avance le long des segments cycliques pour placer sa cible et gere le raccord dernier/premier segment. Les capteurs interrogent les segments de bord exportes par la geometrie de piste. La progression est projetee sur le chemin et cumulee avec son signe; un tour ne compte qu'apres un franchissement avant de la ligne et au moins 95% de longueur validee. Le reseau neuronal est entraine par neuro-evolution; TensorFlow.js n'est pas utilise.
-
-## NeuroDrive F1 Ultimate Edition
-
-La feuille de route des 40 fonctions, leurs critères d’acceptation et leur statut vérifié sont dans [`docs/ultimate-edition-roadmap.md`](docs/ultimate-edition-roadmap.md). Le lot 1 ajoute en course arcade un mode professeur avec visualisation des forces réellement calculées, réglages dynamiques du BehaviorManager, profils d’IA et défense de voie. Les équations d’entraînement et résultats historiques restent hors de ce moteur; détails et limites dans [`docs/ultimate-edition-lot1-steering-ai.md`](docs/ultimate-edition-lot1-steering-ai.md).
-
-Le Neural Racing Lab documenté pour l'Ultimate Edition est décrit dans [docs/ultimate-edition-lot2-neural-research.md](docs/ultimate-edition-lot2-neural-research.md); cette extension distingue explicitement replays arcade, modèles historiques et données d'entraînement réellement enregistrées.
-
-L'extension Ultimate lot 3 ajoute des mécaniques d'arcade optionnelles (tour de formation, boîte, DRS, ERS, pneus, stands et dégâts) sans toucher au moteur scientifique. Limites et contrôles : [docs/ultimate-edition-lot3-arcade-gameplay.md](docs/ultimate-edition-lot3-arcade-gameplay.md).
-
-
-Ultimate Edition graphics and immersion, lot 4 (features 09-16), are documented in [docs/ultimate-edition-lot4-visual-immersion.md](docs/ultimate-edition-lot4-visual-immersion.md). Lighting, visual weather, bounded particles, race flags, animated crowd, TV cameras and photo capture are implemented in the arcade race session. Weather remains visual-only. TV camera has a dedicated control; the original four-camera cycle is preserved.
-
-Ultimate Edition lot 5 adds local career storage and a keyboard tutorial. The exact feature scope and known partials are listed in [docs/ultimate-edition-lot5-career.md](docs/ultimate-edition-lot5-career.md); the 40-feature status matrix is in [docs/ultimate-edition-roadmap.md](docs/ultimate-edition-roadmap.md).
-
-
-## Ultimate Edition LOT 5.1
-
-Features 37–40 are described in [the LOT 5.1 report](docs/ultimate-edition-lot5-1.md): bounded sampled 3D race replays with interpolation and legacy import; a measured resumable cross-mode tutorial; a guided 180-second professor timeline; and an evidence map from course slides to code, tests, demonstrations and limits. These modes do not start training. Run npm.cmd test and npm.cmd run build for validation. Browser playback and manual walkthroughs remain on the documented checklist.
+Projet de Simo pour le Master IA2 Casablanca G1, promotion 2026–2027; support de cours de Michel Buffa. Le code et les résultats décrivent l’état du dépôt. La conformité officielle à une consigne de rendu ou à un barème doit être confirmée à partir des consignes remises à la promotion.

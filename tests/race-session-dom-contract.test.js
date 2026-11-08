@@ -34,7 +34,8 @@ describe('RaceSession DOM contract', () => {
     const selectors = [...raceSessionSource.matchAll(/querySelector\('([^']+)'\)/g)].map((match) => match[1]);
     const queriedIds = [...new Set(selectors.filter((selector) => /^#[A-Za-z][\w-]*$/.test(selector)))];
     const applicationAndHudMarkup = `${indexSource}\n${raceSessionSource}`;
-    const missing = queriedIds.filter((selector) => !applicationAndHudMarkup.includes(`id="${selector.slice(1)}"`));
+    const dynamicallyAssignedIds = new Set([...raceSessionSource.matchAll(/\.id = '([^']+)'/g)].map((match) => match[1]));
+    const missing = queriedIds.filter((selector) => !applicationAndHudMarkup.includes(`id="${selector.slice(1)}"`) && !dynamicallyAssignedIds.has(selector.slice(1)));
     expect(missing).toEqual([]);
   });
 
