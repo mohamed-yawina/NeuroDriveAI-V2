@@ -81,7 +81,11 @@ menu.querySelector('.showroom-hint')?.remove();
 menu.querySelector('.menu-index')?.remove();
 menu.querySelector('.menu-foot')?.remove();
 menu.querySelector('.camera-presets')?.insertAdjacentHTML('afterend', '<button id="camera-reset" class="camera-reset" type="button">RÉINITIALISER LA CAMÉRA</button>');
-menu.querySelector('[data-panel="settings"]').insertAdjacentHTML('beforeend', `<div class="settings-divider"></div><h3>Graphismes</h3><label class="menu-field">QUALITÉ<select id="graphics-quality"><option value="low">Basse</option><option value="medium">Moyenne</option><option value="high">Haute</option></select></label><label class="toggle-setting"><input id="graphics-shadows" type="checkbox"><span>Ombres</span></label><label class="menu-field">DENSITÉ DU DÉCOR<select id="graphics-scenery"><option value="low">Réduite</option><option value="medium">Normale</option><option value="high">Complète</option></select></label><label class="toggle-setting"><input id="graphics-effects" type="checkbox"><span>Effets visuels de vitesse et collision</span></label><div class="settings-divider"></div><h3>Caméra et commandes</h3><label class="menu-field">CAMÉRA DE COURSE<select id="camera-default"><option value="chase">Poursuite</option><option value="trackside">Bord de piste</option><option value="cockpit">Cockpit</option><option value="overview">Aérienne</option></select></label><label class="menu-field">SENSIBILITÉ ORBITALE<input id="camera-sensitivity" type="range" min="0.003" max="0.02" step="0.001"></label><label class="menu-field">VITESSE DU ZOOM<input id="zoom-sensitivity" type="range" min="0.3" max="1.6" step="0.1"></label><p class="availability-note">Course au clavier : ↑ accélérer · ↓ freiner · ← → braquer · Espace pause · R redémarrer · C caméra · 1–6 suivre.</p><details class="showroom-help"><summary>Aide showroom</summary><p>Glissez horizontalement pour orbiter autour de la voiture sur 360°. La molette ajuste progressivement le zoom. Le bouton de réinitialisation revient au trois-quarts avant.</p></details><label class="menu-field">MODÈLE PAR DÉFAUT POUR ESSAI NEURAL<select id="default-model"><option>A</option><option>B</option><option>C</option></select></label><button id="haptics-test" class="settings-action" type="button">TESTER LES VIBRATIONS</button><button id="settings-reset" class="settings-action secondary" type="button">RESTAURER LES PARAMÈTRES PAR DÉFAUT</button>`);
+menu.querySelector('[data-panel="settings"]').insertAdjacentHTML('beforeend', `<div class="settings-divider"></div><h3>Graphismes</h3><label class="menu-field">QUALITÉ<select id="graphics-quality"><option value="low">Basse</option><option value="medium">Moyenne</option><option value="high">Haute</option></select></label><label class="toggle-setting"><input id="graphics-shadows" type="checkbox"><span>Ombres</span></label><label class="menu-field">DENSITÉ DU DÉCOR<select id="graphics-scenery"><option value="low">Réduite</option><option value="medium">Normale</option><option value="high">Complète</option></select></label><label class="toggle-setting"><input id="graphics-effects" type="checkbox"><span>Effets visuels de vitesse et collision</span></label><div class="settings-divider"></div><h3>Caméra et commandes</h3><label class="menu-field">CAMÉRA DE COURSE<select id="camera-default"><option value="chase">Poursuite</option><option value="hood">Capot</option><option value="trackside">Bord de piste</option><option value="cockpit">Cockpit</option><option value="overview">Aérienne</option></select></label><label class="menu-field">SENSIBILITÉ ORBITALE<input id="camera-sensitivity" type="range" min="0.003" max="0.02" step="0.001"></label><label class="menu-field">VITESSE DU ZOOM<input id="zoom-sensitivity" type="range" min="0.3" max="1.6" step="0.1"></label><p class="availability-note">Course au clavier : ↑ accélérer · ↓ freiner · ← → braquer · Espace pause · R redémarrer · C caméra · 1–6 suivre.</p><details class="showroom-help"><summary>Aide showroom</summary><p>Glissez horizontalement pour orbiter autour de la voiture sur 360°. La molette ajuste progressivement le zoom. Le bouton de réinitialisation revient au trois-quarts avant.</p></details><label class="menu-field">MODÈLE PAR DÉFAUT POUR ESSAI NEURAL<select id="default-model"><option>A</option><option>B</option><option>C</option></select></label><button id="haptics-test" class="settings-action" type="button">TESTER LES VIBRATIONS</button><button id="settings-reset" class="settings-action secondary" type="button">RESTAURER LES PARAMÈTRES PAR DÉFAUT</button>`);
+const performanceSettingsHeading = menu.querySelector('[data-panel="settings"] h3');
+performanceSettingsHeading.textContent = 'Performance & graphismes';
+performanceSettingsHeading.insertAdjacentHTML('afterend', '<p class="availability-note">Le profil règle la résolution interne, la taille des cartes d’ombre et la densité du décor. L’antialiasing du contexte reste fixe pendant la session.</p>');
+menu.querySelector('#graphics-effects').closest('.toggle-setting').insertAdjacentHTML('afterend', '<p class="availability-note" id="graphics-effects-note">Effets désactivés avec le profil Faible.</p><label class="toggle-setting"><input id="performance-fps" type="checkbox"><span>Afficher le moniteur FPS</span></label><p class="availability-note">FPS et ms/RAF mesurent la cadence d’image, pas le temps CPU ou GPU.</p>');
 app.append(menu);
 const garageDynamics = new GameVehicleDynamics();
 menu.querySelector('[data-panel="garage"] .menu-copy')?.insertAdjacentHTML('afterend', `<div class="garage-specs"><span class="menu-kicker">FICHE TECHNIQUE · PHYSIQUE ARCADE</span><div><b>${(garageDynamics.maxSpeed * 3.6).toFixed(0)} <small>km/h max.</small></b><b>${garageDynamics.acceleration.toFixed(0)} <small>m/s² · accélération</small></b><b>${garageDynamics.braking.toFixed(0)} <small>m/s² · freinage</small></b><b>${garageDynamics.turnRate.toFixed(1)} <small>rad/s · braquage</small></b></div><p>Réglages communs aux six voitures; les mécaniques de course peuvent réduire l'adhérence ou la vitesse.</p></div>`);
@@ -152,23 +156,35 @@ menu.querySelectorAll('[data-accent]').forEach((button) => button.classList.togg
 let gameSettings = readGameSettings();
 const settingsControls = {
   quality: menu.querySelector('#graphics-quality'), shadows: menu.querySelector('#graphics-shadows'), scenery: menu.querySelector('#graphics-scenery'),
-  effects: menu.querySelector('#graphics-effects'), cameraMode: menu.querySelector('#camera-default'),
+  effects: menu.querySelector('#graphics-effects'), showFps: menu.querySelector('#performance-fps'), cameraMode: menu.querySelector('#camera-default'),
   orbitSensitivity: menu.querySelector('#camera-sensitivity'), zoomSensitivity: menu.querySelector('#zoom-sensitivity'), model: menu.querySelector('#default-model'),
 };
 function syncSettingsForm() {
   gameSettings = readGameSettings();
-  for (const key of ['quality', 'shadows', 'scenery', 'effects', 'cameraMode', 'orbitSensitivity', 'zoomSensitivity']) {
+  for (const key of ['quality', 'shadows', 'scenery', 'effects', 'showFps', 'cameraMode', 'orbitSensitivity', 'zoomSensitivity']) {
     const control = settingsControls[key]; if (control) control.type === 'checkbox' ? control.checked = gameSettings[key] : control.value = gameSettings[key];
   }
+  settingsControls.effects.checked = gameSettings.effects && gameSettings.quality !== 'low';
+  settingsControls.effects.disabled = gameSettings.quality === 'low';
+  menu.querySelector('#graphics-effects-note').textContent = gameSettings.quality === 'low'
+    ? 'Les effets visuels sont désactivés en profil Faible.'
+    : 'Les effets visuels de course peuvent être activés ou désactivés.';
   settingsControls.model.value = ['A', 'B', 'C'].includes(preferences.configuration) ? preferences.configuration : 'A';
 }
 function saveVisualSettings() {
+  const previous = gameSettings;
+  const keepEffectsPreference = settingsControls.quality.value === 'low' || previous.quality === 'low';
   gameSettings = writeGameSettings({
     quality: settingsControls.quality.value, shadows: settingsControls.shadows.checked, scenery: settingsControls.scenery.value,
-    effects: settingsControls.effects.checked, cameraMode: settingsControls.cameraMode.value,
+    effects: keepEffectsPreference ? previous.effects : settingsControls.effects.checked, showFps: settingsControls.showFps.checked, cameraMode: settingsControls.cameraMode.value,
     orbitSensitivity: settingsControls.orbitSensitivity.value, zoomSensitivity: settingsControls.zoomSensitivity.value,
   });
-  showroom.applySettings();
+  settingsControls.effects.checked = gameSettings.effects && gameSettings.quality !== 'low';
+  settingsControls.effects.disabled = gameSettings.quality === 'low';
+  menu.querySelector('#graphics-effects-note').textContent = gameSettings.quality === 'low'
+    ? 'Les effets visuels sont désactivés en profil Faible.'
+    : 'Les effets visuels de course peuvent être activés ou désactivés.';
+  if (['quality', 'shadows', 'scenery', 'effects', 'showFps'].some((key) => previous[key] !== gameSettings[key])) showroom.applySettings();
 }
 syncSettingsForm();
 menu.querySelectorAll('[data-color]').forEach((button) => button.classList.toggle('selected', button.dataset.color === selectedLivery));

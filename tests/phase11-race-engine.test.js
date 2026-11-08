@@ -269,14 +269,63 @@ describe('Phase 11 race engine and starting grid', () => {
     expect(world.collisionCount).toBe(0);
   });
 
-  it('cycles through chase, trackside, cockpit and overview cameras while following a selected car', () => {
+  it('cycles through chase, hood, cockpit, rear, trackside and overview cameras while following a selected car', () => {
     const cameras = new RaceCameras(new PerspectiveCamera(), straightTrack());
-    expect(cameras.nextMode()).toBe('trackside');
+    expect(cameras.nextMode()).toBe('hood');
     expect(cameras.nextMode()).toBe('cockpit');
+    expect(cameras.nextMode()).toBe('rear');
+    expect(cameras.nextMode()).toBe('trackside');
     expect(cameras.nextMode()).toBe('overview');
     expect(cameras.nextMode()).toBe('chase');
     cameras.setTarget('car-4');
     expect(cameras.targetId).toBe('car-4');
+  });
+
+  it('frames the followed car in chase, hood, cockpit and trackside modes and eases speed FOV', () => {
+    const track = straightTrack(), camera = new PerspectiveCamera(48, 1, 0.1, 600);
+    const car = { id: 'car-4', position: new Vector3(2, 0, 5), forward: new Vector3(0, 0, -1), velocity: new Vector3() };
+    const cameras = new RaceCameras(camera, track); cameras.setTarget(car.id);
+    for (const mode of ['chase', 'hood', 'cockpit', 'rear', 'trackside']) {
+      cameras.setMode(mode);
+      for (let i = 0; i < 12; i++) cameras.update([car], 1 / 60);
+      expect(camera.position.toArray().every(Number.isFinite)).toBe(true);
+      expect(camera.position.y).toBeGreaterThan(1);
+      const view = camera.getWorldDirection(new Vector3());
+      expect(view.dot(car.forward)).toBeGreaterThan(mode === 'rear' ? -1 : mode === 'trackside' ? 0.1 : 0.8);
+      if (mode === 'rear') expect(view.dot(car.forward)).toBeLessThan(-0.8);
+    }
+    cameras.setMode('chase');
+    for (let i = 0; i < 30; i++) cameras.update([car], 1 / 60);
+    const stoppedFov = camera.fov;
+    car.velocity.set(0, 0, -58);
+    for (let i = 0; i < 60; i++) cameras.update([car], 1 / 60);
+    expect(camera.fov).toBeGreaterThan(stoppedFov);
+    cameras.effectsEnabled = false;
+    for (let i = 0; i < 240; i++) cameras.update([car], 1 / 60);
+    expect(camera.fov).toBeCloseTo(cameras.baseFov, 1);
+  });
+
+  it('restores the prior view after a temporary TV camera shot', () => {
+    const cameras = new RaceCameras(new PerspectiveCamera(), straightTrack());
+    cameras.setMode('cockpit'); cameras.setMode('tv');
+    expect(cameras.mode).toBe('tv');
+    cameras.setMode(cameras.previousMode);
+    expect(cameras.mode).toBe('cockpit');
+  });
+
+  it('keeps all race cameras above ground and centered on cars across standard and user tracks', () => {
+    const circuits = [...createGeneralizationTracks(), circuitToTrackDefinition(generateCircuit(2026, 'easy'))];
+    for (const definition of circuits) {
+      const camera = new PerspectiveCamera(48, 1, 0.1, 600);
+      const car = { id: 'followed', position: definition.waypoints[0].clone(), forward: definition.waypoints[1].clone().sub(definition.waypoints[0]).setY(0).normalize(), velocity: new Vector3(0, 0, -20), progress: 0, completedLaps: 0 };
+      const cameras = new RaceCameras(camera, definition); cameras.setTarget(car.id);
+      for (const mode of ['chase', 'hood', 'cockpit', 'rear', 'trackside', 'overview', 'tv']) {
+        cameras.setMode(mode);
+        for (let step = 0; step < 12; step++) cameras.update([car], 1 / 60);
+        expect(camera.position.toArray().every(Number.isFinite)).toBe(true);
+        expect(camera.position.y).toBeGreaterThan(0);
+      }
+    }
   });
 
   it('ends the race after a winner and configured finish delay', () => {

@@ -62,3 +62,63 @@
 .race-lab-panel>header{display:flex;align-items:center;justify-content:space-between;gap:10px}.race-lab-panel>header>div{display:grid;gap:4px}.race-lab-collapse{flex:none;padding:6px 8px;border:1px solid rgba(225,6,0,.55);background:#251416;color:#fff;font:700 7px 'DM Mono',monospace;cursor:pointer}.race-lab-panel.is-collapsed .race-lab-content{display:none}
 .race-lab-vector-toggle{display:flex;align-items:center;gap:7px;margin:8px 0;color:#f5f5f5;font:700 8px 'DM Mono',monospace}.race-lab-vector-toggle input{accent-color:#e10600}.race-lab-vector-legend{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px;margin:7px 0;color:#c6c9cf;font:7px 'DM Mono',monospace}.race-lab-vector-legend span{display:flex;align-items:center;gap:4px}.race-lab-vector-legend i{width:7px;height:7px;border-radius:50%;background:var(--vector)}
 .lab-network-canvas{display:block;width:100%;height:188px;margin:3px 0;background:rgba(4,6,9,.58);border:1px solid rgba(245,245,245,.12)}.race-lab-comparison{margin:10px 0;border-top:1px solid rgba(245,245,245,.15);padding-top:8px}.race-lab-comparison>summary{cursor:pointer;color:#ff746d;font:700 8px 'DM Mono',monospace}.race-lab-comparison>small{display:block;margin-top:5px;color:#adb2ba;font-size:8px;line-height:1.4}.race-lab-table-wrap{max-height:190px;overflow:auto;margin-top:6px}.race-lab-comparison table{width:100%;border-collapse:collapse;color:#e7e9ed;font:7px 'DM Mono',monospace}.race-lab-comparison th,.race-lab-comparison td{padding:5px 4px;border-bottom:1px solid rgba(245,245,245,.09);text-align:left;white-space:nowrap}.race-lab-comparison thead th{position:sticky;top:0;background:#17191e;color:#aeb4bc;font-size:6px}.race-lab-comparison tbody th{font-weight:700}.race-lab-comparison tbody th small,.race-lab-comparison tbody td small{display:block;margin-top:2px;color:#aeb4bc;font-size:6px;font-weight:400}.race-lab-comparison tr.is-human th{color:#ff7871}
+
+/* Modification 22: compact, bounded AI telemetry center within the existing lab panel. */
+.ai-telemetry-center{margin:10px 0;padding:8px;border:1px solid rgba(225,6,0,.42);background:rgba(8,10,13,.62)}
+.ai-telemetry-center>summary{display:flex;justify-content:space-between;gap:8px;cursor:pointer;color:#fff;font:700 9px 'DM Mono',monospace;letter-spacing:.04em}
+.ai-telemetry-center>summary b{color:#ff7770;font-size:8px;text-align:right}
+.ai-telemetry-content{padding-top:8px}
+.ai-telemetry-driver{display:grid;gap:2px;margin-bottom:8px}.ai-telemetry-driver>b{font:700 11px 'DM Mono',monospace}.ai-telemetry-driver>small{color:#b8bec8;font-size:8px}
+.ai-telemetry-metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px}
+.ai-telemetry-metrics article{min-width:0;padding:6px;border:1px solid rgba(245,245,245,.1);background:#171a20}
+.ai-telemetry-metrics article small{display:block;min-height:20px;color:#aeb5c0;font:7px/1.35 'DM Mono',monospace}
+.ai-telemetry-metrics article b{display:block;overflow-wrap:anywhere;color:#fff;font:700 10px 'DM Mono',monospace;font-variant-numeric:tabular-nums}
+.ai-telemetry-note,.ai-telemetry-force-state{display:block;margin:7px 0;color:#c0c5ce;font-size:8px;line-height:1.45}
+.ai-telemetry-controls{display:flex;gap:5px;margin:8px 0}.ai-telemetry-controls button{flex:1;min-height:30px;padding:5px;border:1px solid #4b3336;background:#241416;color:#fff;font:700 7px 'DM Mono',monospace;cursor:pointer}.ai-telemetry-controls button:hover,.ai-telemetry-controls button:focus-visible{border-color:#e10600;outline-color:#ff615a}
+.ai-chart-toggle{display:flex;align-items:center;gap:6px;margin:7px 0;color:#e5e7eb;font:8px 'DM Mono',monospace}.ai-chart-toggle input{accent-color:#e10600}
+.ai-telemetry-chart{height:78px;overflow:hidden;border:1px solid rgba(245,245,245,.1);background:rgba(4,6,9,.58)}.ai-telemetry-chart canvas{display:block;width:100%;height:74px}.ai-telemetry-chart.is-disabled{display:none}
+.ai-telemetry-force-summary{display:grid;gap:3px;margin:6px 0}.ai-telemetry-force-summary>span{display:grid;grid-template-columns:7px 1fr;gap:4px;align-items:center;color:#cbd0d8;font:7px/1.35 'DM Mono',monospace;overflow-wrap:anywhere}.ai-telemetry-force-summary i{width:6px;height:6px;border-radius:50%;background:#aeb5c0}.ai-force-pathFollowing{background:#f5f5f5!important}.ai-force-obstacleAvoidance{background:#ffad42!important}.ai-force-separation{background:#57c7ff!important}.ai-force-pursuit{background:#e10600!important}
+.ai-telemetry-center[data-chart-state=paused] .ai-telemetry-driver:after{content:'HISTORIQUE EN PAUSE · SIMULATION ACTIVE';color:#ffb15b;font:7px 'DM Mono',monospace}
+@media(max-width:760px){.ai-telemetry-center{padding:6px}.ai-telemetry-metrics article{padding:5px}.ai-telemetry-chart{height:72px}.ai-telemetry-chart canvas{height:68px}}
+
+/* Modification 20: readable race HUD with no changes to race telemetry sources. */
+.race-header-actions>button{min-height:38px;padding:8px 12px;font-size:10px}
+.race-state .race-metric{display:grid;gap:3px;min-width:max-content}
+.race-state .race-metric>span{color:#aeb8c4;font:700 9px 'DM Mono',monospace;letter-spacing:.05em}
+.race-state .race-metric>b{color:#fff;font:800 13px 'DM Mono',monospace;font-variant-numeric:tabular-nums}
+.race-state #race-player-position{color:#ff716a}
+.race-telemetry>small,.race-metric>span,.race-box-title>span,.race-box-title>b{font-size:10px}
+.race-telemetry .race-metric>b,.race-telemetry .race-driver{font-size:12px}
+.race-leaderboard li{min-height:28px;font-size:10px}
+.race-leaderboard li>small{font-size:9px}
+.race-map-legend{font-size:9px}
+.race-controls{gap:5px;max-width:calc(100vw - 490px);padding:6px}
+.race-controls button{min-height:34px;padding:0 9px;font-size:9px}
+.race-controls button kbd{font-size:9px}
+.race-key-guide{font-size:9px}
+@media(min-width:1200px){
+  .race-header{height:72px;padding-inline:24px}
+  .race-telemetry{top:88px;left:24px;width:198px;padding:14px 16px}
+  .race-leaderboard{top:88px;right:24px;width:220px;padding:12px}
+  .race-minimap{right:24px;bottom:82px;width:232px}
+  .race-controls{left:24px;bottom:18px}
+}
+@media(max-height:800px) and (min-width:761px){
+  .race-telemetry{padding-block:9px}
+  .race-telemetry>strong{font-size:42px}
+  .race-telemetry .race-metric{padding-top:5px;padding-bottom:5px}
+  .race-minimap{bottom:70px;width:196px}
+  .race-minimap canvas{max-height:122px}
+  .race-controls{bottom:10px}
+}
+@media(max-width:1100px) and (min-width:761px){
+  .race-controls{max-width:calc(100vw - 430px);flex-wrap:wrap}
+  .race-controls button{font-size:8px}
+  .race-telemetry{width:164px}
+  .race-leaderboard{width:190px}
+  .race-minimap{width:180px}
+}
+@media(max-width:760px){
+  .race-state .race-metric>span{font-size:7px}
+  .race-state .race-metric>b{font-size:10px}
+}

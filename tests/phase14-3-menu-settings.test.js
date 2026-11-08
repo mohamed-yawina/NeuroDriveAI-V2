@@ -133,6 +133,12 @@ describe('Phase 14.3 showroom and real settings', () => {
     expect(readGameSettings(storage).cameraMode).toBe('chase');
   });
 
+  it('accepts the new hood camera as a persisted race-camera preference', () => {
+    const storage = memoryStorage();
+    expect(writeGameSettings({ cameraMode: 'hood' }, storage).cameraMode).toBe('hood');
+    expect(readGameSettings(storage).cameraMode).toBe('hood');
+  });
+
   it('keeps the same physical definitions and renders all three built-in circuits', () => {
     for (const definition of createGeneralizationTracks()) {
       const track = new Track(new Scene(), definition);

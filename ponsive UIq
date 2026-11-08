@@ -1,0 +1,12 @@
+ docs/modification-19-1-career-ui-pro.md        |  71 [32m++++++++++++++[m
+ docs/modification-19-career-mode-ultimate.md   |  59 [32m++++++++++++[m
+ src/game/CareerPanel.js                        | 128 [32m++++++++++++++++++[m[31m-------[m
+ src/game/CareerStore.js                        | 107 [32m++++++++++++++++++[m[31m---[m
+ src/game/RaceSession.js                        |   9 [32m+[m[31m-[m
+ src/game/career-panel.css                      |  63 [32m+++++++++++[m[31m-[m
+ src/main.js                                    |  24 [32m++++[m[31m-[m
+ tests/career-responsive-layout.test.js         |  37 [32m+++++++[m
+ tests/race-ranking-session-integration.test.js |  11 [32m++[m[31m-[m
+ tests/race-ranking-validation.test.js          |   2 [32m+[m[31m-[m
+ tests/ultimate-career-store.test.js            |  46 [32m+++++++[m[31m--[m
+ 11 files changed, 492 insertions(+), 65 deletions(-)

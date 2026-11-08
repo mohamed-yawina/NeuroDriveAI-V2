@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { Track } from './Track.js';
 import { FormulaCar } from './FormulaCar.js';
 import { getRenderProfile } from '../settings/GameSettings.js';
+import { FrameRateMonitor } from './FrameRateMonitor.js';
 
 export function releaseSceneResources(root) {
   const geometries = new Set();
@@ -21,6 +22,10 @@ export function releaseSceneResources(root) {
   materials.forEach((material) => material.dispose());
 }
 
+export function getPerformanceOverlayContainer(container) {
+  return container?.parentElement?.querySelector?.('.race-ui') ?? container;
+}
+
 export class SceneManager {
   constructor(container, trackDefinition) {
     this.scene = new THREE.Scene();
@@ -36,11 +41,13 @@ export class SceneManager {
       this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
       this.renderer.toneMappingExposure = 1.08;
       container.appendChild(this.renderer.domElement);
+      this.performanceMonitor = new FrameRateMonitor(getPerformanceOverlayContainer(container), { enabled: this.renderProfile.showFps, profile: this.renderProfile.quality });
       this.addEnvironment();
       this.track = new Track(this.scene, trackDefinition);
       this.car = new FormulaCar(this.scene);
       this.resizeObserver = new ResizeObserver(() => this.resize());
       this.resizeObserver.observe(container);
+      this.windowResize = () => this.resize(); window.addEventListener('resize', this.windowResize);
       this.resize();
     } catch (error) {
       this.dispose();
@@ -151,17 +158,21 @@ export class SceneManager {
     const element = this.renderer.domElement.parentElement;
     const width = element.clientWidth, height = element.clientHeight;
     if (!width || !height) return;
+    const pixelRatio = Math.min(window.devicePixelRatio || 1, this.renderProfile.pixelRatio);
+    if (this.renderer.getPixelRatio && Math.abs(this.renderer.getPixelRatio() - pixelRatio) > 1e-3) this.renderer.setPixelRatio(pixelRatio);
     this.camera.aspect = width / height;
     this.camera.updateProjectionMatrix();
     this.renderer.setSize(width, height);
   }
 
-  render() { this.renderer.render(this.scene, this.camera); }
+  render(timestamp = performance.now()) { this.performanceMonitor?.update(timestamp); this.renderer.render(this.scene, this.camera); }
 
   dispose() {
     if (this.disposed) return;
     this.disposed = true;
     this.resizeObserver?.disconnect();
+    if (this.windowResize) window.removeEventListener('resize', this.windowResize);
+    this.performanceMonitor?.dispose(); this.performanceMonitor = null;
     if (this.scene) { releaseSceneResources(this.scene); this.scene.clear(); }
     this.renderer?.renderLists?.dispose();
     this.renderer?.dispose();

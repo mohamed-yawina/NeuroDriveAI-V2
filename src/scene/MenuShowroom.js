@@ -3,6 +3,7 @@ import { FormulaCar } from './FormulaCar.js';
 import { Track } from './Track.js';
 import { releaseSceneResources } from './SceneManager.js';
 import { getRenderProfile, readGameSettings } from '../settings/GameSettings.js';
+import { FrameRateMonitor } from './FrameRateMonitor.js';
 
 const VIEW_ANGLES = Object.freeze({ threeQuarter: Math.PI - 0.52, front: Math.PI, side: Math.PI / 2, rear: 0, top: 0.52 });
 // Keep the paddock wall beyond the furthest camera position allowed by the
@@ -37,6 +38,7 @@ export class MenuShowroom {
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping; this.renderer.toneMappingExposure = 1.15;
     this.renderer.domElement.className = 'showroom-canvas'; this.renderer.domElement.setAttribute('aria-label', 'Monoplace F1 3D, faites glisser pour la tourner et utilisez la molette pour zoomer');
     container.append(this.renderer.domElement);
+    this.performanceMonitor = new FrameRateMonitor(container, { enabled: renderProfile.showFps, profile: renderProfile.quality });
     this.scene.add(new THREE.HemisphereLight(0xe9efff, 0x222329, 2.25));
     const key = new THREE.SpotLight(0xffece8, 100, 45, Math.PI / 4, 0.45); key.position.set(-8, 13, 7); key.castShadow = true; this.keyLight = key; this.scene.add(key);
     const rim = new THREE.DirectionalLight(0xe10600, 4); rim.position.set(8, 6, -6); this.scene.add(rim);
@@ -55,7 +57,8 @@ export class MenuShowroom {
     this.pointerUp = () => { this.dragging = false; };
     this.wheel = (event) => { const factor = readGameSettings().zoomSensitivity; if (this.view === 'circuit') this.circuitSpan = THREE.MathUtils.clamp(this.circuitSpan + Math.sign(event.deltaY) * 2 * factor, 30, 180); else this.distance = adjustShowroomZoom(this.distance, event.deltaY, factor); };
     this.renderer.domElement.addEventListener('pointerdown', this.pointerDown); window.addEventListener('pointermove', this.pointerMove); window.addEventListener('pointerup', this.pointerUp); this.renderer.domElement.addEventListener('wheel', this.wheel, { passive: true });
-    this.resizeObserver = new ResizeObserver(() => this.resize()); this.resizeObserver.observe(container); this.resize();
+    this.resizeObserver = new ResizeObserver(() => this.resize()); this.resizeObserver.observe(container);
+    this.windowResize = () => this.resize(); window.addEventListener('resize', this.windowResize); this.resize();
     this.previous = performance.now(); this.running = true; this.frameId = requestAnimationFrame((now) => this.animate(now));
   }
   addPaddockBackdrop() {
@@ -93,6 +96,7 @@ export class MenuShowroom {
   }
   setCircuit(definition) {
     if (this.circuitGroup) { this.scene.remove(this.circuitGroup); releaseSceneResources(this.circuitGroup); this.circuitGroup = null; }
+    this.circuitDefinition = definition;
     const circuit = new Track(this.scene, definition); this.circuitGroup = circuit.group; this.car.root.visible = false;
     const xs = definition.waypoints.map((point) => point.x), zs = definition.waypoints.map((point) => point.z);
     this.focus.set((Math.min(...xs) + Math.max(...xs)) / 2, 0, (Math.min(...zs) + Math.max(...zs)) / 2);
@@ -103,18 +107,22 @@ export class MenuShowroom {
     this.camera.fov = 48; this.camera.updateProjectionMatrix();
     this.view = 'circuit';
   }
-  setVehicle() { if (this.circuitGroup) { this.scene.remove(this.circuitGroup); releaseSceneResources(this.circuitGroup); this.circuitGroup = null; } this.scene.fog = this.originalFog ?? this.scene.fog; this.car.root.visible = true; this.focus.set(window.innerWidth < 900 ? 2.5 : 0, 0.7, 0); this.camera.fov = this.originalFov; this.camera.updateProjectionMatrix(); this.view = 'threeQuarter'; this.targetRotation = Math.PI - 0.52; this.distance = 16; }
+  setVehicle() { if (this.circuitGroup) { this.scene.remove(this.circuitGroup); releaseSceneResources(this.circuitGroup); this.circuitGroup = null; } this.circuitDefinition = null; this.scene.fog = this.originalFog ?? this.scene.fog; this.car.root.visible = true; this.focus.set(window.innerWidth < 900 ? 2.5 : 0, 0.7, 0); this.camera.fov = this.originalFov; this.camera.updateProjectionMatrix(); this.view = 'threeQuarter'; this.targetRotation = Math.PI - 0.52; this.distance = 16; }
   setView(view) { const angle = getShowroomViewAngle(view); if (Number.isFinite(angle)) { this.setVehicle(); this.targetRotation = angle; this.view = view; } }
   resetCamera() { this.setView('threeQuarter'); }
   applySettings() {
     const profile = getRenderProfile();
+    this.performanceMonitor?.setEnabled(profile.showFps); this.performanceMonitor?.setProfile(profile.quality);
     this.renderer.setPixelRatio(Math.min(devicePixelRatio || 1, profile.pixelRatio));
     this.renderer.shadowMap.enabled = profile.shadowsEnabled;
     this.keyLight.castShadow = profile.shadowsEnabled;
+    this.keyLight.shadow.map?.dispose?.(); this.keyLight.shadow.map = null;
     this.keyLight.shadow.mapSize.set(profile.shadowMapSize, profile.shadowMapSize);
+    if (this.circuitGroup && this.circuitDefinition) this.setCircuit(this.circuitDefinition);
+    this.resize();
     return profile;
   }
-  resize() { const { clientWidth: width, clientHeight: height } = this.container; if (!width || !height) return; if (!this.circuitGroup) this.focus.x = width < 900 ? 2.5 : 0; this.camera.aspect = width / height; this.camera.updateProjectionMatrix(); this.renderer.setSize(width, height); }
+  resize() { const { clientWidth: width, clientHeight: height } = this.container; if (!width || !height) return; const profile = getRenderProfile(); const ratio = Math.min(devicePixelRatio || 1, profile.pixelRatio); if (this.renderer.getPixelRatio && Math.abs(this.renderer.getPixelRatio() - ratio) > 1e-3) this.renderer.setPixelRatio(ratio); if (!this.circuitGroup) this.focus.x = width < 900 ? 2.5 : 0; this.camera.aspect = width / height; this.camera.updateProjectionMatrix(); this.renderer.setSize(width, height); }
   setActive(active) {
     if (this.disposed || this.running === Boolean(active)) return;
     this.running = Boolean(active);
@@ -131,11 +139,11 @@ export class MenuShowroom {
       this.camera.position.copy(getShowroomCameraPosition(this.view, this.rotation, Math.min(this.distance, SHOWROOM_MAX_CAMERA_DISTANCE), this.focus));
       this.camera.lookAt(this.focus);
     }
-    this.renderer.render(this.scene, this.camera);
+    this.performanceMonitor?.update(now); this.renderer.render(this.scene, this.camera);
   }
   dispose() {
-    if (this.disposed) return; this.disposed = true; cancelAnimationFrame(this.frameId); this.resizeObserver.disconnect();
-    this.renderer.domElement.removeEventListener('pointerdown', this.pointerDown); this.renderer.domElement.removeEventListener('wheel', this.wheel); window.removeEventListener('pointermove', this.pointerMove); window.removeEventListener('pointerup', this.pointerUp);
+    if (this.disposed) return; this.disposed = true; cancelAnimationFrame(this.frameId); this.resizeObserver.disconnect(); this.performanceMonitor?.dispose(); this.performanceMonitor = null;
+    this.renderer.domElement.removeEventListener('pointerdown', this.pointerDown); this.renderer.domElement.removeEventListener('wheel', this.wheel); window.removeEventListener('pointermove', this.pointerMove); window.removeEventListener('pointerup', this.pointerUp); window.removeEventListener('resize', this.windowResize);
     releaseSceneResources(this.scene); this.scene.clear(); this.renderer.renderLists?.dispose(); this.renderer.dispose(); this.renderer.domElement.remove();
   }
 }

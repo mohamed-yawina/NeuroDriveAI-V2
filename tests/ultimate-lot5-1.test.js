@@ -144,10 +144,10 @@ describe('LOT 5.1 replay, tutorial, professor demo and conformance', () => {
     expect(pauseTutorial.observe('pause-cycle', { mode: 'race', paused: false }).advanced).toBe(true);
   });
 
-  it('runs a controllable ten-step professor timeline totaling three minutes inside integrated F1 labs', () => {
-    expect(PROFESSOR_DEMO_STEPS).toHaveLength(10);
+  it('runs a controllable eleven-step professor timeline totaling three minutes inside integrated F1 labs', () => {
+    expect(PROFESSOR_DEMO_STEPS).toHaveLength(11);
     expect(PROFESSOR_DEMO_STEPS.reduce((sum, step) => sum + step.seconds, 0)).toBe(180);
-    expect(PROFESSOR_DEMO_STEPS.map((step) => step.id)).toEqual(['intro', 'path', 'obstacle', 'separation', 'combined', 'architecture', 'decisions', 'comparison', 'limits', 'conclusion']);
+    expect(PROFESSOR_DEMO_STEPS.map((step) => step.id)).toEqual(['intro', 'path', 'obstacle', 'separation', 'combined', 'ai-telemetry', 'architecture', 'decisions', 'comparison', 'limits', 'conclusion']);
     expect(PROFESSOR_DEMO_STEPS.every((step) => !['academy', 'academy-combined', 'ai-lab', 'race-professor'].includes(step.mode))).toBe(true);
     const timeline = new ProfessorDemoTimeline();
     expect(timeline.tick(5)).toBe(false);

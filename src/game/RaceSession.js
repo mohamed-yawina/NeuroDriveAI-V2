@@ -10,9 +10,10 @@ import { RaceCameras } from './RaceCameras.js';
 import { createRosterRaceWorld } from './createRosterRaceWorld.js';
 import { audioManager } from './AudioManager.js';
 import { hapticsManager } from './HapticsManager.js';
-import { readGameSettings } from '../settings/GameSettings.js';
+import { getRenderProfile, readGameSettings } from '../settings/GameSettings.js';
 import { getRaceCoachSnapshot, renderRaceForceVectors, formatRaceForce } from './RaceCoach.js';
 import { RaceLabVisuals, drawNeuralNetwork } from './RaceLabVisuals.js';
+import { AITelemetryCenter, collectAITelemetry } from './AITelemetryCenter.js';
 import './race-session.css';
 import { RaceVisualState } from './RaceVisualState.js';
 import { RaceParticles } from './RaceParticles.js';
@@ -26,7 +27,7 @@ const FIXED_STEP = 1 / 60;
 const MAX_STEPS_PER_FRAME = 8;
 export const NEURAL_ACTIVATION_LAYER_LABELS = Object.freeze(['ENTRÉES', 'COUCHE CACHÉE 1', 'COUCHE CACHÉE 2', 'SORTIES']);
 const TRACK_NAMES = { original: 'CIRCUIT AZUR', technical: 'CIRCUIT TECHNIQUE', 'fast-oval': 'OVALE RAPIDE' };
-const CAMERA_NAMES = { chase: 'POURSUITE', trackside: 'BORD DE PISTE', cockpit: 'COCKPIT', overview: 'AÃ‰RIENNE' };
+const CAMERA_NAMES = { chase: 'POURSUITE', hood: 'CAPOT', trackside: 'BORD DE PISTE', cockpit: 'COCKPIT', rear: 'ARRIÈRE · B', overview: 'AÉRIENNE' };
 CAMERA_NAMES.tv = 'CAMÉRA TV'; CAMERA_NAMES.photo = 'PHOTO';
 const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (character) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[character]);
 const formatTime = (seconds) => {
@@ -78,6 +79,8 @@ export class RaceSession {
     this.driverNumber = Number.isInteger(driverProfile.preferences?.driverNumber) && driverProfile.preferences.driverNumber >= 0 && driverProfile.preferences.driverNumber <= 99 ? driverProfile.preferences.driverNumber : 7;
     this.replayRecorder = new ReplayRecorder({ maxFrames: this.careerStore.maxReplayFrames });
     this.gameSettings = readGameSettings();
+    this.renderProfile = getRenderProfile(this.gameSettings);
+    this.gameSettings.effects = this.renderProfile.effectsEnabled;
     this.returnLabel = returnLabel;
     this.tutorialGuide = tutorial ? (tutorial instanceof RaceTutorial ? tutorial : new RaceTutorial()) : null;
     this.disposed = false;
@@ -123,6 +126,8 @@ export class RaceSession {
       })));
       this.cameras = new RaceCameras(this.scene.camera, this.track);
       this.cameras.mode = this.gameSettings.cameraMode;
+      this.cameras.effectsEnabled = this.gameSettings.effects;
+      this.ui.querySelector('#race-camera-label').textContent = CAMERA_NAMES[this.cameras.mode] ?? 'POURSUITE';
       this.cameras.setTarget(this.world.cars[0].id);
       this.updateCarPicker();
       this.initializeCoachPanel();
@@ -156,6 +161,7 @@ export class RaceSession {
       this.frameId = requestAnimationFrame((now) => this.animate(now));
     } catch (error) {
       this.listeners.abort();
+      this.aiTelemetryCenter?.dispose(); this.aiTelemetryCenter = null;
       try { this.particles?.dispose(); } catch (cleanupError) { console.error('[NeuroDrive F1] Particle cleanup failed', cleanupError); }
       try { this.scene?.dispose(); } catch (cleanupError) { console.error('[NeuroDrive F1] Scene cleanup failed', cleanupError); }
       this.ui?.remove();
@@ -206,10 +212,12 @@ export class RaceSession {
     actions.append(hudButton, mechanicsButton);
     header.append(actions);
     const lap = this.ui.querySelector('#race-lap').closest('.race-metric');
-    state.append(lap);
     const telemetry = this.ui.querySelector('.race-telemetry');
     const positionMetric = document.createElement('div'); positionMetric.className = 'race-metric'; positionMetric.innerHTML = '<span>POSITION EN COURSE</span><b id="race-player-position">— / 6</b>';
-    telemetry.insertBefore(positionMetric, telemetry.querySelector('.race-metric'));
+    state.append(lap, positionMetric);
+    const currentLapMetric = document.createElement('div'); currentLapMetric.className = 'race-metric';
+    currentLapMetric.innerHTML = '<span>TOUR EN COURS</span><b id="race-current-lap-time">00:00.00</b>';
+    telemetry.insertBefore(currentLapMetric, telemetry.querySelector('.race-metric'));
     const driver = telemetry.querySelector('.race-driver');
     driver.insertAdjacentHTML('beforebegin', '<div class="race-metric"><span>RAPPORT</span><b id="race-gear-compact">1</b></div><div class="race-metric"><span>RPM</span><b id="race-rpm-compact">3000</b></div>');
     const advanced = this.ui.querySelector('.race-advanced');
@@ -221,7 +229,7 @@ export class RaceSession {
     systemReadout.innerHTML = '<span>DRS <b id="race-drs-compact">FERMÉ</b></span><span>ERS <b id="race-ers-compact">100%</b></span><span id="race-brake-indicator">FREIN</span>';
     const help = document.createElement('details');
     help.className = 'race-command-help';
-    help.innerHTML = '<summary>COMMANDES</summary><p><kbd>↑</kbd>/<kbd>W</kbd> accélérer · <kbd>↓</kbd>/<kbd>S</kbd> freiner · <kbd>←</kbd>/<kbd>A</kbd> et <kbd>→</kbd>/<kbd>D</kbd> tourner · <kbd>E</kbd>/<kbd>Q</kbd> rapports manuels · <kbd>F</kbd> DRS · <kbd>V</kbd> ERS · <kbd>Espace</kbd> pause · <kbd>C</kbd> caméra · <kbd>R</kbd> recommencer</p>';
+    help.innerHTML = '<summary>COMMANDES</summary><p><kbd>↑</kbd>/<kbd>W</kbd> accélérer · <kbd>↓</kbd>/<kbd>S</kbd> freiner · <kbd>←</kbd>/<kbd>A</kbd> et <kbd>→</kbd>/<kbd>D</kbd> tourner · <kbd>E</kbd>/<kbd>Q</kbd> rapports manuels · <kbd>F</kbd> DRS · <kbd>V</kbd> ERS · <kbd>Espace</kbd> pause · <kbd>C</kbd> caméra · <kbd>B</kbd> regarder derrière · <kbd>R</kbd> recommencer</p>';
     footer.append(systemReadout, help);
     const map = this.ui.querySelector('.race-minimap');
     map.insertAdjacentHTML('beforeend', '<div class="race-map-legend"><span><i class="player"></i>VOUS</span><span><i class="opponent"></i>IA</span><button type="button" data-action="map-size" aria-label="Agrandir la mini-carte">AGRANDIR</button></div>');
@@ -235,6 +243,15 @@ export class RaceSession {
     this.ui.insertAdjacentHTML('beforeend', `<aside class="race-lab-panel" id="integrated-lab-panel" aria-label="Panneau du laboratoire intégré">
       <header><small>NEURODRIVE F1 · LABORATOIRE</small><b>${neural ? 'NEURAL LAB' : 'STEERING LAB'}</b></header>
       <label class="race-lab-field">VOITURE OBSERVÉE<select id="lab-follow-car"></select></label>
+      <details class="ai-telemetry-center" open><summary><span>AI TELEMETRY CENTER</span><b id="ai-telemetry-status">EN ATTENTE</b></summary><div class="ai-telemetry-content">
+        <div class="ai-telemetry-driver"><b id="ai-telemetry-driver">—</b><small id="ai-telemetry-controller">—</small><small id="ai-telemetry-model">—</small></div>
+        <div class="ai-telemetry-metrics"><article><small>VITESSE · RÉELLE</small><b id="ai-telemetry-speed">—</b></article><article><small>DIRECTION</small><b id="ai-telemetry-direction">—</b></article><article><small>ACCÉLÉRATION · MESURÉE</small><b id="ai-telemetry-acceleration">—</b></article><article><small>COMMANDE ACCÉLÉRATION</small><b id="ai-telemetry-throttle">—</b></article><article><small>COMMANDE FREINAGE</small><b id="ai-telemetry-brake">—</b></article><article><small>TOURS</small><b id="ai-telemetry-laps">—</b></article><article><small>PROGRESSION VALIDÉE</small><b id="ai-telemetry-progress">—</b></article></div>
+        <small id="ai-telemetry-unit-note" class="ai-telemetry-note">Les unités et l’origine des commandes dépendent du contrôleur observé.</small>
+        <div class="ai-telemetry-controls"><button type="button" data-ai-telemetry="pause" aria-pressed="false">PAUSE GRAPHIQUES</button><button type="button" data-ai-telemetry="reset">RÉINITIALISER</button></div>
+        <label class="ai-chart-toggle"><input type="checkbox" data-ai-chart-toggle="speed" checked> Vitesse</label><section class="ai-telemetry-chart"><canvas id="ai-telemetry-speed-chart" aria-label="Vitesse réelle en fonction du temps"></canvas></section>
+        <label class="ai-chart-toggle"><input type="checkbox" data-ai-chart-toggle="controls" checked> Direction et commandes longitudinales</label><section class="ai-telemetry-chart"><canvas id="ai-telemetry-controls-chart" aria-label="Direction, accélération et freinage en fonction du temps"></canvas></section>
+        ${neural ? '<p id="ai-telemetry-force-state" class="ai-telemetry-force-state">Forces Steering indisponibles sur Neural AI.</p>' : '<label class="ai-chart-toggle"><input type="checkbox" data-ai-chart-toggle="forces" checked> Forces Steering</label><section class="ai-telemetry-chart"><canvas id="ai-telemetry-forces-chart" aria-label="Contributions Steering pondérées en fonction du temps"></canvas></section><p id="ai-telemetry-force-state" class="ai-telemetry-force-state">Forces calculées par le contrôleur sélectionné.</p><div id="ai-telemetry-force-summary" class="ai-telemetry-force-summary"></div>'}
+      </div></details>
       <p class="race-lab-track" id="lab-track-class">${escapeHtml(activeTrackLabel)}</p>
       ${neural ? `<p class="race-lab-caution">${escapeHtml(this.laboratory.methodNote ?? 'Évaluation arcade distincte des résultats scientifiques historiques.')}</p><ul class="race-lab-provenance">${provenance}</ul>
         <div class="race-lab-readout"><span>MODÈLE DE LA VOITURE SUIVIE</span><b id="lab-neural-model">—</b><span>ARCHITECTURE</span><b id="lab-architecture">—</b><span>RÉSEAU EN DIRECT · POIDS ET ACTIVATIONS DU MODÈLE</span><canvas class="lab-network-canvas" id="lab-network-canvas" role="img" aria-label="Réseau neuronal et activations réelles"></canvas><span>VITESSE / ÉCART</span><b id="lab-neural-speed">—</b><span>PROGRESSION · DISTANCE</span><b id="lab-neural-distance">—</b><span>INCIDENTS</span><b id="lab-neural-incidents">—</b><span>ENTRÉES MESURÉES</span><div id="lab-neural-inputs"></div><span>SORTIES RÉELLES</span><b id="lab-neural-outputs">En attente de l’inférence</b><details><summary>Activations numériques</summary><div id="lab-neural-activations"></div></details></div>`
@@ -248,6 +265,7 @@ export class RaceSession {
     </aside>`);
     const labPanel = this.ui.querySelector('#integrated-lab-panel');
     const labHeader = labPanel.querySelector('header');
+    this.aiTelemetryCenter = new AITelemetryCenter(labPanel, { signal: this.listeners.signal });
     const labContent = document.createElement('div');
     labContent.className = 'race-lab-content';
     labContent.id = 'integrated-lab-content';
@@ -289,6 +307,8 @@ export class RaceSession {
     const id = this.ui.querySelector('#lab-follow-car')?.value ?? this.cameras?.targetId;
     const car = this.world.cars.find((candidate) => candidate.id === id) ?? this.world.cars[0];
     if (!car) return;
+    const assignment = this.driverAssignments?.find((entry) => entry.id === car.driverId);
+    this.aiTelemetryCenter?.update(collectAITelemetry(car, this.world, { modelName: assignment?.name ?? null }));
     const telemetry = this.world.getDriverTelemetry(car);
     const pathProjection = this.world.timing.path.project(car.position);
     if (this.laboratory.type === 'steering') {
@@ -311,7 +331,6 @@ export class RaceSession {
     const controller = car.controller;
     const adapter = controller?.network ? controller : null;
     const network = adapter?.network;
-    const assignment = this.driverAssignments?.find((entry) => entry.id === car.driverId);
     const commands = adapter?.controller?.lastCommands;
     const observation = adapter?.lastObservation;
     this.ui.querySelector('#lab-neural-model').textContent = assignment?.name ?? (network ? 'Modèle sans provenance de roster publiée' : 'Steering AI · aucun réseau neuronal sur cette voiture');
@@ -323,7 +342,10 @@ export class RaceSession {
     const labels = ['capteur −60°', 'capteur −30°', 'capteur 0°', 'capteur +30°', 'capteur +60°', 'vitesse normalisée', 'erreur cap / π'];
     const input = observation?.map((value, index) => `<span>${labels[index]} <b>${Number(value).toFixed(3)}</b></span>`).join('') ?? 'Entrées non publiées par ce contrôleur';
     this.ui.querySelector('#lab-neural-inputs').innerHTML = input;
-    this.ui.querySelector('#lab-neural-outputs').textContent = commands ? `direction ${commands.steering.toFixed(3)} · commande longitudinale ${commands.throttleBrake.toFixed(3)} · force ${this.world.lastForces.get(car.id)?.length().toFixed(2) ?? '0.00'} unités arcade` : 'Contrôleur Steering sélectionné · sorties réseau non applicables';
+    const appliedMagnitude = this.world.lastForces.get(car.id)?.length();
+    this.ui.querySelector('#lab-neural-outputs').textContent = commands && observation
+      ? `Sorties brutes : direction ${commands.steering.toFixed(3)} · longitudinale ${commands.throttleBrake.toFixed(3)} | force arcade appliquée : ${Number.isFinite(appliedMagnitude) ? appliedMagnitude.toFixed(2) : '—'} unités arcade`
+      : network ? 'Inférence en attente pour cette voiture' : 'Steering AI sélectionnée · sorties réseau non applicables';
     const layers = adapter?.controller?.lastActivations ?? [];
     this.ui.querySelector('#lab-neural-activations').innerHTML = layers.length ? layers.map((values, index) => `<div class="lab-activation-layer"><small>${NEURAL_ACTIVATION_LAYER_LABELS[index] ?? `COUCHE ${index}`}</small><div>${values.map((value) => `<i title="${Number(value).toFixed(4)}" style="--activation:${Math.min(1, Math.abs(Number(value)))}"></i>`).join('')}</div></div>`).join('') : '<small>Pas d’activations réseau pour ce pilote.</small>';
     if (!this.ui.querySelector('#integrated-lab-panel').classList.contains('is-collapsed')) {
@@ -493,7 +515,7 @@ export class RaceSession {
         const ai = this.world.cars.find((car) => !car.isPlayer && car.controller?.getBehaviorConfiguration);
         if (ai) this.syncLabCarSelection(ai.id);
       }
-      else if (action === 'camera-tv') { this.cameras.setMode(this.cameras.mode === 'tv' ? 'chase' : 'tv'); this.ui.querySelector('#race-camera-label').textContent = CAMERA_NAMES[this.cameras.mode]; }
+      else if (action === 'camera-tv') { this.cameras.setMode(this.cameras.mode === 'tv' ? this.cameras.previousMode ?? 'chase' : 'tv'); this.ui.querySelector('#race-camera-label').textContent = CAMERA_NAMES[this.cameras.mode] ?? this.cameras.mode.toUpperCase(); }
       else if (action === 'coach') this.toggleCoach(true);
       else if (action === 'coach-close') this.toggleCoach(false);
       else if (action === 'shift-up') this.shiftPlayerGear(1);
@@ -537,8 +559,8 @@ export class RaceSession {
     window.addEventListener('pointerup', () => { this.photoDragging = false; }, options);
     canvas.addEventListener('wheel', (event) => { if (this.cameras.mode === 'photo') { event.preventDefault(); this.cameras.zoomPhoto(event.deltaY); } }, { ...options, passive: false });
     window.addEventListener('keydown', (event) => this.onKeyDown(event), options);
-    window.addEventListener('keyup', (event) => this.keys.delete(event.code), options);
-    bindRaceFocusSafety(window, document, this.keys, () => { if (!this.paused) this.pause(true); }, options);
+    window.addEventListener('keyup', (event) => { this.keys.delete(event.code); if (event.code === 'KeyB') this.endRearView(); }, options);
+    bindRaceFocusSafety(window, document, this.keys, () => { this.endRearView(); if (!this.paused) this.pause(true); }, options);
   }
 
   onKeyDown(event) {
@@ -550,6 +572,7 @@ export class RaceSession {
     if (event.code === 'KeyR') { if (!event.repeat) this.restart(); return; }
     if (event.code === 'KeyC') { if (!event.repeat) this.cycleCamera(); return; }
     if (this.paused) return;
+    if (event.code === 'KeyB') { event.preventDefault(); this.beginRearView(); return; }
     if (event.code === 'KeyE') { if (!event.repeat) this.shiftPlayerGear(1); return; }
     if (event.code === 'KeyQ') { if (!event.repeat) this.shiftPlayerGear(-1); return; }
     if (event.code === 'KeyF') { if (!event.repeat) this.ui.querySelector('[data-action="drs"]').click(); return; }
@@ -640,6 +663,7 @@ export class RaceSession {
 
   pause(value) {
     this.paused = Boolean(value);
+    if (this.paused) this.endRearView();
     this.observeTutorial('pause-cycle', { paused: this.paused });
     this.world.paused = this.paused;
     this.keys.clear();
@@ -654,6 +678,7 @@ export class RaceSession {
     this.lastTutorialPosition = null; this.lastTutorialLaps = 0;
     this.finalStandings = null; this.displayedRanks.clear(); this.raceDiagnostics.reset();
     this.cameras.mode = 'chase'; this.ui.querySelector('#race-camera-label').textContent = 'POURSUITE';
+    this.rearViewPreviousMode = null;
     this.world.reset(); this.applyAiDifficulty();
     this.accumulator = 0;
     this.keys.clear();
@@ -669,6 +694,22 @@ export class RaceSession {
     const mode = this.cameras.nextMode();
     this.observeTutorial('camera', { changed: mode !== previousMode, from: previousMode, to: mode });
     this.ui.querySelector('#race-camera-label').textContent = CAMERA_NAMES[mode] ?? mode.toUpperCase();
+  }
+
+  beginRearView() {
+    if (!this.cameras || this.cameras.mode === 'rear') return;
+    this.rearViewPreviousMode = this.cameras.mode;
+    this.cameras.setMode('rear');
+    this.ui.querySelector('#race-camera-label').textContent = CAMERA_NAMES.rear;
+  }
+
+  endRearView() {
+    if (!this.cameras || !this.rearViewPreviousMode) return;
+    const previousMode = this.rearViewPreviousMode;
+    this.rearViewPreviousMode = null;
+    this.cameras.setMode(previousMode);
+    const label = this.ui?.querySelector('#race-camera-label');
+    if (label) label.textContent = CAMERA_NAMES[previousMode] ?? previousMode.toUpperCase();
   }
 
   cycleHudMode() {
@@ -770,7 +811,7 @@ export class RaceSession {
       });
     }
     this.updateHud(frameSeconds);
-    this.scene.render();
+    this.scene.render(now);
   }
 
   updateHud(dt) {
@@ -852,6 +893,7 @@ export class RaceSession {
       if (lapsCompleted > this.lastTutorialLaps) this.observeTutorial('lap-completed', { laps: lapsCompleted, previousLaps: this.lastTutorialLaps });
       this.lastTutorialLaps = lapsCompleted;
       this.ui.querySelector('#race-player-position').textContent = `P${rankedPlayer?.position ?? '—'} / ${ranked.length}`;
+      this.ui.querySelector('#race-current-lap-time').textContent = formatTime(player?.currentLapTime ?? 0);
       this.rankList.innerHTML = ranked.map((car) => `<li class="${car.isPlayer ? 'player' : ''} ${car.finished ? 'finished' : ''}"><b>${String(car.position).padStart(2, '0')}</b><i style="--car-color:#${car.color.toString(16).padStart(6, '0')}"></i><span>${escapeHtml(car.name)}</span><small title="Position fondée sur les tours validés et la progression de route">${car.finished ? 'ARRIVÉ' : `T${Math.min(this.laps, (car.completedLaps ?? 0) + 1)}/${this.laps}`} · ${formatRaceGap(car, leader)}</small></li>`).join('');
       this.displayedRanks = new Map(ranked.map((car) => [car.id, car.position]));
       this.raceDiagnostics.observe(this.world, this.displayedRanks);
@@ -983,6 +1025,7 @@ export class RaceSession {
     this.keys.clear();
     if (this.pitLaneLine) { this.scene.scene.remove(this.pitLaneLine); this.pitLaneLine.geometry.dispose(); this.pitLaneLine.material.dispose(); this.pitLaneLine = null; }
     this.particles?.dispose();
+    this.aiTelemetryCenter?.dispose(); this.aiTelemetryCenter = null;
     this.labVisuals?.dispose(); this.labVisuals = null;
     this.scene.dispose();
     this.ui.remove();

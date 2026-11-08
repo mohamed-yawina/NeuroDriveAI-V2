@@ -4,11 +4,30 @@ import { setIntegratedLabInstructions } from '../src/game/RaceSession.js';
 
 const raceSessionSource = readFileSync(new URL('../src/game/RaceSession.js', import.meta.url), 'utf8');
 const indexSource = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
+const raceCssSource = readFileSync(new URL('../src/game/race-session.css', import.meta.url), 'utf8');
 
 describe('RaceSession DOM contract', () => {
   it('keeps the application roots required by SceneManager in the real entry HTML', () => {
     expect(indexSource).toMatch(/<div\s+id="app"[^>]*>/);
     expect(indexSource).toMatch(/<div\s+id="viewport"[^>]*>/);
+  });
+
+  it('places the real player position and lap metrics in the top race status strip', () => {
+    expect(raceSessionSource).toContain("state.append(lap, positionMetric)");
+    expect(raceSessionSource).toContain("id=\"race-player-position\"");
+    expect(raceSessionSource).toContain("id=\"race-speed\"");
+    expect(raceSessionSource).toContain("id=\"race-clock\"");
+    expect(raceSessionSource).toContain("id=\"race-current-lap-time\"");
+    expect(raceSessionSource).toContain("formatTime(player?.currentLapTime ?? 0)");
+  });
+
+  it('defines a responsive race HUD for desktop and compact viewports', () => {
+    expect(raceCssSource).toContain('@media(min-width:1200px)');
+    expect(raceCssSource).toContain('@media(max-height:800px) and (min-width:761px)');
+    expect(raceCssSource).toContain('@media(max-width:1100px) and (min-width:761px)');
+    expect(raceCssSource).toContain('@media(max-width:760px)');
+    expect(raceCssSource).toContain('.race-minimap');
+    expect(raceCssSource).toContain('.race-controls');
   });
 
   it('declares every static id queried by RaceSession in its actual HUD or dynamic HUD markup', () => {

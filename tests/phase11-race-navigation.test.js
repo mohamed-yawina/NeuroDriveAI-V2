@@ -67,4 +67,19 @@ describe('Phase 11 race session navigation and cleanup', () => {
     expect(session.ui.dataset.hudMode).toBe('full');
     expect(button.textContent).toBe('HUD');
   });
+
+  it('temporarily looks behind with B and restores the selected camera afterward', () => {
+    const session = Object.create(RaceSession.prototype);
+    const label = { textContent: '' };
+    session.rearViewPreviousMode = null;
+    session.cameras = { mode: 'cockpit', setMode(mode) { this.mode = mode; } };
+    session.ui = { querySelector: () => label };
+    session.beginRearView();
+    expect(session.cameras.mode).toBe('rear');
+    expect(label.textContent).toContain('ARRIÈRE');
+    session.endRearView();
+    expect(session.cameras.mode).toBe('cockpit');
+    expect(label.textContent).toBe('COCKPIT');
+    expect(session.rearViewPreviousMode).toBeNull();
+  });
 });
