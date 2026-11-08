@@ -131,12 +131,17 @@ describe('P3-to-finish race integration', () => {
 
   it('awards the championship points to the same P3-grid player standing saved by the race', () => {
     const run = runP3Finish((index) => [50, 48, 56, 46, 44, 42][index]);
-    const store = new CareerStore(new MemoryStorage());
-    store.createChampionship({ rounds: ['original'], laps: 3 });
-    const race = store.saveRace({ trackId: 'original', results: standingsFor(run) });
+    const storage = new MemoryStorage();
+    const store = new CareerStore(storage);
+    store.createChampionship({ rounds: ['original', 'technical'], laps: 3 });
+    const race = store.saveRace({ trackId: 'original', mode: 'championship', raceCompleted: true, seasonId: store.read().championship.id, roundTrackId: 'original', results: standingsFor(run) });
     const standing = store.addChampionshipResult({ roundTrackId: 'original', raceId: race.id })[0];
     const savedResult = store.read().championship.results[0].entries.find((entry) => entry.driverId === run.player.driverId);
     expect(standing).toMatchObject({ driverId: run.player.driverId, wins: 1, points: 25 });
     expect(savedResult).toMatchObject({ gridPosition: 3, position: 1, status: 'finished' });
+    const reloaded = new CareerStore(storage);
+    expect(reloaded.standings()[0]).toMatchObject({ driverId: run.player.driverId, wins: 1, points: 25 });
+    expect(reloaded.nextChampionshipRound().trackId).toBe('technical');
+    expect(() => reloaded.addChampionshipResult({ roundTrackId: 'original', raceId: race.id })).toThrow();
   });
 });

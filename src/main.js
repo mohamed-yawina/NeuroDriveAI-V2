@@ -16,6 +16,7 @@ import { CircuitLibrary } from './circuits/CircuitLibrary.js';
 import { resolveTrackSelection, USER_TRACK_SELECTION_PREFIX } from './circuits/TrackSelection.js';
 import { measureTrackDefinition, trackPreviewSvg } from './ui/TrackGallery.js';
 import { GameVehicleDynamics } from './game/GameVehicleDynamics.js';
+import { createGeneralizationTracks } from './ai/training/GeneralizationTracks.js';
 const { MenuShowroom } = await import('./scene/MenuShowroom.js');
 
 const app = document.querySelector('#app');
@@ -95,6 +96,13 @@ function resolveSelectedTrack(trackId) {
   if (!String(trackId).startsWith(USER_TRACK_SELECTION_PREFIX)) return null;
   return resolveTrackSelection(trackId, { library: userCircuitLibrary });
 }
+function getCareerAvailableTracks() {
+  const tracks = createGeneralizationTracks().map((track) => ({ selectionId: track.id, track, custom: false }));
+  try {
+    for (const circuit of userCircuitLibrary.list()) tracks.push({ selectionId: `${USER_TRACK_SELECTION_PREFIX}${circuit.id}`, track: resolveTrackSelection(`${USER_TRACK_SELECTION_PREFIX}${circuit.id}`, { library: userCircuitLibrary }), custom: true });
+  } catch (error) { console.warn('Custom tracks are unavailable to the career calendar', error); }
+  return tracks;
+}
 function refreshUserCircuitOptions() {
   const trackSelect = menu.querySelector('#menu-track');
   const labSelect = menu.querySelector('#integrated-lab-track');
@@ -167,8 +175,9 @@ menu.querySelectorAll('[data-color]').forEach((button) => button.classList.toggl
 menu.querySelectorAll('[data-view]').forEach((button) => button.addEventListener('click', () => {
   menu.querySelectorAll('[data-view]').forEach((item) => item.classList.toggle('active', item === button));
   menu.querySelectorAll('[data-panel]').forEach((panel) => panel.classList.toggle('hidden', panel.dataset.panel !== button.dataset.view));
+  menu.classList.toggle('menu-career-active', button.dataset.view === 'career');
   audioManager.setScene(({ home: 'menu', garage: 'garage', circuits: 'circuits', career: 'career', 'ai-labs': 'steering-lab', creation: 'creation', settings: 'menu' })[button.dataset.view] ?? 'menu');
-  if (button.dataset.view === 'career') refreshCareerPanel(menu, careerStore, tutorialGuide.snapshot());
+  if (button.dataset.view === 'career') refreshCareerPanel(menu, careerStore, tutorialGuide.snapshot(), getCareerAvailableTracks());
   if (button.dataset.view === 'circuits') { menu.querySelector('#showroom-badge-title').textContent = 'CIRCUIT 3D · APERÇU'; previewCircuit(menu.querySelector('#menu-track').value); }
   else { menu.querySelector('#showroom-badge-title').textContent = 'SHOWROOM 3D'; showroom.setVehicle(); }
   audioManager.unlock();
@@ -258,6 +267,7 @@ menu.querySelector('#settings-reset').addEventListener('click', () => {
 
 bindCareerPanel(menu, careerStore, {
   onChampionshipStart: (round) => launch({ championshipRound: round }),
+  getAvailableTracks: getCareerAvailableTracks,
   onTutorial: () => continueTutorial(),
   onTutorialChapter: (chapterId) => { tutorialGuide.selectChapter(chapterId); continueTutorial(); },
   onTutorialRestart: () => { tutorialGuide.reset(); continueTutorial(); },
@@ -270,7 +280,7 @@ bindCareerPanel(menu, careerStore, {
     return careerStore.importReplay(compatible);
   },
   onCompliance: () => openComplianceReport(),
-  onUpdate: (profile) => { menu.querySelector('.profile-chip b').textContent = profile.name; selectedDriverName = profile.name; selectedLivery = profile.livery; preferences.livery = selectedLivery; careerStore.setProfile({ preferences: { secondaryLivery: selectedSecondaryLivery, driverNumber: selectedDriverNumber } }); localStorage.setItem('neurodrive-game-preferences', JSON.stringify(preferences)); applyGarageCustomization(); menu.querySelector('#garage-driver-name').value = profile.name; menu.querySelectorAll('[data-color]').forEach((item) => item.classList.toggle('selected', item.dataset.color === selectedLivery)); },
+  onUpdate: (profile) => { menu.querySelector('.profile-chip b').textContent = profile.name; selectedDriverName = profile.name; selectedLivery = profile.livery; selectedDriverNumber = profile.preferences?.driverNumber ?? selectedDriverNumber; selectedSecondaryLivery = profile.preferences?.secondaryLivery ?? selectedSecondaryLivery; preferences.livery = selectedLivery; preferences.secondaryLivery = selectedSecondaryLivery; preferences.driverNumber = selectedDriverNumber; localStorage.setItem('neurodrive-game-preferences', JSON.stringify(preferences)); applyGarageCustomization(); menu.querySelector('#garage-driver-name').value = profile.name; menu.querySelector('#garage-driver-number').value = String(selectedDriverNumber); menu.querySelectorAll('[data-color]').forEach((item) => item.classList.toggle('selected', item.dataset.color === selectedLivery)); menu.querySelectorAll('[data-accent]').forEach((item) => item.classList.toggle('selected', item.dataset.accent === selectedSecondaryLivery)); updateRaceReadySummary(); },
 });
 
 bindMainMenuEntries(menu, {
@@ -394,7 +404,7 @@ const navigation = new SessionNavigation({ onStateChange(state) {
     audioManager.setScene(({ home: 'menu', garage: 'garage', circuits: 'circuits', career: 'career', 'ai-labs': 'steering-lab', creation: 'creation', settings: 'menu' })[activeMenu] ?? 'menu');
     audioManager.unlock().then((ready) => { if (ready) audioManager.event('menu'); });
     menu.querySelector('#audio-enabled').checked = audioManager.settings.enabled;
-    refreshCareerPanel(menu, careerStore, tutorialGuide.snapshot());
+    refreshCareerPanel(menu, careerStore, tutorialGuide.snapshot(), getCareerAvailableTracks());
     if (!labLaunchPending && labLaunchStatus.dataset.state === 'loading') labLaunchStatus.hidden = true;
   }
   syncLabLaunchButtons();
@@ -410,9 +420,13 @@ async function launch({ mode = 'race', tutorial = false, tutorialSession = tutor
         const { RaceSession } = await import('./game/RaceSession.js');
         if (!championshipRound) return new RaceSession({ ...options, trackDefinition: resolveSelectedTrack(options.trackId) ?? undefined });
         const season = championshipRound.season;
+        const scheduledTrack = careerStore.championshipTrackDefinition(championshipRound.trackId, season)
+          ?? createGeneralizationTracks().find((track) => track.id === championshipRound.trackId);
+        if (!scheduledTrack) throw new RangeError(`La géométrie du circuit « ${championshipRound.trackId} » manque à cette saison; aucun circuit de remplacement n’a été chargé.`);
         return new RaceSession({
           ...options,
-          trackId: championshipRound.trackId,
+          trackId: scheduledTrack.id,
+          trackDefinition: scheduledTrack,
           laps: season.laps,
           formationLap: season.formationLap,
           aiDifficulty: season.difficulty,
@@ -442,7 +456,7 @@ async function launch({ mode = 'race', tutorial = false, tutorialSession = tutor
 
 async function continueTutorial() {
   const step = tutorialGuide.current;
-  if (!step) { refreshCareerPanel(menu, careerStore, tutorialGuide.snapshot()); return; }
+  if (!step) { refreshCareerPanel(menu, careerStore, tutorialGuide.snapshot(), getCareerAvailableTracks()); return; }
   if (navigation.state === 'simulation') await navigation.returnToMenu();
   const route = step.mode === 'race' ? 'race' : step.mode === 'academy' ? 'academy' : step.mode === 'circuit-studio' ? 'circuit-studio' : 'neural-racing';
   await launch({ mode: route, tutorial: true, tutorialSession: tutorialGuide });

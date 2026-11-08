@@ -872,7 +872,14 @@ export class RaceSession {
       seed: this.raceSeed, physics: { laps: this.laps, trackHalfWidth: this.track.halfWidth ?? 8.2, fixedStep: FIXED_STEP, mechanicsEnabled: this.world.gameplayMechanics }, frames: this.replayRecorder.frames, events: this.replayRecorder.events, sampleRate: this.replayRecorder.sampleRate,
     });
     const results = ranked.map((car) => { const telemetry = this.world.getDriverTelemetry(car); return { id: car.driverId ?? car.id, carId: car.id, gridPosition: car.gridPosition, name: car.name, color: car.color, position: car.position, completedLaps: car.completedLaps, finishTime: car.finishTime, bestLapTime: car.bestLapTime, collisions: telemetry.carCollisions, offTrackEvents: telemetry.offTrackEvents, finished: car.finished }; });
-    const race = this.careerStore.saveRace({ trackId: this.track.id, seed: this.raceSeed, results, replay });
+    const race = this.careerStore.saveRace({
+      trackId: this.track.id,
+      mode: this.championshipRound ? 'championship' : 'arcade',
+      seasonId: this.championshipRound?.seasonId ?? null,
+      roundTrackId: this.championshipRound?.trackId ?? null,
+      raceCompleted: this.world.director.state === 'finished',
+      seed: this.raceSeed, results, replay,
+    });
     if (this.championshipRound) {
       try {
         this.careerStore.addChampionshipResult({ roundTrackId: this.championshipRound.trackId, raceId: race.id, seasonId: this.championshipRound.seasonId });

@@ -134,7 +134,7 @@ describe('validated race ranking', () => {
       car('player', { isPlayer: true, finished: true, finishTime: 105, completedLaps: 3, validatedProgress: 300 }),
       car('rival', { finished: true, finishTime: 99, completedLaps: 3, validatedProgress: 300 }),
     ]);
-    const race = store.saveRace({ trackId: 'original', results: ranked.map((entry) => ({
+    const race = store.saveRace({ trackId: 'original', mode: 'championship', raceCompleted: true, seasonId: store.read().championship.id, roundTrackId: 'original', results: ranked.map((entry) => ({
       id: entry.id, name: entry.name, color: entry.color, position: entry.position, completedLaps: entry.completedLaps,
       finishTime: entry.finishTime, bestLapTime: null, finished: entry.finished,
     })) });

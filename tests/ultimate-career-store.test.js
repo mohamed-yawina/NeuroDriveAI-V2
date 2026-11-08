@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { CareerStore, CAREER_KEY, CHAMPIONSHIP_POINTS } from '../src/game/CareerStore.js';
+import { CareerStore, CAREER_KEY, CAREER_RECOVERY_KEY, CHAMPIONSHIP_POINTS } from '../src/game/CareerStore.js';
 import { createRaceReplay } from '../src/neural-lab/ReplayProtocol.js';
 import { RaceTutorial, TUTORIAL_CHAPTERS, TUTORIAL_KEY } from '../src/game/RaceTutorial.js';
 
@@ -14,6 +14,7 @@ function replay() {
   });
 }
 const result = (id, name, position, bestLapTime) => ({ id, name, position, completedLaps: 3, finishTime: position * 100, bestLapTime, collisions: 1, offTrackEvents: 0, finished: true });
+const championshipRace = (store, values) => store.saveRace({ ...values, mode: 'championship', raceCompleted: true, seasonId: store.read().championship.id, roundTrackId: values.trackId });
 
 describe('Ultimate local career persistence', () => {
   it('advances the interactive tutorial only after a measured game input and persists progress', () => {
@@ -46,7 +47,7 @@ describe('Ultimate local career persistence', () => {
   });
   it('calculates championship points from a matching recorded schedule round and rejects duplicates', () => {
     const store = new CareerStore(new MemoryStorage());
-    store.saveRace({ id: 'r1', trackId: 'original', results: [result('d1', 'Ada', 1, 80), result('d2', 'Babbage', 2, 82)] });
+    championshipRace(store, { id: 'r1', trackId: 'original', results: [result('d1', 'Ada', 1, 80), result('d2', 'Babbage', 2, 82)] });
     expect(store.addChampionshipResult({ roundTrackId: 'original', raceId: 'r1' })[0]).toMatchObject({ driverId: 'd1', points: CHAMPIONSHIP_POINTS[0], wins: 1 });
     expect(() => store.addChampionshipResult({ roundTrackId: 'original', raceId: 'r1' })).toThrow();
     expect(() => store.addChampionshipResult({ roundTrackId: 'technical', raceId: 'r1' })).toThrow();
@@ -54,7 +55,7 @@ describe('Ultimate local career persistence', () => {
   it('creates a validated local season while archiving the prior schedule and keeping its existing results', () => {
     const storage = new MemoryStorage();
     const store = new CareerStore(storage);
-    store.saveRace({ id: 'old-round', trackId: 'original', results: [result('d1', 'Ada', 1, 80)] });
+    championshipRace(store, { id: 'old-round', trackId: 'original', results: [result('d1', 'Ada', 1, 80)] });
     store.addChampionshipResult({ roundTrackId: 'original', raceId: 'old-round' });
     const season = store.createChampionship({ rounds: ['technical', 'fast-oval'], laps: 5, difficulty: 'aggressive', weather: 'rain', formationLap: true });
     expect(season).toMatchObject({ rounds: ['technical', 'fast-oval'], laps: 5, difficulty: 'aggressive', weather: 'rain', formationLap: true });
@@ -76,7 +77,7 @@ describe('Ultimate local career persistence', () => {
       { ...result('car-5', 'Euler', 5, 84), color: 0xffffff },
       { ...result('car-6', 'Fermi', 6, null), finished: false, status: 'race-ended', color: 0x888888 },
     ];
-    store.saveRace({ id: 'round-one', trackId: 'original', results });
+    championshipRace(store, { id: 'round-one', trackId: 'original', results });
     const standings = store.addChampionshipResult({ roundTrackId: 'original', raceId: 'round-one' });
     expect(store.nextChampionshipRound().trackId).toBe('technical');
     expect(standings.map((driver) => driver.points)).toEqual([25, 18, 15, 12, 10, 0]);
@@ -85,9 +86,10 @@ describe('Ultimate local career persistence', () => {
   });
   it('finishes the calendar and uses stable name ordering for equal championship records', () => {
     const store = new CareerStore(new MemoryStorage()); store.createChampionship({ rounds: ['original', 'technical'] });
-    store.saveRace({ id: 'tie-a', trackId: 'original', results: [result('ada', 'Ada', 1, 80), result('bob', 'Babbage', 2, 81)] });
+    championshipRace(store, { id: 'tie-a', trackId: 'original', results: [result('ada', 'Ada', 1, 80), result('bob', 'Babbage', 2, 81)] });
     store.addChampionshipResult({ roundTrackId: 'original', raceId: 'tie-a' });
-    store.saveRace({ id: 'tie-b', trackId: 'technical', results: [result('bob', 'Babbage', 1, 80), result('ada', 'Ada', 2, 81)] });
+    // The next scheduled round is part of the same season.
+    store.saveRace({ id: 'tie-b', trackId: 'technical', mode: 'championship', raceCompleted: true, seasonId: store.read().championship.id, roundTrackId: 'technical', results: [result('bob', 'Babbage', 1, 80), result('ada', 'Ada', 2, 81)] });
     const standings = store.addChampionshipResult({ roundTrackId: 'technical', raceId: 'tie-b' });
     expect(standings.map(({ name, points, wins }) => ({ name, points, wins }))).toEqual([{ name: 'Ada', points: 43, wins: 1 }, { name: 'Babbage', points: 43, wins: 1 }]);
     expect(store.nextChampionshipRound()).toBeNull();
@@ -108,5 +110,37 @@ describe('Ultimate local career persistence', () => {
     const storage = new MemoryStorage(); storage.setItem(CAREER_KEY, '{invalid');
     expect(new CareerStore(storage).read().races).toEqual([]);
     expect(new CareerStore(null).write({ version: 1 })).toBe(false);
+  });
+
+  it('freezes a custom track geometry into a season and can restore it after library deletion', () => {
+    const store = new CareerStore(new MemoryStorage());
+    const track = { id: 'user-track-a', label: 'Mon tracé', halfWidth: 9, width: 18, userCircuit: true, waypoints: [{ x: 0, y: 0.08, z: 0 }, { x: 40, y: 0.08, z: 0 }, { x: 25, y: 0.08, z: 30 }, { x: 0, y: 0.08, z: 25 }] };
+    const season = store.createChampionship({ rounds: ['user:user-track-a'], trackDefinitions: { 'user:user-track-a': track } });
+    const restored = store.championshipTrackDefinition('user:user-track-a', season);
+    expect(restored).toMatchObject({ id: 'user-track-a', label: 'Mon tracé', halfWidth: 9, userCircuit: true });
+    expect(restored.waypoints.map(({ x, z }) => [x, z])).toEqual(track.waypoints.map(({ x, z }) => [x, z]));
+    const race = store.saveRace({ id: 'custom-gp', trackId: 'user-track-a', mode: 'championship', raceCompleted: true, seasonId: season.id, roundTrackId: 'user:user-track-a', results: [result('car-1', 'Ada', 1, 80)] });
+    expect(store.addChampionshipResult({ roundTrackId: 'user:user-track-a', raceId: race.id, seasonId: season.id })[0].points).toBe(25);
+  });
+
+  it('refuses quick-race and laboratory-like results for championship scoring', () => {
+    const store = new CareerStore(new MemoryStorage());
+    store.createChampionship({ rounds: ['original'] });
+    const race = store.saveRace({ id: 'quick-race', trackId: 'original', mode: 'arcade', results: [result('car-1', 'Ada', 1, 80)] });
+    expect(() => store.addChampionshipResult({ roundTrackId: 'original', raceId: race.id })).toThrow(/completed scheduled championship race/i);
+    const unfinished = store.saveRace({ id: 'incomplete-gp', trackId: 'original', mode: 'championship', seasonId: store.read().championship.id, roundTrackId: 'original', results: [result('car-1', 'Ada', 1, 80)] });
+    expect(() => store.addChampionshipResult({ roundTrackId: 'original', raceId: unfinished.id })).toThrow(/completed scheduled championship race/i);
+  });
+
+  it('preserves an unreadable or obsolete career blob before a later write', () => {
+    const storage = new MemoryStorage();
+    const damaged = '{old career payload';
+    storage.setItem(CAREER_KEY, damaged);
+    const store = new CareerStore(storage);
+    expect(store.read().races).toEqual([]);
+    expect(store.recoveryWarning).toMatch(/illisible/i);
+    expect(store.write(store.empty())).toBe(true);
+    expect(storage.getItem(CAREER_RECOVERY_KEY)).toBe(damaged);
+    expect(JSON.parse(storage.getItem(CAREER_KEY)).format).toBe(CAREER_KEY);
   });
 });
