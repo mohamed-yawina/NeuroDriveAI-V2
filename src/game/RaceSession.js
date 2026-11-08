@@ -65,6 +65,7 @@ export class RaceSession {
     this.onReturn = onReturn;
     this.driverAssignments = driverAssignments;
     this.laboratory = laboratory;
+    this.professorMode = Boolean(professorMode && laboratory);
     this.turboEnabled = isArcadeTurboAllowed({ laboratory, driverAssignments });
     this.turbo = new ArcadeTurbo();
     this.labTimeScale = 1;
@@ -158,6 +159,7 @@ export class RaceSession {
         setIntegratedLabInstructions(this.ui, this.laboratory.type);
         this.ui.querySelector('#race-coach-toggle').hidden = this.laboratory.type !== 'steering';
       }
+      if (this.professorMode) this.setProfessorStep(null);
       if (this.initialConditions) {
         this.ui.querySelector('#race-time-select').value = this.initialConditions.day ?? 'day';
         this.ui.querySelector('#race-weather-select').value = this.initialConditions.weather ?? 'dry';
@@ -262,7 +264,7 @@ export class RaceSession {
     const provenance = this.laboratory.models?.map((model) => `<li><b>${escapeHtml(model.name)}</b><small>${escapeHtml(model.provenance)}</small></li>`).join('') ?? '';
     const activeTrackLabel = this.track.userCircuit ? this.track.label : TRACK_NAMES[this.track.id] ?? this.track.label;
     this.ui.insertAdjacentHTML('beforeend', `<aside class="race-lab-panel" id="integrated-lab-panel" aria-label="Panneau du laboratoire intégré">
-      <header><small>NEURODRIVE F1 · LABORATOIRE</small><b>${neural ? 'NEURAL LAB' : 'STEERING LAB'}</b></header>
+      <header><small>NEURODRIVE F1 · LABORATOIRE</small><b>${neural ? 'NEURAL LAB' : 'STEERING LAB'}</b>${this.professorMode ? '<small id="race-professor-stage" class="race-professor-stage">MODE PROFESSEUR</small>' : ''}</header>
       <label class="race-lab-field">VOITURE OBSERVÉE<select id="lab-follow-car"></select></label>
       <details class="ai-telemetry-center" open><summary><span>AI TELEMETRY CENTER</span><b id="ai-telemetry-status">EN ATTENTE</b></summary><div class="ai-telemetry-content">
         <div class="ai-telemetry-driver"><b id="ai-telemetry-driver">—</b><small id="ai-telemetry-controller">—</small><small id="ai-telemetry-model">—</small></div>
@@ -321,6 +323,15 @@ export class RaceSession {
     target.addEventListener('change', () => this.syncLabCarSelection(target.value), { signal: this.listeners.signal });
     this.ui.querySelector('#lab-time-scale').addEventListener('change', (event) => { this.labTimeScale = Number(event.target.value); }, { signal: this.listeners.signal });
     this.updateIntegratedLabPanel();
+  }
+
+  setProfessorStep(step) {
+    const stage = this.ui?.querySelector('#race-professor-stage');
+    if (!stage || !this.professorMode) return;
+    if (!step) { stage.textContent = 'MODE PROFESSEUR'; return; }
+    stage.textContent = `${step.title}`;
+    stage.title = `Étape guidée · ${step.id}`;
+    this.ui.querySelector('#integrated-lab-panel')?.setAttribute('data-professor-stage', step.id);
   }
 
   updateIntegratedLabPanel() {

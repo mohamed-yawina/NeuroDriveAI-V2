@@ -9,7 +9,7 @@ import { CareerStore } from './game/CareerStore.js';
 import { mountCareerPanel, refreshCareerPanel, bindCareerPanel } from './game/CareerPanel.js';
 import { upgradeRaceReplay } from './neural-lab/ReplayProtocol.js';
 import { RaceTutorial } from './game/RaceTutorial.js';
-import { ProfessorDemo } from './game/ProfessorDemo.js';
+import { ProfessorDemo, shouldReuseProfessorSession } from './game/ProfessorDemo.js';
 import { ComplianceReport } from './game/ComplianceReport.js';
 import { bindMainMenuEntries } from './ui/MainMenuSections.js';
 import { CircuitLibrary } from './circuits/CircuitLibrary.js';
@@ -503,16 +503,42 @@ async function continueTutorial() {
 
 async function startProfessorDemo() {
   if (professorDemo) professorDemo.dispose();
+  const closeProfessorDemo = async () => {
+    const activeDemo = professorDemo;
+    professorDemo = null;
+    activeDemo?.dispose();
+    if (navigation.state === 'simulation') await navigation.returnToMenu();
+  };
   professorDemo = new ProfessorDemo({
     host: document.body,
-    onExit: async () => { if (navigation.state === 'simulation') await navigation.returnToMenu(); professorDemo = null; },
+    onExit: closeProfessorDemo,
+    onPause: (paused) => {
+      if (navigation.session && navigation.session.paused !== paused) navigation.session.pause?.(paused);
+    },
     onNavigate: async (step) => {
+      const wantedType = step.mode === 'steering-lab' ? 'steering' : step.mode === 'neural-lab' ? 'neural' : null;
+      if (!wantedType) {
+        if (navigation.state === 'simulation') await navigation.returnToMenu();
+        return;
+      }
+      if (navigation.state === 'simulation' && shouldReuseProfessorSession(navigation.session, step)) {
+        navigation.session.setProfessorStep?.(step);
+        const paused = professorDemo?.timeline.paused ?? false;
+        if (navigation.session.paused !== paused) navigation.session.pause?.(paused);
+        return;
+      }
       if (navigation.state === 'simulation') await navigation.returnToMenu();
       const routes = {
-        'steering-lab': () => launchIntegratedSteeringLab({ professorMode: true }),
-        'neural-lab': () => launchIntegratedNeuralLab({ configurations: ['A', 'B', 'C'], professorMode: true, onReturn: returnToIntegratedLabs }),
+        'steering-lab': () => launchIntegratedSteeringLab({ professorMode: true, onReturn: closeProfessorDemo }),
+        'neural-lab': () => launchIntegratedNeuralLab({ configurations: ['A', 'B', 'C'], professorMode: true, onReturn: closeProfessorDemo }),
       };
       if (routes[step.mode]) await routes[step.mode]();
+      if (navigation.state !== 'simulation' || navigation.session?.laboratory?.type !== wantedType) {
+        throw new Error(`Le ${wantedType === 'steering' ? 'Steering Lab' : 'Neural Lab'} ne s’est pas ouvert.`);
+      }
+      navigation.session.setProfessorStep?.(step);
+      const paused = professorDemo?.timeline.paused ?? false;
+      if (navigation.session.paused !== paused) navigation.session.pause?.(paused);
     },
   });
 }
