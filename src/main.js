@@ -1,0 +1,374 @@
+﻿import './style.css';
+import { SessionNavigation } from './ui/SessionNavigation.js';
+import { audioManager } from './game/AudioManager.js';
+import { hapticsManager } from './game/HapticsManager.js';
+import { getPanelCtaAction, launchMenuRace } from './ui/MenuLaunchOptions.js';
+import { createIntegratedLabEntryActions, launchNeuralLab, launchSteeringLab } from './ui/IntegratedLabLaunch.js';
+import { readGameSettings, resetGameSettings, writeGameSettings } from './settings/GameSettings.js';
+import { CareerStore } from './game/CareerStore.js';
+import { mountCareerPanel, refreshCareerPanel, bindCareerPanel } from './game/CareerPanel.js';
+import { upgradeRaceReplay } from './neural-lab/ReplayProtocol.js';
+import { RaceTutorial } from './game/RaceTutorial.js';
+import { ProfessorDemo } from './game/ProfessorDemo.js';
+import { ComplianceReport } from './game/ComplianceReport.js';
+import { bindMainMenuEntries } from './ui/MainMenuSections.js';
+const { MenuShowroom } = await import('./scene/MenuShowroom.js');
+
+const app = document.querySelector('#app');
+app.classList.add('presentation-mode');
+const menu = document.createElement('main');
+menu.className = 'main-menu';
+menu.innerHTML = `<div class="showroom-stage" id="showroom-stage"><div class="showroom-badge"><b id="showroom-badge-title">SHOWROOM 3D</b><span>NEURODRIVE F1 · RED EDITION</span></div><div class="showroom-hint">GLISSER · TOURNER &nbsp; MOLETTE · ZOOM</div></div><header class="racing-nav"><a class="racing-logo" href="#accueil"><b>ND</b><span>NEURODRIVE <i>F1</i><small>RED RACING EDITION</small></span></a><nav aria-label="Navigation principale"><button data-view="home" class="active">JOUER</button><button data-view="ai-labs">LABORATOIRES IA</button><button data-view="creation">CRÉATION</button><button data-view="garage">GARAGE</button><button data-view="circuits">CIRCUITS</button><button data-view="career">CARRIÈRE LOCALE</button><button data-view="settings">RÉGLAGES</button></nav><span class="profile-chip">PILOTE <b>LOCAL</b></span></header><section class="home-panel menu-panel" data-panel="home"><p class="menu-kicker">NEURODRIVE F1 · COURSE RAPIDE</p><h1>Choisissez<br><em>votre course.</em></h1><p class="menu-copy">Prenez le départ face aux pilotes autonomes, inscrivez vos résultats au championnat local ou reprenez le tutoriel interactif.</p><div class="menu-entry-grid play-entry-grid"><button id="launch-simulation" class="menu-entry-card menu-entry-featured" data-menu-entry="quick-race"><span class="menu-entry-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M8 31h4l4-11h13l7 7h5v9H8zM17 20l3-7h10l3 10M15 36a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm20 0a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"/></svg></span><span class="menu-entry-text"><b>COURSE RAPIDE</b><small>Lancer une course contre cinq pilotes IA.</small></span><span class="menu-entry-arrow" aria-hidden="true">↗</span></button><button class="menu-entry-card" data-menu-entry="championship"><span class="menu-entry-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M15 8h18v8a9 9 0 0 1-18 0zm0 4H8v4a9 9 0 0 0 9 9m16-13h7v4a9 9 0 0 1-9 9M24 25v9m-9 6h18M19 34h10"/></svg></span><span class="menu-entry-text"><b>CHAMPIONNAT LOCAL</b><small>Calendrier, points et classement.</small></span><span class="menu-entry-arrow" aria-hidden="true">↗</span></button><button class="menu-entry-card" data-menu-entry="tutorial"><span class="menu-entry-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M24 7 42 38H6zM24 18v9m0 6h.01"/></svg></span><span class="menu-entry-text"><b>TUTORIEL</b><small>Reprendre ou recommencer le parcours guidé.</small></span><span class="menu-entry-arrow" aria-hidden="true">↗</span></button></div><div class="play-race-options" id="play-race-options" aria-label="Paramètres de course"><label class="menu-field">CIRCUIT<select id="menu-track"><option value="original">Circuit Azur · entraînement</option><option value="technical">Circuit Technique · virages serrés</option><option value="fast-oval">Ovale Rapide · grande vitesse</option></select></label><label class="race-formation-option"><input id="menu-formation" type="checkbox"><span>Tour de formation automatique</span><small>Optionnel · conduite assistée avant le départ</small></label></div></section><section class="home-panel menu-panel secondary-panel hidden" data-panel="garage"><div class="panel-topline"><button class="back-home">← MENU</button><span>CONFIGURATION VISUELLE</span></div><h2>Votre monoplace</h2><p class="menu-copy">Choisissez une livrée et un angle. Les réglages aérodynamiques, moteur et pneus ne sont pas simulés par le moteur actuel.</p><div class="livery-row" role="group" aria-label="Choisir la livrée"><button data-color="#e10600" aria-label="Rouge compétition" class="selected"></button><button data-color="#f5f5f5" aria-label="Blanc"></button><button data-color="#1684ff" aria-label="Bleu"></button><button data-color="#d6b14d" aria-label="Or"></button></div><div class="camera-presets"><button data-camera="threeQuarter" class="selected">3/4</button><button data-camera="front">AVANT</button><button data-camera="side">CÔTÉ</button><button data-camera="rear">ARRIÈRE</button><button data-camera="top">DESSUS</button></div><p class="availability-note">Boîte, pneus, ERS et DRS sont disponibles dans les mécaniques de course arcade; les réglages aérodynamiques de garage restent visuels.</p><button class="launch-button launch-from-panel">CHOISIR LE CIRCUIT <span>↗</span></button></section><section class="home-panel menu-panel secondary-panel hidden" data-panel="circuits"><div class="panel-topline"><button class="back-home">← MENU</button><span>SÉLECTION DU CIRCUIT</span></div><h2>Choisissez la piste</h2><div class="track-cards"><button data-track="original" class="selected"><b>01</b><strong>CIRCUIT AZUR</strong><small>Configuration historique · entraînement</small></button><button data-track="technical"><b>02</b><strong>CIRCUIT TECHNIQUE</strong><small>Enchaînements serrés</small></button><button data-track="fast-oval"><b>03</b><strong>OVALE RAPIDE</strong><small>Grandes courbes · vitesse</small></button></div><label class="menu-field">TOURS<select id="menu-laps"><option>3</option><option>5</option><option>8</option></select></label><button class="launch-button launch-from-panel">ALLER À LA GRILLE <span>↗</span></button></section><section class="home-panel menu-panel secondary-panel hidden" data-panel="settings"><div class="panel-topline"><button class="back-home">← MENU</button><span>ACCESSIBILITÉ & AUDIO</span></div><h2>Réglages</h2><label class="toggle-setting"><input id="audio-enabled" type="checkbox"><span>Audio procédural</span></label><label class="menu-field">VOLUME GÉNÉRAL<input data-volume="master" type="range" min="0" max="1" step="0.05"></label><label class="menu-field">MOTEUR<input data-volume="engine" type="range" min="0" max="1" step="0.05"></label><label class="menu-field">EFFETS<input data-volume="effects" type="range" min="0" max="1" step="0.05"></label><label class="menu-field">AMBIANCE<input data-volume="ambience" type="range" min="0" max="1" step="0.05"></label><label class="menu-field">MUSIQUE<input data-volume="music" type="range" min="0" max="1" step="0.05"></label><label class="menu-field">INTERFACE<input data-volume="interface" type="range" min="0" max="1" step="0.05"></label><label class="toggle-setting"><input id="haptics-enabled" type="checkbox"><span>Vibrations (si compatibles)</span></label><label class="menu-field">INTENSITÉ HAPTIQUE<input id="haptics-intensity" type="range" min="0" max="1" step="0.05"></label><p class="availability-note" id="haptics-support-note">Les vibrations dépendent du navigateur et du matériel détecté.</p></section><div class="menu-index">PHASE 14 <span>RED RACING EDITION</span></div></main>`;
+const retainedTrackField = menu.querySelector('#menu-track')?.closest('.menu-field');
+const retainedLapsField = menu.querySelector('#menu-laps')?.closest('.menu-field');
+menu.querySelector('[data-panel="home"] .play-race-options')?.append(retainedTrackField, retainedLapsField);
+menu.insertAdjacentHTML('beforeend', `<section class="home-panel menu-panel secondary-panel hidden menu-section-panel" data-panel="ai-labs"><div class="panel-topline"><button class="back-home" type="button">← MENU</button><span>LABORATOIRES · IA</span><span>ANALYSE & EXPÉRIMENTATION</span></div><h2>Laboratoires IA</h2><p class="menu-copy">Explorez les comportements réactifs et comparez les contrôleurs neuronaux sur des conditions identifiées.</p><div class="menu-entry-grid lab-entry-grid"><button class="menu-entry-card" data-menu-entry="steering-lab"><span class="menu-entry-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M8 37 19 25l8 5 13-18M29 12h11v11M8 17h8M8 25h5"/></svg></span><span class="menu-entry-text"><b>STEERING LAB</b><small>Démonstrations interactives de Seek, Path Following et des forces de steering.</small></span><span class="menu-entry-arrow" aria-hidden="true">↗</span></button><button class="menu-entry-card" data-menu-entry="neural-lab"><span class="menu-entry-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><circle cx="10" cy="24" r="4"/><circle cx="24" cy="12" r="4"/><circle cx="24" cy="36" r="4"/><circle cx="38" cy="18" r="4"/><circle cx="38" cy="30" r="4"/><path d="m14 22 6-8m-6 12 6 8m6-20 8 3m-8 15 8-3m0-8v4"/></svg></span><span class="menu-entry-text"><b>NEURAL LAB</b><small>Comparer Steering et Neural, inspecter les cerveaux et consulter les résultats.</small></span><span class="menu-entry-arrow" aria-hidden="true">↗</span></button></div></section><section class="home-panel menu-panel secondary-panel hidden menu-section-panel" data-panel="creation"><div class="panel-topline"><button class="back-home" type="button">← MENU</button><span>CRÉATION</span><span>CIRCUITS PERSONNALISÉS</span></div><h2>Créez votre circuit</h2><p class="menu-copy">Dessinez une piste, validez sa géométrie, enregistrez-la et testez-la dans les modes compatibles.</p><div class="menu-entry-grid creation-entry-grid"><button class="menu-entry-card menu-entry-featured" data-menu-entry="circuit-studio"><span class="menu-entry-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M8 33c0-7 6-12 13-12h7c7 0 12-5 12-12M8 33c0 5 4 8 9 8h11c7 0 12-4 12-10s-5-10-12-10M13 13h9m-9 0v9m22 13h5v-5"/></svg></span><span class="menu-entry-text"><b>CIRCUIT STUDIO</b><small>Créer, générer, sauvegarder et tester une piste utilisateur.</small></span><span class="menu-entry-arrow" aria-hidden="true">↗</span></button></div></section>`);
+mountCareerPanel(menu);
+const steeringEntry = menu.querySelector('[data-menu-entry="steering-lab"]');
+steeringEntry?.querySelector('b') && (steeringEntry.querySelector('b').textContent = 'STEERING LAB · COURSE 3D');
+steeringEntry?.querySelector('small') && (steeringEntry.querySelector('small').textContent = 'Observer les pilotes Steering et leurs forces dans le circuit F1 et ses caméras.');
+const neuralEntry = menu.querySelector('[data-menu-entry="neural-lab"]');
+neuralEntry?.querySelector('b') && (neuralEntry.querySelector('b').textContent = 'NEURAL LAB · COURSE 3D');
+neuralEntry?.querySelector('small') && (neuralEntry.querySelector('small').textContent = 'Comparer les vrais modèles A/B/C aux pilotes Steering dans la même scène arcade.');
+menu.querySelector('[data-panel="ai-labs"] .lab-entry-grid')?.insertAdjacentHTML('afterend', `<fieldset class="integrated-lab-options"><legend>Modèles historiques de la course 3D</legend><label><input type="checkbox" data-neural-model="A" checked> A</label><label><input type="checkbox" data-neural-model="B" checked> B</label><label><input type="checkbox" data-neural-model="C" checked> C</label><label>Graine de grille<input id="neural-lab-seed" type="number" min="0" max="4294967295" value="13013"></label><small>Steering AI est toujours inclus. Simulation arcade : aucune donnée scientifique n’est écrite.</small></fieldset>`);
+const aiLabsPanel = menu.querySelector('[data-panel="ai-labs"]');
+const labLaunchStatus = document.createElement('p');
+labLaunchStatus.id = 'lab-launch-status';
+labLaunchStatus.className = 'lab-launch-status';
+labLaunchStatus.setAttribute('role', 'status');
+labLaunchStatus.setAttribute('aria-live', 'polite');
+labLaunchStatus.hidden = true;
+aiLabsPanel?.querySelector('h2')?.after(labLaunchStatus);
+let labLaunchPending = false;
+function syncLabLaunchButtons() {
+  const unavailable = labLaunchPending || (typeof navigation !== 'undefined' && navigation.state !== 'menu');
+  menu.querySelectorAll('.lab-entry-grid [data-menu-entry]').forEach((button) => { button.disabled = unavailable; });
+}
+function showLabLaunchError(mode, error) {
+  console.error(`[NeuroDrive F1] ${mode} launch failed`, error);
+  audioManager.unlock().then((ready) => { if (ready) audioManager.event('ui-error'); });
+  labLaunchPending = false;
+  labLaunchStatus.hidden = false;
+  labLaunchStatus.dataset.state = 'error';
+  labLaunchStatus.setAttribute('role', 'alert');
+  labLaunchStatus.textContent = `${mode} n'a pas pu démarrer. Vérifiez le circuit et réessayez.`;
+  syncLabLaunchButtons();
+}
+const labTrackLabel = document.createElement('label');
+labTrackLabel.className = 'integrated-lab-track-select'; labTrackLabel.textContent = 'CIRCUIT DE L’EXPÉRIENCE';
+const labTrackSelect = document.createElement('select'); labTrackSelect.id = 'integrated-lab-track';
+for (const option of menu.querySelector('#menu-track')?.options ?? []) labTrackSelect.add(option.cloneNode(true));
+labTrackSelect.value = menu.querySelector('#menu-track')?.value ?? 'original';
+labTrackSelect.addEventListener('change', () => {
+  menu.querySelector('#menu-track').value = labTrackSelect.value;
+  menu.querySelectorAll('[data-track]').forEach((button) => button.classList.toggle('selected', button.dataset.track === labTrackSelect.value));
+  previewCircuit(labTrackSelect.value);
+});
+menu.querySelector('#menu-track')?.addEventListener('change', () => { labTrackSelect.value = menu.querySelector('#menu-track').value; });
+labTrackLabel.append(labTrackSelect); aiLabsPanel?.insertBefore(labTrackLabel, aiLabsPanel.querySelector('.integrated-lab-options'));
+menu.querySelector('.showroom-hint')?.remove();
+menu.querySelector('.menu-index')?.remove();
+menu.querySelector('.menu-foot')?.remove();
+menu.querySelector('.camera-presets')?.insertAdjacentHTML('afterend', '<button id="camera-reset" class="camera-reset" type="button">RÉINITIALISER LA CAMÉRA</button>');
+menu.querySelector('[data-panel="settings"]').insertAdjacentHTML('beforeend', `<div class="settings-divider"></div><h3>Graphismes</h3><label class="menu-field">QUALITÉ<select id="graphics-quality"><option value="low">Basse</option><option value="medium">Moyenne</option><option value="high">Haute</option></select></label><label class="toggle-setting"><input id="graphics-shadows" type="checkbox"><span>Ombres</span></label><label class="menu-field">DENSITÉ DU DÉCOR<select id="graphics-scenery"><option value="low">Réduite</option><option value="medium">Normale</option><option value="high">Complète</option></select></label><label class="toggle-setting"><input id="graphics-effects" type="checkbox"><span>Effets visuels de vitesse et collision</span></label><div class="settings-divider"></div><h3>Caméra et commandes</h3><label class="menu-field">CAMÉRA DE COURSE<select id="camera-default"><option value="chase">Poursuite</option><option value="trackside">Bord de piste</option><option value="cockpit">Cockpit</option><option value="overview">Aérienne</option></select></label><label class="menu-field">SENSIBILITÉ ORBITALE<input id="camera-sensitivity" type="range" min="0.003" max="0.02" step="0.001"></label><label class="menu-field">VITESSE DU ZOOM<input id="zoom-sensitivity" type="range" min="0.3" max="1.6" step="0.1"></label><p class="availability-note">Course au clavier : ↑ accélérer · ↓ freiner · ← → braquer · Espace pause · R redémarrer · C caméra · 1–6 suivre.</p><details class="showroom-help"><summary>Aide showroom</summary><p>Glissez horizontalement pour orbiter autour de la voiture sur 360°. La molette ajuste progressivement le zoom. Le bouton de réinitialisation revient au trois-quarts avant.</p></details><label class="menu-field">MODÈLE PAR DÉFAUT POUR ESSAI NEURAL<select id="default-model"><option>A</option><option>B</option><option>C</option></select></label><button id="haptics-test" class="settings-action" type="button">TESTER LES VIBRATIONS</button><button id="settings-reset" class="settings-action secondary" type="button">RESTAURER LES PARAMÈTRES PAR DÉFAUT</button>`);
+app.append(menu);
+const careerStore = new CareerStore();
+let tutorialGuide = new RaceTutorial();
+let professorDemo = null;
+const showroom = new MenuShowroom(menu.querySelector('#showroom-stage'));
+const preferences = (() => { try { return JSON.parse(localStorage.getItem('neurodrive-game-preferences') ?? '{}'); } catch { return {}; } })();
+let selectedLivery = preferences.livery ?? careerStore.read().profile.livery ?? '#e10600'; showroom.setColor(selectedLivery);
+menu.querySelector('.profile-chip b').textContent = careerStore.read().profile.name;
+let gameSettings = readGameSettings();
+const settingsControls = {
+  quality: menu.querySelector('#graphics-quality'), shadows: menu.querySelector('#graphics-shadows'), scenery: menu.querySelector('#graphics-scenery'),
+  effects: menu.querySelector('#graphics-effects'), cameraMode: menu.querySelector('#camera-default'),
+  orbitSensitivity: menu.querySelector('#camera-sensitivity'), zoomSensitivity: menu.querySelector('#zoom-sensitivity'), model: menu.querySelector('#default-model'),
+};
+function syncSettingsForm() {
+  gameSettings = readGameSettings();
+  for (const key of ['quality', 'shadows', 'scenery', 'effects', 'cameraMode', 'orbitSensitivity', 'zoomSensitivity']) {
+    const control = settingsControls[key]; if (control) control.type === 'checkbox' ? control.checked = gameSettings[key] : control.value = gameSettings[key];
+  }
+  settingsControls.model.value = ['A', 'B', 'C'].includes(preferences.configuration) ? preferences.configuration : 'A';
+}
+function saveVisualSettings() {
+  gameSettings = writeGameSettings({
+    quality: settingsControls.quality.value, shadows: settingsControls.shadows.checked, scenery: settingsControls.scenery.value,
+    effects: settingsControls.effects.checked, cameraMode: settingsControls.cameraMode.value,
+    orbitSensitivity: settingsControls.orbitSensitivity.value, zoomSensitivity: settingsControls.zoomSensitivity.value,
+  });
+  showroom.applySettings();
+}
+syncSettingsForm();
+menu.querySelectorAll('[data-color]').forEach((button) => button.classList.toggle('selected', button.dataset.color === selectedLivery));
+menu.querySelectorAll('[data-view]').forEach((button) => button.addEventListener('click', () => {
+  menu.querySelectorAll('[data-view]').forEach((item) => item.classList.toggle('active', item === button));
+  menu.querySelectorAll('[data-panel]').forEach((panel) => panel.classList.toggle('hidden', panel.dataset.panel !== button.dataset.view));
+  audioManager.setScene(({ home: 'menu', garage: 'garage', circuits: 'circuits', career: 'career', 'ai-labs': 'steering-lab', creation: 'creation', settings: 'menu' })[button.dataset.view] ?? 'menu');
+  if (button.dataset.view === 'career') refreshCareerPanel(menu, careerStore, tutorialGuide.snapshot());
+  if (button.dataset.view === 'circuits') { menu.querySelector('#showroom-badge-title').textContent = 'CIRCUIT 3D · APERÇU'; previewCircuit(menu.querySelector('#menu-track').value); }
+  else { menu.querySelector('#showroom-badge-title').textContent = 'SHOWROOM 3D'; showroom.setVehicle(); }
+  audioManager.unlock();
+}));
+let lastMenuHoverAt = 0;
+menu.addEventListener('pointerover', (event) => {
+  const control = event.target.closest?.('button, [role="button"]');
+  if (!control || control.contains(event.relatedTarget)) return;
+  const now = performance.now();
+  if (now - lastMenuHoverAt < 140) return;
+  lastMenuHoverAt = now;
+  audioManager.unlock().then((ready) => { if (ready) audioManager.event('ui-hover'); });
+});
+menu.addEventListener('click', (event) => {
+  if (!event.target.closest?.('button, [role="button"]')) return;
+  audioManager.unlock().then((ready) => { if (ready) audioManager.event('ui-confirm'); });
+});
+menu.addEventListener('change', (event) => {
+  if (!event.target.matches?.('select')) return;
+  audioManager.unlock().then((ready) => { if (ready) audioManager.event('ui-confirm'); });
+});
+menu.querySelectorAll('.back-home').forEach((button) => button.addEventListener('click', () => menu.querySelector('[data-view="home"]').click()));
+menu.querySelectorAll('.launch-from-panel').forEach((button) => button.addEventListener('click', () => {
+  if (getPanelCtaAction(button.closest('[data-panel]')?.dataset.panel) === 'circuits') menu.querySelector('[data-view="circuits"]').click();
+  else menu.querySelector('#launch-simulation').click();
+}));
+menu.querySelectorAll('[data-color]').forEach((button) => button.addEventListener('click', () => { selectedLivery = button.dataset.color; showroom.setColor(selectedLivery); menu.querySelectorAll('[data-color]').forEach((item) => item.classList.toggle('selected', item === button)); preferences.livery = selectedLivery; careerStore.setProfile({ livery: selectedLivery }); localStorage.setItem('neurodrive-game-preferences', JSON.stringify(preferences)); }));
+menu.querySelectorAll('[data-camera]').forEach((button) => button.addEventListener('click', () => { showroom.setView(button.dataset.camera); menu.querySelectorAll('[data-camera]').forEach((item) => item.classList.toggle('selected', item === button)); }));
+menu.querySelector('#camera-reset').addEventListener('click', () => { showroom.resetCamera(); menu.querySelectorAll('[data-camera]').forEach((item) => item.classList.toggle('selected', item.dataset.camera === 'threeQuarter')); });
+menu.querySelectorAll('[data-track]').forEach((button) => button.addEventListener('click', () => { menu.querySelector('#menu-track').value = button.dataset.track; if (labTrackSelect) labTrackSelect.value = button.dataset.track; menu.querySelectorAll('[data-track]').forEach((item) => item.classList.toggle('selected', item === button)); previewCircuit(button.dataset.track); }));
+menu.querySelector('#audio-enabled').checked = audioManager.settings.enabled;
+menu.querySelectorAll('[data-volume]').forEach((input) => { input.value = audioManager.settings[input.dataset.volume]; input.addEventListener('input', () => audioManager.setVolume(input.dataset.volume, input.value)); });
+menu.querySelector('#audio-enabled').addEventListener('change', (event) => { audioManager.setEnabled(event.target.checked); if (event.target.checked) audioManager.unlock(); });
+menu.querySelector('#haptics-enabled').checked = hapticsManager.settings.enabled; menu.querySelector('#haptics-intensity').value = hapticsManager.settings.intensity;
+menu.querySelector('#haptics-enabled').disabled = !hapticsManager.isSupported();
+if (!hapticsManager.isSupported()) menu.querySelector('#haptics-support-note').textContent = 'API de vibration non détectée sur cet appareil : option désactivée.';
+menu.querySelector('#haptics-enabled').addEventListener('change', (event) => hapticsManager.setEnabled(event.target.checked));
+menu.querySelector('#haptics-intensity').addEventListener('input', (event) => hapticsManager.setIntensity(event.target.value));
+Object.entries(settingsControls).filter(([key]) => key !== 'model').forEach(([, control]) => control.addEventListener('input', saveVisualSettings));
+Object.entries(settingsControls).filter(([key]) => key !== 'model').forEach(([, control]) => control.addEventListener('change', saveVisualSettings));
+settingsControls.model.addEventListener('change', () => { preferences.configuration = settingsControls.model.value; localStorage.setItem('neurodrive-game-preferences', JSON.stringify(preferences)); });
+menu.querySelector('#haptics-test').disabled = !hapticsManager.isSupported();
+menu.querySelector('#haptics-test').addEventListener('click', () => {
+  const sent = hapticsManager.pulse('collision');
+  menu.querySelector('#haptics-support-note').textContent = sent ? 'Impulsion de test envoyée au périphérique compatible.' : 'Test non envoyé : activez les vibrations et vérifiez le périphérique.';
+});
+menu.querySelector('#settings-reset').addEventListener('click', () => {
+  gameSettings = resetGameSettings();
+  audioManager.resetSettings(); hapticsManager.resetSettings();
+  preferences.configuration = 'A'; preferences.livery = '#e10600'; selectedLivery = preferences.livery;
+  localStorage.setItem('neurodrive-game-preferences', JSON.stringify(preferences));
+  showroom.setColor(selectedLivery); syncSettingsForm(); showroom.applySettings(); showroom.resetCamera();
+  menu.querySelectorAll('[data-color]').forEach((button) => button.classList.toggle('selected', button.dataset.color === selectedLivery));
+  menu.querySelector('#audio-enabled').checked = audioManager.settings.enabled;
+  menu.querySelectorAll('[data-volume]').forEach((input) => { input.value = audioManager.settings[input.dataset.volume]; });
+  menu.querySelector('#haptics-enabled').checked = hapticsManager.settings.enabled;
+  menu.querySelector('#haptics-intensity').value = hapticsManager.settings.intensity;
+});
+
+bindCareerPanel(menu, careerStore, {
+  onChampionshipStart: (round) => launch({ championshipRound: round }),
+  onTutorial: () => continueTutorial(),
+  onTutorialChapter: (chapterId) => { tutorialGuide.selectChapter(chapterId); continueTutorial(); },
+  onTutorialRestart: () => { tutorialGuide.reset(); continueTutorial(); },
+  onDemo: () => startProfessorDemo(),
+  onReplay: (replay) => openSavedReplay(replay),
+  onImportReplay: async (replay) => {
+    const { createGeneralizationTracks } = await import('./ai/training/GeneralizationTracks.js');
+    const knownTrack = createGeneralizationTracks().find((track) => track.id === replay.track?.id);
+    const compatible = upgradeRaceReplay(replay, { knownTrack });
+    return careerStore.importReplay(compatible);
+  },
+  onCompliance: () => openComplianceReport(),
+  onUpdate: (profile) => { menu.querySelector('.profile-chip b').textContent = profile.name; selectedLivery = profile.livery; showroom.setColor(selectedLivery); },
+});
+
+bindMainMenuEntries(menu, {
+  'quick-race': () => launch(),
+  championship: () => menu.querySelector('[data-view="career"]')?.click(),
+  tutorial: () => continueTutorial(),
+  ...createIntegratedLabEntryActions({ steering: () => launchIntegratedSteeringLab(), neural: () => launchIntegratedNeuralLab() }),
+  'circuit-studio': () => launch({ mode: 'circuit-studio' }),
+});
+
+async function returnToIntegratedLabs() {
+  if (navigation.state === 'simulation') await navigation.returnToMenu();
+  menu.querySelector('[data-view="ai-labs"]')?.click();
+}
+
+function launchIntegratedSteeringLab({ professorMode = false } = {}) {
+  if (labLaunchPending || navigation.state !== 'menu') return Promise.resolve(null);
+  labLaunchPending = true;
+  labLaunchStatus.hidden = false;
+  labLaunchStatus.dataset.state = 'loading';
+  labLaunchStatus.setAttribute('role', 'status');
+  labLaunchStatus.textContent = 'Initialisation de la scène F1 et des contrôleurs Steering…';
+  syncLabLaunchButtons();
+  return launchSteeringLab(navigation, {
+    documentRef: document, livery: selectedLivery, onReturn: returnToIntegratedLabs, professorMode,
+    createSession: async (options) => {
+      const { RaceSession } = await import('./game/RaceSession.js');
+      return new RaceSession(options);
+    },
+  }).catch((error) => { showLabLaunchError('Steering Lab', error); return null; });
+}
+
+function launchIntegratedNeuralLab({ trackDefinition = null, configurations = null, onReturn = returnToIntegratedLabs, tutorial = false, professorMode = false } = {}) {
+  if (labLaunchPending || navigation.state !== 'menu') return Promise.resolve(null);
+  const selectedModels = configurations ?? [...menu.querySelectorAll('[data-neural-model]:checked')].map((input) => input.dataset.neuralModel);
+  if (!selectedModels.length) {
+    labLaunchStatus.hidden = false;
+    labLaunchStatus.dataset.state = 'error';
+    labLaunchStatus.setAttribute('role', 'alert');
+    labLaunchStatus.textContent = 'Sélectionnez au moins un modèle A, B ou C avant de lancer Neural Lab.';
+    return null;
+  }
+  labLaunchPending = true;
+  labLaunchStatus.hidden = false;
+  labLaunchStatus.dataset.state = 'loading';
+  labLaunchStatus.setAttribute('role', 'status');
+  labLaunchStatus.textContent = 'Chargement des modèles sélectionnés et préparation de la grille F1…';
+  syncLabLaunchButtons();
+  const requestedSeed = Number(menu.querySelector('#neural-lab-seed')?.value);
+  const seed = Number.isInteger(requestedSeed) && requestedSeed >= 0 && requestedSeed <= 0xffffffff ? requestedSeed >>> 0 : 13013;
+  audioManager.unlock();
+  return launchNeuralLab(navigation, {
+    documentRef: document, livery: selectedLivery, onReturn, configurations: selectedModels, seed, trackDefinition, tutorial, professorMode,
+    createSession: async (options) => {
+      const { RaceSession } = await import('./game/RaceSession.js');
+      return new RaceSession(options);
+    },
+  }).catch((error) => { showLabLaunchError('Neural Lab', error); return null; });
+}
+
+async function previewCircuit(trackId) {
+  const { createGeneralizationTracks } = await import('./ai/training/GeneralizationTracks.js');
+  const circuit = createGeneralizationTracks().find((track) => track.id === trackId) ?? createGeneralizationTracks()[0];
+  showroom.setCircuit(circuit);
+}
+
+const launchButton = document.querySelector('#launch-simulation');
+const navigation = new SessionNavigation({ onStateChange(state) {
+  // Gate REDLINE at the application lifecycle boundary. In particular, loading
+  // fades the menu track out before an async 3D session is constructed.
+  audioManager.setAppState(state);
+  launchButton.disabled = state !== 'menu';
+  if (state === 'simulation') {
+    menu.classList.add('menu-dismissed'); showroom.setActive(false);
+    audioManager.setScene(navigation.session?.laboratory?.type === 'steering' ? 'steering-lab' : navigation.session?.laboratory?.type === 'neural' ? 'neural-lab' : navigation.session?.tutorialGuide ? 'tutorial' : navigation.session?.championshipRound ? 'career' : 'race');
+    audioManager.unlock();
+    labLaunchPending = false; labLaunchStatus.hidden = true;
+  }
+  if (state === 'menu') {
+    menu.classList.remove('menu-dismissed'); showroom.setActive(true);
+    const activeMenu = menu.querySelector('[data-view].active')?.dataset.view ?? 'home';
+    audioManager.setScene(({ home: 'menu', garage: 'garage', circuits: 'circuits', career: 'career', 'ai-labs': 'steering-lab', creation: 'creation', settings: 'menu' })[activeMenu] ?? 'menu');
+    audioManager.unlock().then((ready) => { if (ready) audioManager.event('menu'); });
+    menu.querySelector('#audio-enabled').checked = audioManager.settings.enabled;
+    refreshCareerPanel(menu, careerStore, tutorialGuide.snapshot());
+    if (!labLaunchPending && labLaunchStatus.dataset.state === 'loading') labLaunchStatus.hidden = true;
+  }
+  syncLabLaunchButtons();
+} });
+
+async function launch({ mode = 'race', tutorial = false, tutorialSession = tutorialGuide, professorMode = false, initialScenario = null, championshipRound = null } = {}) {
+  audioManager.unlock(); audioManager.event('menu');
+  if (mode === 'neural-racing') return launchIntegratedNeuralLab({ tutorial, professorMode });
+  try {
+    const onReturn = () => navigation.returnToMenu();
+    if (mode === 'race') {
+      await launchMenuRace(navigation, { documentRef: document, livery: selectedLivery, onReturn, createSession: async (options) => {
+        const { RaceSession } = await import('./game/RaceSession.js');
+        if (!championshipRound) return new RaceSession(options);
+        const season = championshipRound.season;
+        return new RaceSession({
+          ...options,
+          trackId: championshipRound.trackId,
+          laps: season.laps,
+          formationLap: season.formationLap,
+          aiDifficulty: season.difficulty,
+          initialConditions: { day: 'day', weather: season.weather },
+          championshipRound: { trackId: championshipRound.trackId, seasonId: season.id, roundIndex: championshipRound.index, roundTotal: season.rounds.length },
+          onChampionshipAdvance: async () => { if (navigation.state === 'simulation') await navigation.returnToMenu(); menu.querySelector('[data-view="career"]')?.click(); },
+        });
+      }, tutorial: tutorial ? tutorialSession : false, professorMode });
+    } else {
+      await navigation.launch(async () => {
+        if (mode === 'academy') {
+        const { SteeringAcademy } = await import('./academy/SteeringAcademy.js');
+          return new SteeringAcademy({ onReturn, initialScenario: initialScenario ?? undefined, onTutorialEvent: tutorial ? (event, details) => tutorialSession.observe(event, { mode: 'academy', ...details }) : null });
+        }
+        if (mode === 'circuit-studio') {
+        const { CircuitStudio } = await import('./circuits/CircuitStudio.js');
+          return new CircuitStudio({ onReturn, onTest: (request) => launchCircuitTest(request), onTutorialEvent: tutorial ? (event, details) => tutorialSession.observe(event, { mode: 'circuit-studio', ...details }) : null });
+        }
+        throw new Error(`Mode de jeu inconnu : ${mode}`);
+      });
+    }
+  } catch (error) {
+    document.querySelector('.menu-copy').textContent = `Impossible de lancer la simulation : ${error.message}`;
+    return null;
+  }
+}
+
+async function continueTutorial() {
+  const step = tutorialGuide.current;
+  if (!step) { refreshCareerPanel(menu, careerStore, tutorialGuide.snapshot()); return; }
+  if (navigation.state === 'simulation') await navigation.returnToMenu();
+  const route = step.mode === 'race' ? 'race' : step.mode === 'academy' ? 'academy' : step.mode === 'circuit-studio' ? 'circuit-studio' : 'neural-racing';
+  await launch({ mode: route, tutorial: true, tutorialSession: tutorialGuide });
+}
+
+async function startProfessorDemo() {
+  if (professorDemo) professorDemo.dispose();
+  professorDemo = new ProfessorDemo({
+    host: document.body,
+    onExit: async () => { if (navigation.state === 'simulation') await navigation.returnToMenu(); professorDemo = null; },
+    onNavigate: async (step) => {
+      if (navigation.state === 'simulation') await navigation.returnToMenu();
+      const routes = {
+        'steering-lab': () => launchIntegratedSteeringLab({ professorMode: true }),
+        'neural-lab': () => launchIntegratedNeuralLab({ configurations: ['A', 'B', 'C'], professorMode: true, onReturn: returnToIntegratedLabs }),
+      };
+      if (routes[step.mode]) await routes[step.mode]();
+    },
+  });
+}
+
+async function openSavedReplay(replay) {
+  if (navigation.state === 'simulation') await navigation.returnToMenu();
+  try {
+    await navigation.launch(async () => {
+      const { RaceReplayViewer } = await import('./game/RaceReplayViewer.js');
+      return new RaceReplayViewer({ app, replay, onClose: () => navigation.returnToMenu() });
+    });
+  } catch (error) { document.querySelector('#career-replay-message').textContent = `Replay non lisible : ${error.message}`; }
+}
+
+function openComplianceReport() { new ComplianceReport({ host: document.body }); }
+
+async function launchCircuitTest({ mode, trackDefinition }) {
+  await navigation.returnToMenu();
+  if (mode === 'neural') {
+    return launchIntegratedNeuralLab({
+      trackDefinition,
+      configurations: [preferences.configuration ?? 'A'],
+      onReturn: () => navigation.returnToMenu(),
+    });
+  }
+  try {
+    await navigation.launch(async () => {
+      if (mode === 'race') {
+        const { RaceSession } = await import('./game/RaceSession.js');
+        return new RaceSession({ trackDefinition, onReturn: () => navigation.returnToMenu() });
+      }
+      if (mode === 'academy') {
+        const { SteeringAcademy } = await import('./academy/SteeringAcademy.js');
+        return new SteeringAcademy({ trackDefinition, onReturn: () => navigation.returnToMenu() });
+      }
+    });
+  } catch (error) {
+    document.querySelector('.menu-copy').textContent = `Impossible de tester le circuit : ${error.message}`;
+  }
+}
+

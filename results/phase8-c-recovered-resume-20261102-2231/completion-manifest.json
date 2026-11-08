@@ -1,0 +1,101 @@
+{
+  "attemptId": "resume-20261102-2231",
+  "status": "training-complete",
+  "seed2028Generations": 250,
+  "seed2028CandidateEvaluations": 4000,
+  "seed2028PhysicalEpisodes": 12000,
+  "replayValidation": {
+    "result": "validated",
+    "generation": 94,
+    "historyEntriesCompared": 94,
+    "comparedFields": "every serialized statistic and fitness field in every generation row",
+    "bestNetworkExact": true,
+    "bestFitnessExact": true,
+    "bestGeneration": 90,
+    "candidateEvaluations": 1504,
+    "physicalEpisodeEvaluations": 4512,
+    "scenarioOrder": "verified all 4,512 calls: 16 candidates in population order, each on original/technical/fast-oval track order, with the recorded generation/track seed formula and exact initial conditions",
+    "scenarioTraceSha256": "074f017c560acf3d3872f213fd7fd3d243f3eb63ec1d9ddeba4bea6421cbf534",
+    "rng": "same seed-2028 xorshift stream replayed from initialization; full uint32 state retained in the continuation checkpoint",
+    "protocol": {
+      "configuration": "C",
+      "generations": 250,
+      "populationSize": 16,
+      "eliteCount": 6,
+      "seeds": [
+        2026,
+        2027,
+        2028
+      ],
+      "mutationRate": 0.08,
+      "mutationSigma": 0.12,
+      "tournamentSize": 3,
+      "architecture": [
+        7,
+        16,
+        16,
+        2
+      ],
+      "circuits": [
+        {
+          "id": "original",
+          "label": "Original training circuit",
+          "waypointCount": 44,
+          "waypointPolylineLength": 491.16429670025263,
+          "meanWaypointTurnRadians": 0.142799666072263,
+          "maxWaypointTurnRadians": 0.40049595895082085,
+          "meanTurnRadiansPerMeter": 0.012792430861508788
+        },
+        {
+          "id": "technical",
+          "label": "Technical, tighter turns",
+          "waypointCount": 56,
+          "waypointPolylineLength": 415.70131312734696,
+          "meanWaypointTurnRadians": 0.11342207791337236,
+          "maxWaypointTurnRadians": 0.3641917979868119,
+          "meanTurnRadiansPerMeter": 0.015279327157677457
+        },
+        {
+          "id": "fast-oval",
+          "label": "Fast elongated circuit",
+          "waypointCount": 56,
+          "waypointPolylineLength": 525.7479592283062,
+          "meanWaypointTurnRadians": 0.11219973762820652,
+          "maxWaypointTurnRadians": 0.3079844960946959,
+          "meanTurnRadiansPerMeter": 0.01195094568964573
+        }
+      ],
+      "trainingScenarioSeedFormula": "uint32(trainingSeed * 65537 + generation * 313 + trackIndex * 7919); same scenario suite for all candidates within a generation.",
+      "validationScenarioSeed": 731001,
+      "trainingScenariosUsedForSelection": true,
+      "validationScenariosUsedForSelection": false,
+      "heldOutFinalTrackUsedForSelection": false,
+      "rewardWeightsChanged": false,
+      "eliteFractionMatchesPhase7": true,
+      "comparisonBudgetEpisodesA": 3600,
+      "comparisonBudgetEpisodesB": 14400,
+      "expectedPhysicalEpisodes": 36000,
+      "fitnessDefinition": "Per-circuit performance = 0.65 * normalized existing reward per 100 m (fixed lap bonus removed) + 0.35 * physical score; physical score combines capped normalized progress (0.30), completed-lap indicator (0.35), normalized pace (0.20), on-track fraction (0.15). Candidate fitness = 0.40 * mean circuit performance + 0.40 * worst circuit performance + 20 * circuit success rate - 3 * mean off-track events per normalized circuit distance."
+    }
+  },
+  "historicalArtifactSha256": {
+    "results/phase7-multitrack-training.json": "a6c838b8320d2a3b550f97cc2ed19ca413dec3a1f20a5107d59cf9b3bde45cfb",
+    "results/phase7-multitrack-generation-statistics.csv": "7da1ae454ffd713a7cdc1c2bc6224776d4d52754890d93e6b075651076aacf52",
+    "results/phase7-multitrack-validation.json": "53001f6136141f4a799b729c69e6d128eb795b386c32dce4c794207af7e9f36b",
+    "results/phase7-multitrack-validation.csv": "a5ae90f573f694148228f11675d614a767eff3ab7da69bfd15d31868d44167c6",
+    "results/phase7-multitrack-test.json": "1600cb5c206b1726b6304d06585a6bdfffe5b67bb73488458b2c37261ea37714",
+    "results/phase7-multitrack-test.csv": "fc78193e7c797f1c848a1664ba8006b2a80ca379846e6b98cad1a8f0a4724bac",
+    "results/phase8-b/training.json": "b589a5c62cf04c74ecfcc84ab7bbdd9275a747b04f2272e7b4135bed8e041f37",
+    "results/phase8-b/generation-statistics.csv": "d19a55c09781cb304aae031bb3bde93765429a13bc4e1480d182a53c5803f299",
+    "results/phase8-b/generation-statistics.json": "337b185f69ff40066ca36532c1a757f3b8450debd7fc8231af82e20b8bb29309",
+    "results/phase8-b/generation-circuit-statistics.csv": "55f1aaba5cbb6ee1a31d2a2e47b2f814689a143681327b90c62b6c93074d222b",
+    "results/phase8-b/validation.json": "b1a26d644023a082252f6b05df5a578115fed28b852f0a59940ff8bc55acf225",
+    "results/phase8-b/validation.csv": "49a23ddcedb7eabf73ca78cc58a0ffeaa7107b9bf1bcd66e58ebfff376468941",
+    "results/phase8-b/comparison-summary.json": "71473fbaeab67407f74a904ce4987bc080c8ed37951badb477332ef8be2637bc",
+    "results/phase8-b/held-out-final.json": "03025426c22abc2adabf2746c0d16534ccd38a0f75679f2a8ad8f65b59ef521e",
+    "results/phase8-b/held-out-final.csv": "bb9665e8b174b680b545a305d64d42592807ada60c5bbf9bac27ac78dea2a40e",
+    "results/phase8-b/models/seed-2026.json": "c7b977200132a658f13f760ccb48900d4e9533ebd697a1c666a97a4eec73fff3",
+    "results/phase8-b/models/seed-2027.json": "b008e832e226e69a2c80a9157abb7957326eff343a13f36e35d639f42aa9fe64",
+    "results/phase8-b/models/seed-2028.json": "183593d529423e53d7fb6ff54a7cf22e4f053423cead61e7da8e567ae72edeee"
+  }
+}

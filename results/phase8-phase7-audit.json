@@ -1,0 +1,715 @@
+{
+  "scope": "Initial observations on phase 7 training starts and the saved independent validation starts. No physics episodes were run; full in-episode observation/activation traces were not present in phase 7 artifacts.",
+  "scenarioBalance": {
+    "trainingStartsPerSeedPerCircuit": [
+      {
+        "seed": 2026,
+        "starts": 50
+      },
+      {
+        "seed": 2027,
+        "starts": 50
+      },
+      {
+        "seed": 2028,
+        "starts": 50
+      }
+    ],
+    "validationStartsPerCircuit": 30,
+    "trainingInitialSpeedsMetersPerSecond": [
+      0,
+      7,
+      14,
+      21
+    ],
+    "trainingHeadingPerturbationDegrees": [
+      -10,
+      10
+    ],
+    "validationInitialSpeedsMetersPerSecond": [
+      0,
+      7,
+      14,
+      21
+    ],
+    "validationHeadingPerturbationDegrees": [
+      -15,
+      15
+    ]
+  },
+  "diversityLimitations": "Phase 7 stored only fitness metrics per generation; it stored neither population members, parent identities, nor generation best-network snapshots. Within-run genetic diversity cannot be reconstructed. Cross-seed best-model parameter distance is only a coarse between-run proxy.",
+  "activationLimitations": "Tanh saturation rates cover episode-start observations only; they do not estimate the activation distribution over full trajectories.",
+  "crossSeedBestModelRmsDistances": [
+    {
+      "seeds": [
+        2026,
+        2027
+      ],
+      "parameterRmsDistance": 0.4219786597262728
+    },
+    {
+      "seeds": [
+        2026,
+        2028
+      ],
+      "parameterRmsDistance": 0.40756684894228046
+    },
+    {
+      "seeds": [
+        2027,
+        2028
+      ],
+      "parameterRmsDistance": 0.40971168419723997
+    }
+  ],
+  "networks": [
+    {
+      "trainingSeed": 2026,
+      "generations": 50,
+      "parameterCount": 434,
+      "bestSoFarSnapshotsAvailable": 0,
+      "bestSoFarUniqueSnapshots": 0,
+      "bestSoFarSnapshotChangeFraction": 0,
+      "observations": {
+        "trainingStarts": {
+          "sensorOuterLeft": {
+            "count": 150,
+            "mean": 0.2092878943681717,
+            "sd": 0.011569918828118388,
+            "min": 0.19043366611003876,
+            "max": 0.2352973371744156,
+            "outsideNominalRange": 0
+          },
+          "sensorFrontLeft": {
+            "count": 150,
+            "mean": 0.33856171250343325,
+            "sd": 0.056416176525203,
+            "min": 0.22945383191108704,
+            "max": 0.4844609797000885,
+            "outsideNominalRange": 0
+          },
+          "sensorFront": {
+            "count": 150,
+            "mean": 0.8363937518994013,
+            "sd": 0.19402037459404878,
+            "min": 0.30072158575057983,
+            "max": 1,
+            "outsideNominalRange": 0
+          },
+          "sensorFrontRight": {
+            "count": 150,
+            "mean": 0.5525625071922938,
+            "sd": 0.24972399340101087,
+            "min": 0.29046541452407837,
+            "max": 1,
+            "outsideNominalRange": 0
+          },
+          "sensorOuterRight": {
+            "count": 150,
+            "mean": 0.22734901279211045,
+            "sd": 0.09137460937962057,
+            "min": 0.19444681704044342,
+            "max": 1,
+            "outsideNominalRange": 0
+          },
+          "speedRatio": {
+            "count": 150,
+            "mean": 0.30916666666666665,
+            "sd": 0.2425221925698531,
+            "min": 0,
+            "max": 0.65625,
+            "outsideNominalRange": 0
+          },
+          "headingErrorRatio": {
+            "count": 150,
+            "mean": 0.000041197277071963374,
+            "sd": 0.03348825637867271,
+            "min": -0.08093195408582687,
+            "max": 0.06880389899015427,
+            "outsideNominalRange": 0
+          }
+        },
+        "validationStarts": {
+          "sensorOuterLeft": {
+            "count": 90,
+            "mean": 0.2101167764928606,
+            "sd": 0.01699521449153812,
+            "min": 0.18844112753868103,
+            "max": 0.25535687804222107,
+            "outsideNominalRange": 0
+          },
+          "sensorFrontLeft": {
+            "count": 90,
+            "mean": 0.3435151285595364,
+            "sd": 0.08664873080163142,
+            "min": 0.2406151294708252,
+            "max": 0.6595296859741211,
+            "outsideNominalRange": 0
+          },
+          "sensorFront": {
+            "count": 90,
+            "mean": 0.8067976868814892,
+            "sd": 0.21660956642607573,
+            "min": 0.3698963224887848,
+            "max": 1,
+            "outsideNominalRange": 0
+          },
+          "sensorFrontRight": {
+            "count": 90,
+            "mean": 0.5601000901725557,
+            "sd": 0.25494030720739524,
+            "min": 0.26020482182502747,
+            "max": 1,
+            "outsideNominalRange": 0
+          },
+          "sensorOuterRight": {
+            "count": 90,
+            "mean": 0.24129563735591042,
+            "sd": 0.1181809451099352,
+            "min": 0.1888611912727356,
+            "max": 1,
+            "outsideNominalRange": 0
+          },
+          "speedRatio": {
+            "count": 90,
+            "mean": 0.31354166666666666,
+            "sd": 0.2441347568739217,
+            "min": 0,
+            "max": 0.65625,
+            "outsideNominalRange": 0
+          },
+          "headingErrorRatio": {
+            "count": 90,
+            "mean": 0.0029787404760200946,
+            "sd": 0.045283260045510615,
+            "min": -0.08811099082231522,
+            "max": 0.10265816003084183,
+            "outsideNominalRange": 0
+          }
+        }
+      },
+      "tanhActivationRates": {
+        "trainingStarts": [
+          {
+            "layer": 1,
+            "activationCount": 2400,
+            "absAbove095": 0,
+            "absAbove099": 0,
+            "values": {
+              "count": 2400,
+              "mean": 0.0404184841048852,
+              "sd": 0.3453340311359701,
+              "min": -0.6296890200415964,
+              "max": 0.7210095003914835,
+              "outsideNominalRange": 1080
+            }
+          },
+          {
+            "layer": 2,
+            "activationCount": 2400,
+            "absAbove095": 0,
+            "absAbove099": 0,
+            "values": {
+              "count": 2400,
+              "mean": -0.06446746853362209,
+              "sd": 0.4160489453904122,
+              "min": -0.8534941581223383,
+              "max": 0.7236573786064581,
+              "outsideNominalRange": 1394
+            }
+          },
+          {
+            "layer": 3,
+            "activationCount": 300,
+            "absAbove095": 0,
+            "absAbove099": 0,
+            "values": {
+              "count": 300,
+              "mean": 0.22968228749133734,
+              "sd": 0.2735074918779979,
+              "min": -0.2715072012552544,
+              "max": 0.8766006563308776,
+              "outsideNominalRange": 84
+            }
+          }
+        ],
+        "validationStarts": [
+          {
+            "layer": 1,
+            "activationCount": 1440,
+            "absAbove095": 0,
+            "absAbove099": 0,
+            "values": {
+              "count": 1440,
+              "mean": 0.040051909480418514,
+              "sd": 0.3435004415357529,
+              "min": -0.6576454711621429,
+              "max": 0.6759392070282887,
+              "outsideNominalRange": 650
+            }
+          },
+          {
+            "layer": 2,
+            "activationCount": 1440,
+            "absAbove095": 0,
+            "absAbove099": 0,
+            "values": {
+              "count": 1440,
+              "mean": -0.06537328751312747,
+              "sd": 0.41438366631844004,
+              "min": -0.8553861070559592,
+              "max": 0.7557662818649624,
+              "outsideNominalRange": 822
+            }
+          },
+          {
+            "layer": 3,
+            "activationCount": 180,
+            "absAbove095": 0,
+            "absAbove099": 0,
+            "values": {
+              "count": 180,
+              "mean": 0.23891323722062627,
+              "sd": 0.27178919837030735,
+              "min": -0.3222005296285863,
+              "max": 0.8310138626139925,
+              "outsideNominalRange": 49
+            }
+          }
+        ]
+      }
+    },
+    {
+      "trainingSeed": 2027,
+      "generations": 50,
+      "parameterCount": 434,
+      "bestSoFarSnapshotsAvailable": 0,
+      "bestSoFarUniqueSnapshots": 0,
+      "bestSoFarSnapshotChangeFraction": 0,
+      "observations": {
+        "trainingStarts": {
+          "sensorOuterLeft": {
+            "count": 150,
+            "mean": 0.20933445900678635,
+            "sd": 0.011706531676078283,
+            "min": 0.18885070085525513,
+            "max": 0.23487818241119385,
+            "outsideNominalRange": 0
+          },
+          "sensorFrontLeft": {
+            "count": 150,
+            "mean": 0.3397169115146001,
+            "sd": 0.06043187904562981,
+            "min": 0.22047151625156403,
+            "max": 0.4838653802871704,
+            "outsideNominalRange": 0
+          },
+          "sensorFront": {
+            "count": 150,
+            "mean": 0.8275285216172537,
+            "sd": 0.2052665456741007,
+            "min": 0.30005913972854614,
+            "max": 1,
+            "outsideNominalRange": 0
+          },
+          "sensorFrontRight": {
+            "count": 150,
+            "mean": 0.5548259214560191,
+            "sd": 0.25582375783815614,
+            "min": 0.2909710705280304,
+            "max": 1,
+            "outsideNominalRange": 0
+          },
+          "sensorOuterRight": {
+            "count": 150,
+            "mean": 0.2514762881398201,
+            "sd": 0.1624441113653238,
+            "min": 0.1945820301771164,
+            "max": 1,
+            "outsideNominalRange": 0
+          },
+          "speedRatio": {
+            "count": 150,
+            "mean": 0.3252083333333333,
+            "sd": 0.24843511966015505,
+            "min": 0,
+            "max": 0.65625,
+            "outsideNominalRange": 0
+          },
+          "headingErrorRatio": {
+            "count": 150,
+            "mean": -0.00009353110586137821,
+            "sd": 0.03493693215926559,
+            "min": -0.0782216265797615,
+            "max": 0.08875639736652374,
+            "outsideNominalRange": 0
+          }
+        },
+        "validationStarts": {
+          "sensorOuterLeft": {
+            "count": 90,
+            "mean": 0.2101167764928606,
+            "sd": 0.01699521449153812,
+            "min": 0.18844112753868103,
+            "max": 0.25535687804222107,
+            "outsideNominalRange": 0
+          },
+          "sensorFrontLeft": {
+            "count": 90,
+            "mean": 0.3435151285595364,
+            "sd": 0.08664873080163142,
+            "min": 0.2406151294708252,
+            "max": 0.6595296859741211,
+            "outsideNominalRange": 0
+          },
+          "sensorFront": {
+            "count": 90,
+            "mean": 0.8067976868814892,
+            "sd": 0.21660956642607573,
+            "min": 0.3698963224887848,
+            "max": 1,
+            "outsideNominalRange": 0
+          },
+          "sensorFrontRight": {
+            "count": 90,
+            "mean": 0.5601000901725557,
+            "sd": 0.25494030720739524,
+            "min": 0.26020482182502747,
+            "max": 1,
+            "outsideNominalRange": 0
+          },
+          "sensorOuterRight": {
+            "count": 90,
+            "mean": 0.24129563735591042,
+            "sd": 0.1181809451099352,
+            "min": 0.1888611912727356,
+            "max": 1,
+            "outsideNominalRange": 0
+          },
+          "speedRatio": {
+            "count": 90,
+            "mean": 0.31354166666666666,
+            "sd": 0.2441347568739217,
+            "min": 0,
+            "max": 0.65625,
+            "outsideNominalRange": 0
+          },
+          "headingErrorRatio": {
+            "count": 90,
+            "mean": 0.0029787404760200946,
+            "sd": 0.045283260045510615,
+            "min": -0.08811099082231522,
+            "max": 0.10265816003084183,
+            "outsideNominalRange": 0
+          }
+        }
+      },
+      "tanhActivationRates": {
+        "trainingStarts": [
+          {
+            "layer": 1,
+            "activationCount": 2400,
+            "absAbove095": 0,
+            "absAbove099": 0,
+            "values": {
+              "count": 2400,
+              "mean": 0.04825779441569947,
+              "sd": 0.4767379962453734,
+              "min": -0.8086736769483232,
+              "max": 0.7691923852454844,
+              "outsideNominalRange": 1220
+            }
+          },
+          {
+            "layer": 2,
+            "activationCount": 2400,
+            "absAbove095": 0,
+            "absAbove099": 0,
+            "values": {
+              "count": 2400,
+              "mean": -0.1460564648767825,
+              "sd": 0.40992189179425137,
+              "min": -0.8988285981461868,
+              "max": 0.7236404356926154,
+              "outsideNominalRange": 1431
+            }
+          },
+          {
+            "layer": 3,
+            "activationCount": 300,
+            "absAbove095": 0,
+            "absAbove099": 0,
+            "values": {
+              "count": 300,
+              "mean": 0.20564677768309633,
+              "sd": 0.35127893597721277,
+              "min": -0.49518889449509207,
+              "max": 0.8819858522758676,
+              "outsideNominalRange": 85
+            }
+          }
+        ],
+        "validationStarts": [
+          {
+            "layer": 1,
+            "activationCount": 1440,
+            "absAbove095": 0,
+            "absAbove099": 0,
+            "values": {
+              "count": 1440,
+              "mean": 0.048808497377014363,
+              "sd": 0.4738752180899127,
+              "min": -0.8080720996153776,
+              "max": 0.7643577327240154,
+              "outsideNominalRange": 725
+            }
+          },
+          {
+            "layer": 2,
+            "activationCount": 1440,
+            "absAbove095": 0,
+            "absAbove099": 0,
+            "values": {
+              "count": 1440,
+              "mean": -0.14485557565722484,
+              "sd": 0.41020865668012874,
+              "min": -0.9037342579582521,
+              "max": 0.7037940774729797,
+              "outsideNominalRange": 846
+            }
+          },
+          {
+            "layer": 3,
+            "activationCount": 180,
+            "absAbove095": 0,
+            "absAbove099": 0,
+            "values": {
+              "count": 180,
+              "mean": 0.22399003715614074,
+              "sd": 0.3364537772211502,
+              "min": -0.5403680243387392,
+              "max": 0.8817139095440737,
+              "outsideNominalRange": 49
+            }
+          }
+        ]
+      }
+    },
+    {
+      "trainingSeed": 2028,
+      "generations": 50,
+      "parameterCount": 434,
+      "bestSoFarSnapshotsAvailable": 0,
+      "bestSoFarUniqueSnapshots": 0,
+      "bestSoFarSnapshotChangeFraction": 0,
+      "observations": {
+        "trainingStarts": {
+          "sensorOuterLeft": {
+            "count": 150,
+            "mean": 0.20905599097410837,
+            "sd": 0.011467034082947173,
+            "min": 0.19140063226222992,
+            "max": 0.23319470882415771,
+            "outsideNominalRange": 0
+          },
+          "sensorFrontLeft": {
+            "count": 150,
+            "mean": 0.33820895592371625,
+            "sd": 0.056380457512556,
+            "min": 0.24530859291553497,
+            "max": 0.48095864057540894,
+            "outsideNominalRange": 0
+          },
+          "sensorFront": {
+            "count": 150,
+            "mean": 0.8320566928386688,
+            "sd": 0.19125188684062647,
+            "min": 0.3304128348827362,
+            "max": 1,
+            "outsideNominalRange": 0
+          },
+          "sensorFrontRight": {
+            "count": 150,
+            "mean": 0.556837557554245,
+            "sd": 0.26040782407103624,
+            "min": 0.29359641671180725,
+            "max": 1,
+            "outsideNominalRange": 0
+          },
+          "sensorOuterRight": {
+            "count": 150,
+            "mean": 0.22792588730653127,
+            "sd": 0.0913137738056775,
+            "min": 0.19543102383613586,
+            "max": 1,
+            "outsideNominalRange": 0
+          },
+          "speedRatio": {
+            "count": 150,
+            "mean": 0.3383333333333333,
+            "sd": 0.24952420000651007,
+            "min": 0,
+            "max": 0.65625,
+            "outsideNominalRange": 0
+          },
+          "headingErrorRatio": {
+            "count": 150,
+            "mean": -0.0002376810083903062,
+            "sd": 0.03417176160824842,
+            "min": -0.08167695254087448,
+            "max": 0.06639768183231354,
+            "outsideNominalRange": 0
+          }
+        },
+        "validationStarts": {
+          "sensorOuterLeft": {
+            "count": 90,
+            "mean": 0.2101167764928606,
+            "sd": 0.01699521449153812,
+            "min": 0.18844112753868103,
+            "max": 0.25535687804222107,
+            "outsideNominalRange": 0
+          },
+          "sensorFrontLeft": {
+            "count": 90,
+            "mean": 0.3435151285595364,
+            "sd": 0.08664873080163142,
+            "min": 0.2406151294708252,
+            "max": 0.6595296859741211,
+            "outsideNominalRange": 0
+          },
+          "sensorFront": {
+            "count": 90,
+            "mean": 0.8067976868814892,
+            "sd": 0.21660956642607573,
+            "min": 0.3698963224887848,
+            "max": 1,
+            "outsideNominalRange": 0
+          },
+          "sensorFrontRight": {
+            "count": 90,
+            "mean": 0.5601000901725557,
+            "sd": 0.25494030720739524,
+            "min": 0.26020482182502747,
+            "max": 1,
+            "outsideNominalRange": 0
+          },
+          "sensorOuterRight": {
+            "count": 90,
+            "mean": 0.24129563735591042,
+            "sd": 0.1181809451099352,
+            "min": 0.1888611912727356,
+            "max": 1,
+            "outsideNominalRange": 0
+          },
+          "speedRatio": {
+            "count": 90,
+            "mean": 0.31354166666666666,
+            "sd": 0.2441347568739217,
+            "min": 0,
+            "max": 0.65625,
+            "outsideNominalRange": 0
+          },
+          "headingErrorRatio": {
+            "count": 90,
+            "mean": 0.0029787404760200946,
+            "sd": 0.045283260045510615,
+            "min": -0.08811099082231522,
+            "max": 0.10265816003084183,
+            "outsideNominalRange": 0
+          }
+        }
+      },
+      "tanhActivationRates": {
+        "trainingStarts": [
+          {
+            "layer": 1,
+            "activationCount": 2400,
+            "absAbove095": 0,
+            "absAbove099": 0,
+            "values": {
+              "count": 2400,
+              "mean": -0.1033937781451685,
+              "sd": 0.3857442681666513,
+              "min": -0.8488948812901103,
+              "max": 0.6688465808379829,
+              "outsideNominalRange": 1192
+            }
+          },
+          {
+            "layer": 2,
+            "activationCount": 2400,
+            "absAbove095": 0,
+            "absAbove099": 0,
+            "values": {
+              "count": 2400,
+              "mean": -0.22010661339724044,
+              "sd": 0.3437286692799962,
+              "min": -0.8679604061820918,
+              "max": 0.5165091161054979,
+              "outsideNominalRange": 1759
+            }
+          },
+          {
+            "layer": 3,
+            "activationCount": 300,
+            "absAbove095": 0,
+            "absAbove099": 0,
+            "values": {
+              "count": 300,
+              "mean": 0.23495527993259283,
+              "sd": 0.3336276609043408,
+              "min": -0.36307705758134784,
+              "max": 0.7547547286452004,
+              "outsideNominalRange": 118
+            }
+          }
+        ],
+        "validationStarts": [
+          {
+            "layer": 1,
+            "activationCount": 1440,
+            "absAbove095": 0,
+            "absAbove099": 0,
+            "values": {
+              "count": 1440,
+              "mean": -0.10153851745177925,
+              "sd": 0.3836523572040161,
+              "min": -0.8457981662049958,
+              "max": 0.7192532452890623,
+              "outsideNominalRange": 722
+            }
+          },
+          {
+            "layer": 2,
+            "activationCount": 1440,
+            "absAbove095": 0,
+            "absAbove099": 0,
+            "values": {
+              "count": 1440,
+              "mean": -0.21978892929446153,
+              "sd": 0.3426580986803865,
+              "min": -0.8640035077055053,
+              "max": 0.5499267302074176,
+              "outsideNominalRange": 1047
+            }
+          },
+          {
+            "layer": 3,
+            "activationCount": 180,
+            "absAbove095": 0,
+            "absAbove099": 0,
+            "values": {
+              "count": 180,
+              "mean": 0.2265648082663773,
+              "sd": 0.33963398946454215,
+              "min": -0.3442488760869519,
+              "max": 0.7844868492568216,
+              "outsideNominalRange": 75
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

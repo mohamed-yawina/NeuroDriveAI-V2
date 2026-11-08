@@ -1,0 +1,74 @@
+{
+  "result": "validated",
+  "generation": 94,
+  "historyEntriesCompared": 94,
+  "comparedFields": "every serialized statistic and fitness field in every generation row",
+  "bestNetworkExact": true,
+  "bestFitnessExact": true,
+  "bestGeneration": 90,
+  "candidateEvaluations": 1504,
+  "physicalEpisodeEvaluations": 4512,
+  "scenarioOrder": "verified all 4,512 calls: 16 candidates in population order, each on original/technical/fast-oval track order, with the recorded generation/track seed formula and exact initial conditions",
+  "scenarioTraceSha256": "074f017c560acf3d3872f213fd7fd3d243f3eb63ec1d9ddeba4bea6421cbf534",
+  "rng": "same seed-2028 xorshift stream replayed from initialization; full uint32 state retained in the continuation checkpoint",
+  "protocol": {
+    "configuration": "C",
+    "generations": 250,
+    "populationSize": 16,
+    "eliteCount": 6,
+    "seeds": [
+      2026,
+      2027,
+      2028
+    ],
+    "mutationRate": 0.08,
+    "mutationSigma": 0.12,
+    "tournamentSize": 3,
+    "architecture": [
+      7,
+      16,
+      16,
+      2
+    ],
+    "circuits": [
+      {
+        "id": "original",
+        "label": "Original training circuit",
+        "waypointCount": 44,
+        "waypointPolylineLength": 491.16429670025263,
+        "meanWaypointTurnRadians": 0.142799666072263,
+        "maxWaypointTurnRadians": 0.40049595895082085,
+        "meanTurnRadiansPerMeter": 0.012792430861508788
+      },
+      {
+        "id": "technical",
+        "label": "Technical, tighter turns",
+        "waypointCount": 56,
+        "waypointPolylineLength": 415.70131312734696,
+        "meanWaypointTurnRadians": 0.11342207791337236,
+        "maxWaypointTurnRadians": 0.3641917979868119,
+        "meanTurnRadiansPerMeter": 0.015279327157677457
+      },
+      {
+        "id": "fast-oval",
+        "label": "Fast elongated circuit",
+        "waypointCount": 56,
+        "waypointPolylineLength": 525.7479592283062,
+        "meanWaypointTurnRadians": 0.11219973762820652,
+        "maxWaypointTurnRadians": 0.3079844960946959,
+        "meanTurnRadiansPerMeter": 0.01195094568964573
+      }
+    ],
+    "trainingScenarioSeedFormula": "uint32(trainingSeed * 65537 + generation * 313 + trackIndex * 7919); same scenario suite for all candidates within a generation.",
+    "validationScenarioSeed": 731001,
+    "trainingScenariosUsedForSelection": true,
+    "validationScenariosUsedForSelection": false,
+    "heldOutFinalTrackUsedForSelection": false,
+    "rewardWeightsChanged": false,
+    "eliteFractionMatchesPhase7": true,
+    "comparisonBudgetEpisodesA": 3600,
+    "comparisonBudgetEpisodesB": 14400,
+    "expectedPhysicalEpisodes": 36000,
+    "fitnessDefinition": "Per-circuit performance = 0.65 * normalized existing reward per 100 m (fixed lap bonus removed) + 0.35 * physical score; physical score combines capped normalized progress (0.30), completed-lap indicator (0.35), normalized pace (0.20), on-track fraction (0.15). Candidate fitness = 0.40 * mean circuit performance + 0.40 * worst circuit performance + 20 * circuit success rate - 3 * mean off-track events per normalized circuit distance."
+  }
+}

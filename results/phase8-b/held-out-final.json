@@ -1,0 +1,5278 @@
+{
+  "protocol": {
+    "split": "locked-final-test",
+    "scenarioSeed": 731001,
+    "scenarioCountPerModel": 30,
+    "circuit": {
+      "id": "phase8-chicane-test",
+      "label": "Phase 8 held-out chicane",
+      "waypointCount": 64
+    },
+    "initialSpeedsMetersPerSecond": [
+      0,
+      7,
+      14,
+      21
+    ],
+    "headingPerturbationDegrees": [
+      -15,
+      15
+    ],
+    "fixedDeltaTime": 0.03333333333333333,
+    "maxEpisodeTimeSeconds": 60,
+    "networksTrainedDuringEvaluation": false,
+    "thisCircuitUsedForHyperparameterSelection": false
+  },
+  "scenarios": [
+    {
+      "scenarioId": "phase8-chicane-test-01",
+      "seed": 734028,
+      "arcFraction": 0.023072415435065826,
+      "position": [
+        94.64200914302775,
+        0.08,
+        9.255030702101246
+      ],
+      "heading": [
+        0.3038002952693372,
+        0,
+        0.9527357349203731
+      ],
+      "headingErrorRadians": -0.24116709401939265,
+      "initialSpeedMetersPerSecond": 21
+    },
+    {
+      "scenarioId": "phase8-chicane-test-02",
+      "seed": 734029,
+      "arcFraction": 0.04127038213579605,
+      "position": [
+        98.61569011344724,
+        0.08,
+        17.30194424081498
+      ],
+      "heading": [
+        0.2331181920838487,
+        0,
+        0.9724484091814628
+      ],
+      "headingErrorRadians": -0.12201577154378745,
+      "initialSpeedMetersPerSecond": 0
+    },
+    {
+      "scenarioId": "phase8-chicane-test-03",
+      "seed": 734030,
+      "arcFraction": 0.09977072857630749,
+      "position": [
+        93.5750638941413,
+        0.08,
+        44.206024827103334
+      ],
+      "heading": [
+        -0.6808913594403462,
+        0,
+        0.7323844322754801
+      ],
+      "headingErrorRadians": -0.030082463082002204,
+      "initialSpeedMetersPerSecond": 21
+    },
+    {
+      "scenarioId": "phase8-chicane-test-04",
+      "seed": 734031,
+      "arcFraction": 0.13228671686568608,
+      "position": [
+        81.09949087585183,
+        0.08,
+        54.21054711641476
+      ],
+      "heading": [
+        -0.7641541260526654,
+        0,
+        0.6450336980628897
+      ],
+      "headingErrorRadians": 0.16992709838190945,
+      "initialSpeedMetersPerSecond": 14
+    },
+    {
+      "scenarioId": "phase8-chicane-test-05",
+      "seed": 734032,
+      "arcFraction": 0.14295687670043358,
+      "position": [
+        76.48075722620965,
+        0.08,
+        56.717711538547285
+      ],
+      "heading": [
+        -0.7468106822796896,
+        0,
+        0.6650366943507288
+      ],
+      "headingErrorRadians": 0.26156392260060257,
+      "initialSpeedMetersPerSecond": 0
+    },
+    {
+      "scenarioId": "phase8-chicane-test-06",
+      "seed": 734033,
+      "arcFraction": 0.17702968654533227,
+      "position": [
+        60.806974249255944,
+        0.08,
+        62.858757554122676
+      ],
+      "heading": [
+        -0.9623438839951323,
+        0,
+        0.2718349663622465
+      ],
+      "headingErrorRadians": -0.017689369397048373,
+      "initialSpeedMetersPerSecond": 7
+    },
+    {
+      "scenarioId": "phase8-chicane-test-07",
+      "seed": 734034,
+      "arcFraction": 0.20172630881424994,
+      "position": [
+        48.974870228808655,
+        0.08,
+        65.810265227811
+      ],
+      "heading": [
+        -0.9279795663097306,
+        0,
+        0.37263108366265457
+      ],
+      "headingErrorRadians": 0.18464267619050642,
+      "initialSpeedMetersPerSecond": 21
+    },
+    {
+      "scenarioId": "phase8-chicane-test-08",
+      "seed": 734035,
+      "arcFraction": 0.25321368703929087,
+      "position": [
+        23.720024994769915,
+        0.08,
+        68.55760234562288
+      ],
+      "heading": [
+        -0.9900750530118,
+        0,
+        -0.1405396364150762
+      ],
+      "headingErrorRadians": -0.16301587826566014,
+      "initialSpeedMetersPerSecond": 7
+    },
+    {
+      "scenarioId": "phase8-chicane-test-09",
+      "seed": 734036,
+      "arcFraction": 0.2826519118699556,
+      "position": [
+        9.188566648526583,
+        0.08,
+        68.16683854873195
+      ],
+      "heading": [
+        -0.9985439956751909,
+        0,
+        0.05394338421923978
+      ],
+      "headingErrorRadians": 0.12997746034579782,
+      "initialSpeedMetersPerSecond": 14
+    },
+    {
+      "scenarioId": "phase8-chicane-test-10",
+      "seed": 734037,
+      "arcFraction": 0.3201261703080187,
+      "position": [
+        -9.128350172423884,
+        0.08,
+        65.57022658984873
+      ],
+      "heading": [
+        -0.9592456558558877,
+        0,
+        -0.2825734802163998
+      ],
+      "headingErrorRadians": -0.07925255985389688,
+      "initialSpeedMetersPerSecond": 0
+    },
+    {
+      "scenarioId": "phase8-chicane-test-11",
+      "seed": 734038,
+      "arcFraction": 0.36485405754453193,
+      "position": [
+        -30.284404117150252,
+        0.08,
+        59.23209992985585
+      ],
+      "heading": [
+        -0.8645045151420176,
+        0,
+        -0.5026250523989676
+      ],
+      "headingErrorRadians": -0.14891576801375736,
+      "initialSpeedMetersPerSecond": 0
+    },
+    {
+      "scenarioId": "phase8-chicane-test-12",
+      "seed": 734039,
+      "arcFraction": 0.3972374830705424,
+      "position": [
+        -44.703065383282905,
+        0.08,
+        52.36912352269672
+      ],
+      "heading": [
+        -0.7272353954941788,
+        0,
+        -0.6863881405884177
+      ],
+      "headingErrorRadians": -0.24450337232591848,
+      "initialSpeedMetersPerSecond": 7
+    },
+    {
+      "scenarioId": "phase8-chicane-test-13",
+      "seed": 734040,
+      "arcFraction": 0.43254185617746166,
+      "position": [
+        -59.219146444629835,
+        0.08,
+        42.72550633545657
+      ],
+      "heading": [
+        -0.6689286936126986,
+        0,
+        -0.7433265788747287
+      ],
+      "headingErrorRadians": -0.1758065278627944,
+      "initialSpeedMetersPerSecond": 0
+    },
+    {
+      "scenarioId": "phase8-chicane-test-14",
+      "seed": 734041,
+      "arcFraction": 0.43406624174676833,
+      "position": [
+        -59.81051444184192,
+        0.08,
+        42.261209637619594
+      ],
+      "heading": [
+        -0.7802269038297007,
+        0,
+        -0.6254965855544848
+      ],
+      "headingErrorRadians": -0.006810317170379451,
+      "initialSpeedMetersPerSecond": 14
+    },
+    {
+      "scenarioId": "phase8-chicane-test-15",
+      "seed": 734042,
+      "arcFraction": 0.4917918702432265,
+      "position": [
+        -79.8607851959211,
+        0.08,
+        22.06483818928304
+      ],
+      "heading": [
+        -0.7103567529848442,
+        0,
+        -0.7038418028852998
+      ],
+      "headingErrorRadians": 0.1289469612232778,
+      "initialSpeedMetersPerSecond": 0
+    },
+    {
+      "scenarioId": "phase8-chicane-test-16",
+      "seed": 734043,
+      "arcFraction": 0.5153036856092512,
+      "position": [
+        -86.3840392647495,
+        0.08,
+        12.47815016443127
+      ],
+      "heading": [
+        -0.6428360923451708,
+        0,
+        -0.7660037587234093
+      ],
+      "headingErrorRadians": 0.18115794339549332,
+      "initialSpeedMetersPerSecond": 14
+    },
+    {
+      "scenarioId": "phase8-chicane-test-17",
+      "seed": 734044,
+      "arcFraction": 0.5553042252548039,
+      "position": [
+        -83.42738023668898,
+        0.08,
+        -4.439008433873999
+      ],
+      "heading": [
+        0.8785479580419192,
+        0,
+        -0.4776541483336812
+      ],
+      "headingErrorRadians": -0.16336594261486445,
+      "initialSpeedMetersPerSecond": 7
+    },
+    {
+      "scenarioId": "phase8-chicane-test-18",
+      "seed": 734045,
+      "arcFraction": 0.5908630751849463,
+      "position": [
+        -68.86808703020273,
+        0.08,
+        -14.289108612738556
+      ],
+      "heading": [
+        0.8875444638145848,
+        0,
+        -0.46072206887892997
+      ],
+      "headingErrorRadians": -0.10309177633485644,
+      "initialSpeedMetersPerSecond": 21
+    },
+    {
+      "scenarioId": "phase8-chicane-test-19",
+      "seed": 734046,
+      "arcFraction": 0.6226974841595317,
+      "position": [
+        -55.798043552736914,
+        0.08,
+        -23.027933262417076
+      ],
+      "heading": [
+        0.9428916727043658,
+        0,
+        -0.3330995249842954
+      ],
+      "headingErrorRadians": -0.25958593032738014,
+      "initialSpeedMetersPerSecond": 7
+    },
+    {
+      "scenarioId": "phase8-chicane-test-20",
+      "seed": 734047,
+      "arcFraction": 0.6558930105529726,
+      "position": [
+        -42.344234223450385,
+        0.08,
+        -32.40759008013151
+      ],
+      "heading": [
+        0.726618562000521,
+        0,
+        -0.6870410943723053
+      ],
+      "headingErrorRadians": 0.13999503010540695,
+      "initialSpeedMetersPerSecond": 21
+    },
+    {
+      "scenarioId": "phase8-chicane-test-21",
+      "seed": 734048,
+      "arcFraction": 0.6875709645993386,
+      "position": [
+        -29.639544724275748,
+        0.08,
+        -41.544766794990956
+      ],
+      "heading": [
+        0.6911289036041826,
+        0,
+        -0.7227315121142018
+      ],
+      "headingErrorRadians": 0.17972126397107624,
+      "initialSpeedMetersPerSecond": 7
+    },
+    {
+      "scenarioId": "phase8-chicane-test-22",
+      "seed": 734049,
+      "arcFraction": 0.702310636608551,
+      "position": [
+        -23.746073232585456,
+        0.08,
+        -45.82213834234139
+      ],
+      "heading": [
+        0.828826438473301,
+        0,
+        -0.5595057952225908
+      ],
+      "headingErrorRadians": -0.03437483125541341,
+      "initialSpeedMetersPerSecond": 21
+    },
+    {
+      "scenarioId": "phase8-chicane-test-23",
+      "seed": 734050,
+      "arcFraction": 0.7441917307286834,
+      "position": [
+        -6.868463290210563,
+        0.08,
+        -57.79334438168824
+      ],
+      "heading": [
+        0.8696941016961781,
+        0,
+        -0.4935910954169228
+      ],
+      "headingErrorRadians": -0.07821710997277695,
+      "initialSpeedMetersPerSecond": 14
+    },
+    {
+      "scenarioId": "phase8-chicane-test-24",
+      "seed": 734051,
+      "arcFraction": 0.7887296377370755,
+      "position": [
+        12.508633212956873,
+        0.08,
+        -68.01476260353428
+      ],
+      "heading": [
+        0.8836847976698818,
+        0,
+        -0.46808244825793255
+      ],
+      "headingErrorRadians": 0.2425324259538052,
+      "initialSpeedMetersPerSecond": 7
+    },
+    {
+      "scenarioId": "phase8-chicane-test-25",
+      "seed": 734052,
+      "arcFraction": 0.81617310710717,
+      "position": [
+        25.372883588720427,
+        0.08,
+        -65.66135543840751
+      ],
+      "heading": [
+        0.7185052815589502,
+        0,
+        0.695521502451142
+      ],
+      "headingErrorRadians": -0.1549635269443348,
+      "initialSpeedMetersPerSecond": 14
+    },
+    {
+      "scenarioId": "phase8-chicane-test-26",
+      "seed": 734053,
+      "arcFraction": 0.8349782287841663,
+      "position": [
+        32.24332130827767,
+        0.08,
+        -59.436796485648244
+      ],
+      "heading": [
+        0.6306514180975636,
+        0,
+        0.7760662271040611
+      ],
+      "headingErrorRadians": -0.07217153005867856,
+      "initialSpeedMetersPerSecond": 0
+    },
+    {
+      "scenarioId": "phase8-chicane-test-27",
+      "seed": 734054,
+      "arcFraction": 0.8879576971832042,
+      "position": [
+        49.74142835604507,
+        0.08,
+        -40.000122042008456
+      ],
+      "heading": [
+        0.7946795483531008,
+        0,
+        0.6070291718108047
+      ],
+      "headingErrorRadians": 0.16772143168037132,
+      "initialSpeedMetersPerSecond": 0
+    },
+    {
+      "scenarioId": "phase8-chicane-test-28",
+      "seed": 734055,
+      "arcFraction": 0.9187829862814396,
+      "position": [
+        60.316429782767926,
+        0.08,
+        -29.018202667072643
+      ],
+      "heading": [
+        0.8385334593017049,
+        0,
+        0.5448501056543132
+      ],
+      "headingErrorRadians": 0.2150948428092877,
+      "initialSpeedMetersPerSecond": 7
+    },
+    {
+      "scenarioId": "phase8-chicane-test-29",
+      "seed": 734056,
+      "arcFraction": 0.948766669157582,
+      "position": [
+        70.77450187234791,
+        0.08,
+        -18.52863723811576
+      ],
+      "heading": [
+        0.8518759636432323,
+        0,
+        0.5237435847501283
+      ],
+      "headingErrorRadians": 0.23508047303576898,
+      "initialSpeedMetersPerSecond": 14
+    },
+    {
+      "scenarioId": "phase8-chicane-test-30",
+      "seed": 734057,
+      "arcFraction": 0.9892744760261849,
+      "position": [
+        84.57396037854085,
+        0.08,
+        -4.038910773844251
+      ],
+      "heading": [
+        0.47065050917880674,
+        0,
+        0.8823197256152275
+      ],
+      "headingErrorRadians": -0.23355441017007753,
+      "initialSpeedMetersPerSecond": 21
+    }
+  ],
+  "steering": {
+    "scenarioCount": 30,
+    "completion": {
+      "rate": 1,
+      "ci95": [
+        0.8864866068260312,
+        0.9999999999999999
+      ],
+      "successes": 30,
+      "n": 30
+    },
+    "meanSignedProgressMeters": {
+      "mean": 707.4432849374455,
+      "sd": 144.11482273180778,
+      "ci95": [
+        653.6299858320589,
+        761.2565840428321
+      ],
+      "n": 30
+    },
+    "meanDistanceTravelledMeters": {
+      "mean": 707.4432849374455,
+      "sd": 144.11482273180778,
+      "ci95": [
+        653.6299858320589,
+        761.2565840428321
+      ],
+      "n": 30
+    },
+    "successfulLapTimeSeconds": {
+      "mean": 23.377777777778093,
+      "sd": 0.12076808252740037,
+      "ci95": [
+        23.332682285001994,
+        23.42287327055419
+      ],
+      "n": 30
+    },
+    "offTrackEvents": {
+      "mean": 4,
+      "sd": 1.0170952554312156,
+      "ci95": [
+        3.6202108141155884,
+        4.379789185884412
+      ],
+      "n": 30
+    },
+    "offTrackDurationSeconds": {
+      "mean": 5.635555555555545,
+      "sd": 1.5972661829699022,
+      "ci95": [
+        5.039127226909324,
+        6.231983884201766
+      ],
+      "n": 30
+    },
+    "blockedTimeSeconds": {
+      "mean": 0.06222222222222222,
+      "sd": 0.10494783719205417,
+      "ci95": [
+        0.02303409954181361,
+        0.10141034490263083
+      ],
+      "n": 30
+    },
+    "reward": {
+      "mean": 859.011786329899,
+      "sd": 136.77902350951433,
+      "ci95": [
+        807.93771661288,
+        910.085856046918
+      ],
+      "n": 30
+    },
+    "episodeDurationSeconds": {
+      "mean": 33.915555555555976,
+      "sd": 6.8474887492521725,
+      "ci95": [
+        31.35866409082431,
+        36.47244702028764
+      ],
+      "n": 30
+    }
+  },
+  "steeringEpisodes": [
+    {
+      "controller": "SteeringController",
+      "scenarioId": "phase8-chicane-test-01",
+      "reason": "objective",
+      "completedLaps": 1,
+      "signedProgressMeters": 482.66284058409195,
+      "distanceTravelledMeters": 482.66284058409195,
+      "lapTimeSeconds": 22.766666666666957,
+      "offTrackEvents": 2,
+      "offTrackDurationSeconds": 3.0666666666666655,
+      "blockedTimeSeconds": 0,
+      "episodeDurationSeconds": 22.766666666666957,
+      "meanLateralErrorMeters": 3.8987594999417823,
+      "reward": 648.6023969758161,
+      "lapValidationDistanceMeters": 469.05774978024,
+      "signedDistanceSinceStartCrossingMeters": 0,
+      "steps": 683
+    },
+    {
+      "controller": "SteeringController",
+      "scenarioId": "phase8-chicane-test-02",
+      "reason": "objective",
+      "completedLaps": 1,
+      "signedProgressMeters": 474.19410314130664,
+      "distanceTravelledMeters": 474.19410314130664,
+      "lapTimeSeconds": 23.300000000000317,
+      "offTrackEvents": 2,
+      "offTrackDurationSeconds": 3.0666666666666655,
+      "blockedTimeSeconds": 0.2333333333333333,
+      "episodeDurationSeconds": 23.300000000000317,
+      "meanLateralErrorMeters": 3.5944653960962243,
+      "reward": 640.2371590774568,
+      "lapValidationDistanceMeters": 469.05774978024,
+      "signedDistanceSinceStartCrossingMeters": 0,
+      "steps": 699
+    },
+    {
+      "controller": "SteeringController",
+      "scenarioId": "phase8-chicane-test-03",
+      "reason": "objective",
+      "completedLaps": 1,
+      "signedProgressMeters": 938.8302876115224,
+      "distanceTravelledMeters": 938.8302876115224,
+      "lapTimeSeconds": 23.400000000000322,
+      "offTrackEvents": 5,
+      "offTrackDurationSeconds": 7.233333333333317,
+      "blockedTimeSeconds": 0,
+      "episodeDurationSeconds": 44.10000000000006,
+      "meanLateralErrorMeters": 3.8911336678838304,
+      "reward": 1083.1620984823323,
+      "lapValidationDistanceMeters": 469.05774978024,
+      "signedDistanceSinceStartCrossingMeters": 0,
+      "steps": 1323
+    },
+    {
+      "controller": "SteeringController",
+      "scenarioId": "phase8-chicane-test-04",
+      "reason": "objective",
+      "completedLaps": 1,
+      "signedProgressMeters": 922.9872952481417,
+      "distanceTravelledMeters": 922.9872952481417,
+      "lapTimeSeconds": 23.400000000000322,
+      "offTrackEvents": 5,
+      "offTrackDurationSeconds": 7.3999999999999835,
+      "blockedTimeSeconds": 0,
+      "episodeDurationSeconds": 43.70000000000008,
+      "meanLateralErrorMeters": 3.8546587797595437,
+      "reward": 1066.9917235782734,
+      "lapValidationDistanceMeters": 469.05774978024,
+      "signedDistanceSinceStartCrossingMeters": 0,
+      "steps": 1311
+    },
+    {
+      "controller": "SteeringController",
+      "scenarioId": "phase8-chicane-test-05",
+      "reason": "objective",
+      "completedLaps": 1,
+      "signedProgressMeters": 917.7380864460554,
+      "distanceTravelledMeters": 917.7380864460554,
+      "lapTimeSeconds": 23.400000000000322,
+      "offTrackEvents": 5,
+      "offTrackDurationSeconds": 7.36666666666665,
+      "blockedTimeSeconds": 0.2333333333333333,
+      "episodeDurationSeconds": 44.20000000000005,
+      "meanLateralErrorMeters": 3.722817178085798,
+      "reward": 1061.7002857684813,
+      "lapValidationDistanceMeters": 469.05774978024,
+      "signedDistanceSinceStartCrossingMeters": 0,
+      "steps": 1326
+    },
+    {
+      "controller": "SteeringController",
+      "scenarioId": "phase8-chicane-test-06",
+      "reason": "objective",
+      "completedLaps": 1,
+      "signedProgressMeters": 900.3131583415534,
+      "distanceTravelledMeters": 900.3131583415534,
+      "lapTimeSeconds": 23.433333333333657,
+      "offTrackEvents": 5,
+      "offTrackDurationSeconds": 7.36666666666665,
+      "blockedTimeSeconds": 0,
+      "episodeDurationSeconds": 43.066666666666784,
+      "meanLateralErrorMeters": 3.795973336023556,
+      "reward": 1044.4954062113275,
+      "lapValidationDistanceMeters": 469.05774978024,
+      "signedDistanceSinceStartCrossingMeters": 0,
+      "steps": 1292
+    },
+    {
+      "controller": "SteeringController",
+      "scenarioId": "phase8-chicane-test-07",
+      "reason": "objective",
+      "completedLaps": 1,
+      "signedProgressMeters": 888.6855748639897,
+      "distanceTravelledMeters": 888.6855748639897,
+      "lapTimeSeconds": 23.400000000000322,
+      "offTrackEvents": 5,
+      "offTrackDurationSeconds": 7.3999999999999835,
+      "blockedTimeSeconds": 0,
+      "episodeDurationSeconds": 41.933333333333515,
+      "meanLateralErrorMeters": 3.9886784462585836,
+      "reward": 1032.094770628744,
+      "lapValidationDistanceMeters": 469.05774978024,
+      "signedDistanceSinceStartCrossingMeters": 0,
+      "steps": 1258
+    },
+    {
+      "controller": "SteeringController",
+      "scenarioId": "phase8-chicane-test-08",
+      "reason": "objective",
+      "completedLaps": 1,
+      "signedProgressMeters": 863.0687803615651,
+      "distanceTravelledMeters": 863.0687803615651,
+      "lapTimeSeconds": 23.400000000000322,
+      "offTrackEvents": 5,
+      "offTrackDurationSeconds": 7.266666666666651,
+      "blockedTimeSeconds": 0,
+      "episodeDurationSeconds": 41.40000000000021,
+      "meanLateralErrorMeters": 3.845835363301574,
+      "reward": 1007.1600869110117,
+      "lapValidationDistanceMeters": 469.05774978024,
+      "signedDistanceSinceStartCrossingMeters": 0,
+      "steps": 1242
+    },
+    {
+      "controller": "SteeringController",
+      "scenarioId": "phase8-chicane-test-09",
+      "reason": "objective",
+      "completedLaps": 1,
+      "signedProgressMeters": 848.531954826408,
+      "distanceTravelledMeters": 848.531954826408,
+      "lapTimeSeconds": 23.400000000000322,
+      "offTrackEvents": 5,
+      "offTrackDurationSeconds": 7.266666666666651,
+      "blockedTimeSeconds": 0,
+      "episodeDurationSeconds": 40.46666666666693,
+      "meanLateralErrorMeters": 3.9290617859978982,
+      "reward": 992.1842624953147,
+      "lapValidationDistanceMeters": 469.05774978024,
+      "signedDistanceSinceStartCrossingMeters": 0,
+      "steps": 1214
+    },
+    {
+      "controller": "SteeringController",
+      "scenarioId": "phase8-chicane-test-10",
+      "reason": "objective",
+      "completedLaps": 1,
+      "signedProgressMeters": 830.2060571182761,
+      "distanceTravelledMeters": 830.2060571182761,
+      "lapTimeSeconds": 23.400000000000322,
+      "offTrackEvents": 5,
+      "offTrackDurationSeconds": 7.36666666666665,
+      "blockedTimeSeconds": 0.2333333333333333,
+      "episodeDurationSeconds": 40.40000000000027,
+      "meanLateralErrorMeters": 3.816710195119168,
+      "reward": 973.3157862283805,
+      "lapValidationDistanceMeters": 469.05774978024,
+      "signedDistanceSinceStartCrossingMeters": 0,
+      "steps": 1212
+    },
+    {
+      "controller": "SteeringController",
+      "scenarioId": "phase8-chicane-test-11",
+      "reason": "objective",
+      "completedLaps": 1,
+      "signedProgressMeters": 807.9607912088119,
+      "distanceTravelledMeters": 807.9607912088119,
+      "lapTimeSeconds": 23.400000000000322,
+      "offTrackEvents": 5,
+      "offTrackDurationSeconds": 7.3999999999999835,
+      "blockedTimeSeconds": 0.2333333333333333,
+      "episodeDurationSeconds": 39.50000000000032,
+      "meanLateralErrorMeters": 3.8606293269916585,
+      "reward": 950.789465738029,
+      "lapValidationDistanceMeters": 469.05774978024,
+      "signedDistanceSinceStartCrossingMeters": 0,
+      "steps": 1185
+    },
+    {
+      "controller": "SteeringController",
+      "scenarioId": "phase8-chicane-test-12",
+      "reason": "objective",
+      "completedLaps": 1,
+      "signedProgressMeters": 792.267437788244,
+      "distanceTravelledMeters": 792.267437788244,
+      "lapTimeSeconds": 23.366666666666987,
+      "offTrackEvents": 5,
+      "offTrackDurationSeconds": 7.499999999999983,
+      "blockedTimeSeconds": 0,
+      "episodeDurationSeconds": 38.40000000000038,
+      "meanLateralErrorMeters": 3.9511191262992686,
+      "reward": 935.0734948318411,
+      "lapValidationDistanceMeters": 469.05774978024,
+      "signedDistanceSinceStartCrossingMeters": 0,
+      "steps": 1152
+    },
+    {
+      "controller": "SteeringController",
+      "scenarioId": "phase8-chicane-test-13",
+      "reason": "objective",
+      "completedLaps": 1,
+      "signedProgressMeters": 774.6957275558736,
+      "distanceTravelledMeters": 774.6957275558736,
+      "lapTimeSeconds": 23.400000000000322,
+      "offTrackEvents": 5,
+      "offTrackDurationSeconds": 7.333333333333317,
+      "blockedTimeSeconds": 0.2333333333333333,
+      "episodeDurationSeconds": 37.93333333333374,
+      "meanLateralErrorMeters": 3.8746455732062883,
+      "reward": 917.383049098597,
+      "lapValidationDistanceMeters": 469.05774978024,
+      "signedDistanceSinceStartCrossingMeters": 0,
+      "steps": 1138
+    },
+    {
+      "controller": "SteeringController",
+      "scenarioId": "phase8-chicane-test-14",
+      "reason": "objective",
+      "completedLaps": 1,
+      "signedProgressMeters": 773.8011271935369,
+      "distanceTravelledMeters": 773.8011271935369,
+      "lapTimeSeconds": 23.400000000000322,
+      "offTrackEvents": 5,
+      "offTrackDurationSeconds": 7.233333333333317,
+      "blockedTimeSeconds": 0,
+      "episodeDurationSeconds": 37.100000000000456,
+      "meanLateralErrorMeters": 3.948388983457881,
+      "reward": 916.8114617336619,
+      "lapValidationDistanceMeters": 469.05774978024,
+      "signedDistanceSinceStartCrossingMeters": 0,
+      "steps": 1113
+    },
+    {
+      "controller": "SteeringController",
+      "scenarioId": "phase8-chicane-test-15",
+      "reason": "objective",
+      "completedLaps": 1,
+      "signedProgressMeters": 745.2976856965759,
+      "distanceTravelledMeters": 745.2976856965759,
+      "lapTimeSeconds": 23.400000000000322,
+      "offTrackEvents": 4,
+      "offTrackDurationSeconds": 5.633333333333323,
+      "blockedTimeSeconds": 0.2333333333333333,
+      "episodeDurationSeconds": 36.166666666667176,
+      "meanLateralErrorMeters": 3.7902669647855483,
+      "reward": 896.6683495173485,
+      "lapValidationDistanceMeters": 469.05774978024,
+      "signedDistanceSinceStartCrossingMeters": 0,
+      "steps": 1085
+    },
+    {
+      "controller": "SteeringController",
+      "scenarioId": "phase8-chicane-test-16",
+      "reason": "objective",
+      "completedLaps": 1,
+      "signedProgressMeters": 733.751444031268,
+      "distanceTravelledMeters": 733.751444031268,
+      "lapTimeSeconds": 23.366666666666987,
+      "offTrackEvents": 4,
+      "offTrackDurationSeconds": 5.59999999999999,
+      "blockedTimeSeconds": 0,
+      "episodeDurationSeconds": 35.1333333333339,
+      "meanLateralErrorMeters": 3.849866379649023,
+      "reward": 885.7638024414182,
+      "lapValidationDistanceMeters": 469.05774978024,
+      "signedDistanceSinceStartCrossingMeters": 0,
+      "steps": 1054
+    },
+    {
+      "controller": "SteeringController",
+      "scenarioId": "phase8-chicane-test-17",
+      "reason": "objective",
+      "completedLaps": 1,
+      "signedProgressMeters": 713.7425048699673,
+      "distanceTravelledMeters": 713.7425048699673,
+      "lapTimeSeconds": 23.400000000000322,
+      "offTrackEvents": 4,
+      "offTrackDurationSeconds": 5.566666666666657,
+      "blockedTimeSeconds": 0,
+      "episodeDurationSeconds": 34.00000000000063,
+      "meanLateralErrorMeters": 3.463726862833093,
+      "reward": 865.8193137498182,
+      "lapValidationDistanceMeters": 469.05774978024,
+      "signedDistanceSinceStartCrossingMeters": 0,
+      "steps": 1020
+    },
+    {
+      "controller": "SteeringController",
+      "scenarioId": "phase8-chicane-test-18",
+      "reason": "objective",
+      "completedLaps": 1,
+      "signedProgressMeters": 696.3988862058434,
+      "distanceTravelledMeters": 696.3988862058434,
+      "lapTimeSeconds": 23.400000000000322,
+      "offTrackEvents": 4,
+      "offTrackDurationSeconds": 5.49999999999999,
+      "blockedTimeSeconds": 0,
+      "episodeDurationSeconds": 32.63333333333404,
+      "meanLateralErrorMeters": 3.6676542989012453,
+      "reward": 847.9183612646361,
+      "lapValidationDistanceMeters": 469.05774978024,
+      "signedDistanceSinceStartCrossingMeters": 0,
+      "steps": 979
+    },
+    {
+      "controller": "SteeringController",
+      "scenarioId": "phase8-chicane-test-19",
+      "reason": "objective",
+      "completedLaps": 1,
+      "signedProgressMeters": 680.8075901239881,
+      "distanceTravelledMeters": 680.8075901239881,
+      "lapTimeSeconds": 23.366666666666987,
+      "offTrackEvents": 4,
+      "offTrackDurationSeconds": 5.49999999999999,
+      "blockedTimeSeconds": 0,
+      "episodeDurationSeconds": 32.63333333333404,
+      "meanLateralErrorMeters": 3.6131559813532177,
+      "reward": 832.7701404382991,
+      "lapValidationDistanceMeters": 469.05774978024,
+      "signedDistanceSinceStartCrossingMeters": 0,
+      "steps": 979
+    },
+    {
+      "controller": "SteeringController",
+      "scenarioId": "phase8-chicane-test-20",
+      "reason": "objective",
+      "completedLaps": 1,
+      "signedProgressMeters": 664.0320686886965,
+      "distanceTravelledMeters": 664.0320686886965,
+      "lapTimeSeconds": 23.400000000000322,
+      "offTrackEvents": 4,
+      "offTrackDurationSeconds": 5.299999999999991,
+      "blockedTimeSeconds": 0,
+      "episodeDurationSeconds": 31.300000000000715,
+      "meanLateralErrorMeters": 3.7802904480059243,
+      "reward": 815.8030762039823,
+      "lapValidationDistanceMeters": 469.05774978024,
+      "signedDistanceSinceStartCrossingMeters": 0,
+      "steps": 939
+    },
+    {
+      "controller": "SteeringController",
+      "scenarioId": "phase8-chicane-test-21",
+      "reason": "objective",
+      "completedLaps": 1,
+      "signedProgressMeters": 648.6360838062249,
+      "distanceTravelledMeters": 648.6360838062249,
+      "lapTimeSeconds": 23.400000000000322,
+      "offTrackEvents": 4,
+      "offTrackDurationSeconds": 5.2333333333333245,
+      "blockedTimeSeconds": 0,
+      "episodeDurationSeconds": 31.26666666666738,
+      "meanLateralErrorMeters": 3.6776780288716493,
+      "reward": 801.0286628877061,
+      "lapValidationDistanceMeters": 469.05774978024,
+      "signedDistanceSinceStartCrossingMeters": 0,
+      "steps": 938
+    },
+    {
+      "controller": "SteeringController",
+      "scenarioId": "phase8-chicane-test-22",
+      "reason": "objective",
+      "completedLaps": 1,
+      "signedProgressMeters": 641.0056166582888,
+      "distanceTravelledMeters": 641.0056166582888,
+      "lapTimeSeconds": 23.366666666666987,
+      "offTrackEvents": 4,
+      "offTrackDurationSeconds": 5.333333333333324,
+      "blockedTimeSeconds": 0,
+      "episodeDurationSeconds": 30.300000000000665,
+      "meanLateralErrorMeters": 3.8024070065060207,
+      "reward": 792.4671666868173,
+      "lapValidationDistanceMeters": 469.05774978024,
+      "signedDistanceSinceStartCrossingMeters": 0,
+      "steps": 909
+    },
+    {
+      "controller": "SteeringController",
+      "scenarioId": "phase8-chicane-test-23",
+      "reason": "objective",
+      "completedLaps": 1,
+      "signedProgressMeters": 620.7732774312453,
+      "distanceTravelledMeters": 620.7732774312453,
+      "lapTimeSeconds": 23.366666666666987,
+      "offTrackEvents": 4,
+      "offTrackDurationSeconds": 4.333333333333328,
+      "blockedTimeSeconds": 0,
+      "episodeDurationSeconds": 29.566666666667295,
+      "meanLateralErrorMeters": 3.740814088806332,
+      "reward": 774.9974131760495,
+      "lapValidationDistanceMeters": 469.05774978024,
+      "signedDistanceSinceStartCrossingMeters": 0,
+      "steps": 887
+    },
+    {
+      "controller": "SteeringController",
+      "scenarioId": "phase8-chicane-test-24",
+      "reason": "objective",
+      "completedLaps": 1,
+      "signedProgressMeters": 598.439350266285,
+      "distanceTravelledMeters": 598.439350266285,
+      "lapTimeSeconds": 23.433333333333657,
+      "offTrackEvents": 3,
+      "offTrackDurationSeconds": 4.033333333333329,
+      "blockedTimeSeconds": 0,
+      "episodeDurationSeconds": 28.833333333333925,
+      "meanLateralErrorMeters": 3.539905301190835,
+      "reward": 758.5391950482549,
+      "lapValidationDistanceMeters": 469.05774978024,
+      "signedDistanceSinceStartCrossingMeters": 0,
+      "steps": 865
+    },
+    {
+      "controller": "SteeringController",
+      "scenarioId": "phase8-chicane-test-25",
+      "reason": "objective",
+      "completedLaps": 1,
+      "signedProgressMeters": 584.9265628734822,
+      "distanceTravelledMeters": 584.9265628734822,
+      "lapTimeSeconds": 23.433333333333657,
+      "offTrackEvents": 3,
+      "offTrackDurationSeconds": 3.9999999999999956,
+      "blockedTimeSeconds": 0,
+      "episodeDurationSeconds": 27.700000000000536,
+      "meanLateralErrorMeters": 3.412574263083645,
+      "reward": 744.6410381142409,
+      "lapValidationDistanceMeters": 469.05774978024,
+      "signedDistanceSinceStartCrossingMeters": 0,
+      "steps": 831
+    },
+    {
+      "controller": "SteeringController",
+      "scenarioId": "phase8-chicane-test-26",
+      "reason": "objective",
+      "completedLaps": 1,
+      "signedProgressMeters": 576.0036330864531,
+      "distanceTravelledMeters": 576.0036330864531,
+      "lapTimeSeconds": 23.433333333333657,
+      "offTrackEvents": 3,
+      "offTrackDurationSeconds": 3.9666666666666623,
+      "blockedTimeSeconds": 0.2333333333333333,
+      "episodeDurationSeconds": 28.100000000000556,
+      "meanLateralErrorMeters": 3.3287593055112255,
+      "reward": 735.6398450845126,
+      "lapValidationDistanceMeters": 469.05774978024,
+      "signedDistanceSinceStartCrossingMeters": 0,
+      "steps": 843
+    },
+    {
+      "controller": "SteeringController",
+      "scenarioId": "phase8-chicane-test-27",
+      "reason": "objective",
+      "completedLaps": 1,
+      "signedProgressMeters": 549.8500499953368,
+      "distanceTravelledMeters": 549.8500499953368,
+      "lapTimeSeconds": 23.433333333333657,
+      "offTrackEvents": 3,
+      "offTrackDurationSeconds": 3.933333333333329,
+      "blockedTimeSeconds": 0.2333333333333333,
+      "episodeDurationSeconds": 27.033333333333836,
+      "meanLateralErrorMeters": 3.4398231006282316,
+      "reward": 709.3418721119758,
+      "lapValidationDistanceMeters": 469.05774978024,
+      "signedDistanceSinceStartCrossingMeters": 0,
+      "steps": 811
+    },
+    {
+      "controller": "SteeringController",
+      "scenarioId": "phase8-chicane-test-28",
+      "reason": "objective",
+      "completedLaps": 1,
+      "signedProgressMeters": 534.600889356542,
+      "distanceTravelledMeters": 534.600889356542,
+      "lapTimeSeconds": 23.433333333333657,
+      "offTrackEvents": 3,
+      "offTrackDurationSeconds": 3.7999999999999963,
+      "blockedTimeSeconds": 0,
+      "episodeDurationSeconds": 25.93333333333378,
+      "meanLateralErrorMeters": 3.6095362223053153,
+      "reward": 694.6998502075116,
+      "lapValidationDistanceMeters": 469.05774978024,
+      "signedDistanceSinceStartCrossingMeters": 0,
+      "steps": 778
+    },
+    {
+      "controller": "SteeringController",
+      "scenarioId": "phase8-chicane-test-29",
+      "reason": "objective",
+      "completedLaps": 1,
+      "signedProgressMeters": 519.7721848651911,
+      "distanceTravelledMeters": 519.7721848651911,
+      "lapTimeSeconds": 23.500000000000327,
+      "offTrackEvents": 2,
+      "offTrackDurationSeconds": 3.0666666666666655,
+      "blockedTimeSeconds": 0,
+      "episodeDurationSeconds": 25.0000000000004,
+      "meanLateralErrorMeters": 3.824165351398575,
+      "reward": 686.4285163992636,
+      "lapValidationDistanceMeters": 469.05774978024,
+      "signedDistanceSinceStartCrossingMeters": 0,
+      "steps": 750
+    },
+    {
+      "controller": "SteeringController",
+      "scenarioId": "phase8-chicane-test-30",
+      "reason": "objective",
+      "completedLaps": 1,
+      "signedProgressMeters": 499.3174978785899,
+      "distanceTravelledMeters": 499.3174978785899,
+      "lapTimeSeconds": 23.333333333333652,
+      "offTrackEvents": 3,
+      "offTrackDurationSeconds": 3.9999999999999956,
+      "blockedTimeSeconds": 0,
+      "episodeDurationSeconds": 23.600000000000332,
+      "meanLateralErrorMeters": 3.880413585755728,
+      "reward": 657.8255388058667,
+      "lapValidationDistanceMeters": 469.05774978024,
+      "signedDistanceSinceStartCrossingMeters": 0,
+      "steps": 708
+    }
+  ],
+  "networks": [
+    {
+      "configuration": "A",
+      "trainingSeed": 2026,
+      "networkWeightsUnchanged": true,
+      "summary": {
+        "scenarioCount": 30,
+        "completion": {
+          "rate": 0.8333333333333334,
+          "ci95": [
+            0.6643564949358398,
+            0.9266345762815145
+          ],
+          "successes": 25,
+          "n": 30
+        },
+        "meanSignedProgressMeters": {
+          "mean": 687.538904516544,
+          "sd": 156.68001624907944,
+          "ci95": [
+            629.0336902823415,
+            746.0441187507465
+          ],
+          "n": 30
+        },
+        "meanDistanceTravelledMeters": {
+          "mean": 687.538904516544,
+          "sd": 156.68001624907944,
+          "ci95": [
+            629.0336902823415,
+            746.0441187507465
+          ],
+          "n": 30
+        },
+        "successfulLapTimeSeconds": {
+          "mean": 33.28266666666734,
+          "sd": 0.2666874991862464,
+          "ci95": [
+            33.172583738096755,
+            33.39274959523792
+          ],
+          "n": 25
+        },
+        "offTrackEvents": {
+          "mean": 1.4,
+          "sd": 0.6214554662658655,
+          "ci95": [
+            1.167944974341204,
+            1.6320550256587958
+          ],
+          "n": 30
+        },
+        "offTrackDurationSeconds": {
+          "mean": 1.298888888888889,
+          "sd": 0.831860000255777,
+          "ci95": [
+            0.9882676067819313,
+            1.6095101709958466
+          ],
+          "n": 30
+        },
+        "blockedTimeSeconds": {
+          "mean": 0.06333333333333332,
+          "sd": 0.10697871023920807,
+          "ci95": [
+            0.023386871041079636,
+            0.103279795625587
+          ],
+          "n": 30
+        },
+        "reward": {
+          "mean": 834.2743558455298,
+          "sd": 164.34051289077345,
+          "ci95": [
+            772.9086683493753,
+            895.6400433416844
+          ],
+          "n": 30
+        },
+        "episodeDurationSeconds": {
+          "mean": 46.80777777777764,
+          "sd": 11.231154273228432,
+          "ci95": [
+            42.61400053302662,
+            51.001555022528656
+          ],
+          "n": 30
+        }
+      },
+      "pairedAgainstSteering": {
+        "interpretation": "Neural minus Steering; percentile bootstrap resamples matched scenario pairs.",
+        "completionRate": {
+          "meanDifference": -0.16666666666666666,
+          "ci95": [
+            -0.36350617031924803,
+            0.07798674090704749
+          ],
+          "intervalMethod": "Conservative Bonferroni difference of marginal 97.5% Wilson score intervals; valid under paired dependence.",
+          "discordantPairs": {
+            "neuralOnly": 0,
+            "steeringOnly": 5
+          },
+          "n": 30
+        },
+        "meanSignedProgressMeters": {
+          "meanDifference": -19.90438042090119,
+          "ci95": [
+            -51.30195901850289,
+            -2.0261240979129487
+          ],
+          "n": 30
+        },
+        "successfulLapTimeSeconds": {
+          "meanDifference": 9.910666666667018,
+          "ci95": [
+            9.842666666667025,
+            9.973333333333677
+          ],
+          "n": 25
+        },
+        "offTrackEvents": {
+          "meanDifference": -2.6,
+          "ci95": [
+            -2.8666666666666667,
+            -2.3
+          ],
+          "n": 30
+        },
+        "offTrackDurationSeconds": {
+          "meanDifference": -4.336666666666655,
+          "ci95": [
+            -4.875555555555544,
+            -3.7899999999999894
+          ],
+          "n": 30
+        },
+        "reward": {
+          "meanDifference": -24.737430484369263,
+          "ci95": [
+            -81.5389109033836,
+            15.668746793451275
+          ],
+          "n": 30
+        }
+      },
+      "neuralEpisodes": [
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-01",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 482.742589321202,
+          "distanceTravelledMeters": 482.742589321202,
+          "lapTimeSeconds": 32.233333333334066,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 0.9333333333333332,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 32.233333333334066,
+          "meanLateralErrorMeters": 3.2641417105647497,
+          "reward": 660.6913691606071,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 967
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-02",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 473.57744480748295,
+          "distanceTravelledMeters": 473.57744480748295,
+          "lapTimeSeconds": 32.8000000000007,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 0.9666666666666666,
+          "blockedTimeSeconds": 0.2333333333333333,
+          "episodeDurationSeconds": 32.8000000000007,
+          "meanLateralErrorMeters": 2.852424974867422,
+          "reward": 649.3675467060707,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 984
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-03",
+          "reason": "time-limit",
+          "completedLaps": 0,
+          "signedProgressMeters": 895.7255520724129,
+          "distanceTravelledMeters": 895.7255520724129,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 3,
+          "offTrackDurationSeconds": 2.6333333333333337,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 59.999999999999154,
+          "meanLateralErrorMeters": 3.2393006880519644,
+          "reward": 884.5695509900418,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 450.31054347467585,
+          "steps": 1800
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-04",
+          "reason": "time-limit",
+          "completedLaps": 0,
+          "signedProgressMeters": 881.1451317441511,
+          "distanceTravelledMeters": 881.1451317441511,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 2,
+          "offTrackDurationSeconds": 1.9000000000000026,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 59.999999999999154,
+          "meanLateralErrorMeters": 3.206510422836168,
+          "reward": 877.218309418844,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 452.26181071895024,
+          "steps": 1800
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-05",
+          "reason": "time-limit",
+          "completedLaps": 0,
+          "signedProgressMeters": 855.5018063590308,
+          "distanceTravelledMeters": 855.5018063590308,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 2,
+          "offTrackDurationSeconds": 1.8666666666666691,
+          "blockedTimeSeconds": 0.2333333333333333,
+          "episodeDurationSeconds": 59.999999999999154,
+          "meanLateralErrorMeters": 3.114728850274032,
+          "reward": 851.2341653701242,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 431.6340261791857,
+          "steps": 1800
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-06",
+          "reason": "time-limit",
+          "completedLaps": 0,
+          "signedProgressMeters": 872.3104004806858,
+          "distanceTravelledMeters": 872.3104004806858,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 2,
+          "offTrackDurationSeconds": 1.8666666666666691,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 59.999999999999154,
+          "meanLateralErrorMeters": 3.1293199199783004,
+          "reward": 868.6664113368655,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 465.26374759744124,
+          "steps": 1800
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-07",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 888.7832880656662,
+          "distanceTravelledMeters": 888.7832880656662,
+          "lapTimeSeconds": 33.63333333333399,
+          "offTrackEvents": 3,
+          "offTrackDurationSeconds": 2.066666666666669,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 59.1999999999992,
+          "meanLateralErrorMeters": 3.333792361818146,
+          "reward": 1058.9732114947626,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 1776
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-08",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 863.1860274738035,
+          "distanceTravelledMeters": 863.1860274738035,
+          "lapTimeSeconds": 33.50000000000066,
+          "offTrackEvents": 2,
+          "offTrackDurationSeconds": 1.6666666666666685,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 58.89999999999922,
+          "meanLateralErrorMeters": 3.115404453264271,
+          "reward": 1039.820334984092,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 1767
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-09",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 848.6155062119096,
+          "distanceTravelledMeters": 848.6155062119096,
+          "lapTimeSeconds": 33.46666666666733,
+          "offTrackEvents": 2,
+          "offTrackDurationSeconds": 1.633333333333335,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 57.4999999999993,
+          "meanLateralErrorMeters": 3.1819573269242563,
+          "reward": 1024.8620532442121,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 1725
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-10",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 830.1425781834201,
+          "distanceTravelledMeters": 830.1425781834201,
+          "lapTimeSeconds": 33.40000000000067,
+          "offTrackEvents": 2,
+          "offTrackDurationSeconds": 0.9666666666666666,
+          "blockedTimeSeconds": 0.2333333333333333,
+          "episodeDurationSeconds": 58.06666666666593,
+          "meanLateralErrorMeters": 2.9860592861087376,
+          "reward": 1008.0282664076868,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 1742
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-11",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 808.0252591714941,
+          "distanceTravelledMeters": 808.0252591714941,
+          "lapTimeSeconds": 33.40000000000067,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 0.7999999999999999,
+          "blockedTimeSeconds": 0.2333333333333333,
+          "episodeDurationSeconds": 56.69999999999934,
+          "meanLateralErrorMeters": 2.9636163421811643,
+          "reward": 991.0862400712633,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 1701
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-12",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 791.6404403601916,
+          "distanceTravelledMeters": 791.6404403601916,
+          "lapTimeSeconds": 33.40000000000067,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 0.9333333333333332,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 54.466666666666136,
+          "meanLateralErrorMeters": 3.024389548829326,
+          "reward": 974.3716553051049,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 1634
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-13",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 774.7181225993645,
+          "distanceTravelledMeters": 774.7181225993645,
+          "lapTimeSeconds": 33.40000000000067,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 0.9999999999999999,
+          "blockedTimeSeconds": 0.2333333333333333,
+          "episodeDurationSeconds": 54.466666666666136,
+          "meanLateralErrorMeters": 2.897869066016523,
+          "reward": 956.6258697772306,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 1634
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-14",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 774.1440019273239,
+          "distanceTravelledMeters": 774.1440019273239,
+          "lapTimeSeconds": 33.46666666666733,
+          "offTrackEvents": 2,
+          "offTrackDurationSeconds": 1.166666666666667,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 52.89999999999956,
+          "meanLateralErrorMeters": 3.1227913098327824,
+          "reward": 950.680195184606,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 1587
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-15",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 745.0740452684333,
+          "distanceTravelledMeters": 745.0740452684333,
+          "lapTimeSeconds": 33.333333333334004,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 0.9333333333333332,
+          "blockedTimeSeconds": 0.2333333333333333,
+          "episodeDurationSeconds": 51.899999999999615,
+          "meanLateralErrorMeters": 2.9047674241690853,
+          "reward": 923.7585008618111,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 1557
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-16",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 733.9673649103797,
+          "distanceTravelledMeters": 733.9673649103797,
+          "lapTimeSeconds": 33.433333333334,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 0.9999999999999999,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 50.79999999999968,
+          "meanLateralErrorMeters": 3.250817979316348,
+          "reward": 915.4730593196465,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 1524
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-17",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 714.2603095803813,
+          "distanceTravelledMeters": 714.2603095803813,
+          "lapTimeSeconds": 33.333333333334004,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 0.9999999999999999,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 47.59999999999986,
+          "meanLateralErrorMeters": 2.8477291097799267,
+          "reward": 895.6041466080982,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 1428
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-18",
+          "reason": "off-track",
+          "completedLaps": 0,
+          "signedProgressMeters": 273.397511994355,
+          "distanceTravelledMeters": 273.397511994355,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 2,
+          "offTrackDurationSeconds": 4.933333333333326,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 14.766666666666625,
+          "meanLateralErrorMeters": 6.385318721408728,
+          "reward": 219.21957576684053,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 70.46798733106783,
+          "steps": 443
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-19",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 680.7337355090897,
+          "distanceTravelledMeters": 680.7337355090897,
+          "lapTimeSeconds": 33.30000000000067,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 0.7999999999999999,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 45.69999999999997,
+          "meanLateralErrorMeters": 2.87104628239508,
+          "reward": 862.1933213312279,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 1371
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-20",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 664.3469906532439,
+          "distanceTravelledMeters": 664.3469906532439,
+          "lapTimeSeconds": 33.366666666667335,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 1.0333333333333332,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 43.800000000000075,
+          "meanLateralErrorMeters": 3.0675035132316855,
+          "reward": 844.3786465055299,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 1314
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-21",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 648.3577217277668,
+          "distanceTravelledMeters": 648.3577217277668,
+          "lapTimeSeconds": 33.23333333333401,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 0.9333333333333332,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 44.33333333333338,
+          "meanLateralErrorMeters": 2.8077561850182895,
+          "reward": 829.0981330853974,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 1330
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-22",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 641.1300160444662,
+          "distanceTravelledMeters": 641.1300160444662,
+          "lapTimeSeconds": 33.333333333334004,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 0.9333333333333332,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 42.7666666666668,
+          "meanLateralErrorMeters": 3.1350080242484557,
+          "reward": 821.1414250080803,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 1283
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-23",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 620.6764667771128,
+          "distanceTravelledMeters": 620.6764667771128,
+          "lapTimeSeconds": 33.26666666666734,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 0.7999999999999999,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 41.966666666666846,
+          "meanLateralErrorMeters": 2.903132033615631,
+          "reward": 801.0916241672991,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 1259
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-24",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 598.5145591240805,
+          "distanceTravelledMeters": 598.5145591240805,
+          "lapTimeSeconds": 33.23333333333401,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 0.8666666666666666,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 41.20000000000022,
+          "meanLateralErrorMeters": 2.8026489580370155,
+          "reward": 778.9838455420223,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 1236
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-25",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 585.1910771486966,
+          "distanceTravelledMeters": 585.1910771486966,
+          "lapTimeSeconds": 33.20000000000068,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 0.7999999999999999,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 38.26666666666706,
+          "meanLateralErrorMeters": 2.8553899152661213,
+          "reward": 765.0856291462146,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 1148
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-26",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 575.8545294450789,
+          "distanceTravelledMeters": 575.8545294450789,
+          "lapTimeSeconds": 33.26666666666734,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 0.7999999999999999,
+          "blockedTimeSeconds": 0.2333333333333333,
+          "episodeDurationSeconds": 39.96666666666696,
+          "meanLateralErrorMeters": 2.871128024514107,
+          "reward": 755.8220728896385,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 1199
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-27",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 550.0159381169792,
+          "distanceTravelledMeters": 550.0159381169792,
+          "lapTimeSeconds": 33.26666666666734,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 0.9999999999999999,
+          "blockedTimeSeconds": 0.26666666666666666,
+          "episodeDurationSeconds": 38.6333333333337,
+          "meanLateralErrorMeters": 2.8712886421558665,
+          "reward": 729.1094580511768,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 1159
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-28",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 534.5080702501218,
+          "distanceTravelledMeters": 534.5080702501218,
+          "lapTimeSeconds": 33.30000000000067,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 0.7999999999999999,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 36.73333333333381,
+          "meanLateralErrorMeters": 2.8022483565201766,
+          "reward": 714.3458217403665,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 1102
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-29",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 519.9544856997134,
+          "distanceTravelledMeters": 519.9544856997134,
+          "lapTimeSeconds": 33.366666666667335,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 0.9666666666666666,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 35.16666666666723,
+          "meanLateralErrorMeters": 2.8920831769472986,
+          "reward": 698.6984722800528,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 1055
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-30",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 499.92616446828123,
+          "distanceTravelledMeters": 499.92616446828123,
+          "lapTimeSeconds": 33.133333333334015,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 0.9666666666666666,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 33.40000000000067,
+          "meanLateralErrorMeters": 3.298759605247349,
+          "reward": 678.0317636109768,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 1002
+        }
+      ]
+    },
+    {
+      "configuration": "A",
+      "trainingSeed": 2027,
+      "networkWeightsUnchanged": true,
+      "summary": {
+        "scenarioCount": 30,
+        "completion": {
+          "rate": 0,
+          "ci95": [
+            0,
+            0.11351339317396876
+          ],
+          "successes": 0,
+          "n": 30
+        },
+        "meanSignedProgressMeters": {
+          "mean": 223.01798425877539,
+          "sd": 111.44125759655898,
+          "ci95": [
+            181.40518125873777,
+            264.63078725881303
+          ],
+          "n": 30
+        },
+        "meanDistanceTravelledMeters": {
+          "mean": 223.02035782354918,
+          "sd": 111.43634365357934,
+          "ci95": [
+            181.40938971792656,
+            264.6313259291718
+          ],
+          "n": 30
+        },
+        "successfulLapTimeSeconds": {
+          "mean": null,
+          "sd": null,
+          "ci95": null,
+          "n": 0
+        },
+        "offTrackEvents": {
+          "mean": 0.9333333333333333,
+          "sd": 0.3651483716701107,
+          "ci95": [
+            0.7969848428030002,
+            1.0696818238636665
+          ],
+          "n": 30
+        },
+        "offTrackDurationSeconds": {
+          "mean": 3.265555555555552,
+          "sd": 1.1480279053750362,
+          "ci95": [
+            2.8368753692832076,
+            3.694235741827897
+          ],
+          "n": 30
+        },
+        "blockedTimeSeconds": {
+          "mean": 0.9844444444444435,
+          "sd": 1.6776587712481474,
+          "ci95": [
+            0.3579970635115316,
+            1.6108918253773554
+          ],
+          "n": 30
+        },
+        "reward": {
+          "mean": 204.17390876425395,
+          "sd": 107.64123984600121,
+          "ci95": [
+            163.98005412733573,
+            244.36776340117217
+          ],
+          "n": 30
+        },
+        "episodeDurationSeconds": {
+          "mean": 16.432222222222354,
+          "sd": 11.192264307639475,
+          "ci95": [
+            12.252966713062209,
+            20.6114777313825
+          ],
+          "n": 30
+        }
+      },
+      "pairedAgainstSteering": {
+        "interpretation": "Neural minus Steering; percentile bootstrap resamples matched scenario pairs.",
+        "completionRate": {
+          "meanDifference": -1,
+          "ci95": [
+            -0.9999999999999999,
+            -0.7131165764732035
+          ],
+          "intervalMethod": "Conservative Bonferroni difference of marginal 97.5% Wilson score intervals; valid under paired dependence.",
+          "discordantPairs": {
+            "neuralOnly": 0,
+            "steeringOnly": 30
+          },
+          "n": 30
+        },
+        "meanSignedProgressMeters": {
+          "meanDifference": -484.42530067866977,
+          "ci95": [
+            -536.7718297357303,
+            -427.8614361412309
+          ],
+          "n": 30
+        },
+        "successfulLapTimeSeconds": {
+          "meanDifference": null,
+          "ci95": null,
+          "n": 0
+        },
+        "offTrackEvents": {
+          "meanDifference": -3.066666666666667,
+          "ci95": [
+            -3.4,
+            -2.7333333333333334
+          ],
+          "n": 30
+        },
+        "offTrackDurationSeconds": {
+          "meanDifference": -2.369999999999992,
+          "ci95": [
+            -2.9733333333333234,
+            -1.733333333333328
+          ],
+          "n": 30
+        },
+        "reward": {
+          "meanDifference": -654.837877565645,
+          "ci95": [
+            -706.0626860229482,
+            -600.7251462237697
+          ],
+          "n": 30
+        }
+      },
+      "neuralEpisodes": [
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-01",
+          "reason": "off-track",
+          "completedLaps": 0,
+          "signedProgressMeters": 125.36160135709402,
+          "distanceTravelledMeters": 125.36160135709402,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 3.5666666666666638,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 5.566666666666657,
+          "meanLateralErrorMeters": 16.272798372921788,
+          "reward": 110.9369734976342,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 125.36160135709402,
+          "steps": 167
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-02",
+          "reason": "off-track",
+          "completedLaps": 0,
+          "signedProgressMeters": 320.2335221070808,
+          "distanceTravelledMeters": 320.2335221070808,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 3.5666666666666638,
+          "blockedTimeSeconds": 2.5666666666666673,
+          "episodeDurationSeconds": 27.700000000000536,
+          "meanLateralErrorMeters": 4.723649371457039,
+          "reward": 271.42263902572626,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 320.2335221070808,
+          "steps": 831
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-03",
+          "reason": "off-track",
+          "completedLaps": 0,
+          "signedProgressMeters": 302.1280605838442,
+          "distanceTravelledMeters": 302.1280605838442,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 3.5666666666666638,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 11.633333333333303,
+          "meanLateralErrorMeters": 15.05634131530062,
+          "reward": 289.2460840405887,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 302.1280605838442,
+          "steps": 349
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-04",
+          "reason": "off-track",
+          "completedLaps": 0,
+          "signedProgressMeters": 280.55712466386746,
+          "distanceTravelledMeters": 280.55712466386746,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 3.5666666666666638,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 13.699999999999962,
+          "meanLateralErrorMeters": 10.179550604681728,
+          "reward": 268.2719999462481,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 280.55712466386746,
+          "steps": 411
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-05",
+          "reason": "off-track",
+          "completedLaps": 0,
+          "signedProgressMeters": 281.05696254724535,
+          "distanceTravelledMeters": 281.05696254724535,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 3.5666666666666638,
+          "blockedTimeSeconds": 3.5333333333333306,
+          "episodeDurationSeconds": 37.70000000000042,
+          "meanLateralErrorMeters": 2.6200065250050213,
+          "reward": 259.84463862857336,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 281.05696254724535,
+          "steps": 1131
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-06",
+          "reason": "off-track",
+          "completedLaps": 0,
+          "signedProgressMeters": 252.3189608476681,
+          "distanceTravelledMeters": 252.3189608476681,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 3.5666666666666638,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 21.333333333333552,
+          "meanLateralErrorMeters": 4.047796781289647,
+          "reward": 240.58773664191614,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 252.3189608476681,
+          "steps": 640
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-07",
+          "reason": "off-track",
+          "completedLaps": 0,
+          "signedProgressMeters": 252.8209775726771,
+          "distanceTravelledMeters": 252.8209775726771,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 3.5666666666666638,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 10.133333333333308,
+          "meanLateralErrorMeters": 16.745174396595374,
+          "reward": 239.58563502359704,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 252.8209775726771,
+          "steps": 304
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-08",
+          "reason": "off-track",
+          "completedLaps": 0,
+          "signedProgressMeters": 223.92723258849992,
+          "distanceTravelledMeters": 223.92723258849992,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 3.5666666666666638,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 20.200000000000163,
+          "meanLateralErrorMeters": 3.881221887445261,
+          "reward": 210.31447463993413,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 223.92723258849992,
+          "steps": 606
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-09",
+          "reason": "off-track",
+          "completedLaps": 0,
+          "signedProgressMeters": 201.03786454163526,
+          "distanceTravelledMeters": 201.03786454163526,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 3.5666666666666638,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 11.066666666666638,
+          "meanLateralErrorMeters": 9.740545128105927,
+          "reward": 188.18010636746573,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 201.03786454163526,
+          "steps": 332
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-10",
+          "reason": "off-track",
+          "completedLaps": 0,
+          "signedProgressMeters": 332.93221176634506,
+          "distanceTravelledMeters": 332.93221176634506,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 3.5666666666666638,
+          "blockedTimeSeconds": 3.8333333333333295,
+          "episodeDurationSeconds": 36.70000000000048,
+          "meanLateralErrorMeters": 2.804429380327479,
+          "reward": 304.4852099000004,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 332.93221176634506,
+          "steps": 1101
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-11",
+          "reason": "off-track",
+          "completedLaps": 0,
+          "signedProgressMeters": 322.20307153742976,
+          "distanceTravelledMeters": 322.20307153742976,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 3.5666666666666638,
+          "blockedTimeSeconds": 3.73333333333333,
+          "episodeDurationSeconds": 34.93333333333391,
+          "meanLateralErrorMeters": 2.7074391127966915,
+          "reward": 290.6511661272392,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 8.566926950255267,
+          "steps": 1048
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-12",
+          "reason": "off-track",
+          "completedLaps": 0,
+          "signedProgressMeters": 285.2590138318383,
+          "distanceTravelledMeters": 285.2590138318383,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 3.5666666666666638,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 20.200000000000163,
+          "meanLateralErrorMeters": 4.931497696044458,
+          "reward": 268.31655655380507,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 285.2590138318383,
+          "steps": 606
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-13",
+          "reason": "off-track",
+          "completedLaps": 0,
+          "signedProgressMeters": 381.2636367995818,
+          "distanceTravelledMeters": 381.2636367995818,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 3.5666666666666638,
+          "blockedTimeSeconds": 3.766666666666663,
+          "episodeDurationSeconds": 40.26666666666694,
+          "meanLateralErrorMeters": 3.9337061771975557,
+          "reward": 336.87019481622286,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 100.4367153645734,
+          "steps": 1208
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-14",
+          "reason": "off-track",
+          "completedLaps": 0,
+          "signedProgressMeters": 124.23055383285279,
+          "distanceTravelledMeters": 124.23055383285279,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 3.5666666666666638,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 7.499999999999983,
+          "meanLateralErrorMeters": 10.579482304549334,
+          "reward": 109.91170531441516,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 124.23055383285279,
+          "steps": 225
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-15",
+          "reason": "blocked",
+          "completedLaps": 0,
+          "signedProgressMeters": 2.0218299377442293,
+          "distanceTravelledMeters": 2.0218299377442293,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 0,
+          "offTrackDurationSeconds": 0,
+          "blockedTimeSeconds": 4.033333333333329,
+          "episodeDurationSeconds": 4.033333333333329,
+          "meanLateralErrorMeters": 0.07928171311410713,
+          "reward": -21.328144422947513,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 2.0218299377442293,
+          "steps": 121
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-16",
+          "reason": "off-track",
+          "completedLaps": 0,
+          "signedProgressMeters": 52.700696941515645,
+          "distanceTravelledMeters": 52.700696941515645,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 3.5666666666666638,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 4.899999999999992,
+          "meanLateralErrorMeters": 16.871764715951567,
+          "reward": 38.521263668201684,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 52.700696941515645,
+          "steps": 147
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-17",
+          "reason": "off-track",
+          "completedLaps": 0,
+          "signedProgressMeters": 354.2117631991624,
+          "distanceTravelledMeters": 354.2117631991624,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 3.5666666666666638,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 30.46666666666734,
+          "meanLateralErrorMeters": 4.041447141216516,
+          "reward": 336.2691691743075,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 134.4031578168198,
+          "steps": 914
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-18",
+          "reason": "off-track",
+          "completedLaps": 0,
+          "signedProgressMeters": 198.64174488619807,
+          "distanceTravelledMeters": 198.64174488619807,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 3.5666666666666638,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 9.53333333333331,
+          "meanLateralErrorMeters": 8.83514933583598,
+          "reward": 185.15614529280754,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 198.64174488619807,
+          "steps": 286
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-19",
+          "reason": "off-track",
+          "completedLaps": 0,
+          "signedProgressMeters": 330.5015186878844,
+          "distanceTravelledMeters": 330.5015186878844,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 3.5666666666666638,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 28.40000000000057,
+          "meanLateralErrorMeters": 3.89660684708516,
+          "reward": 309.9453832651151,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 143.68129749203365,
+          "steps": 852
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-20",
+          "reason": "off-track",
+          "completedLaps": 0,
+          "signedProgressMeters": 171.02736407511057,
+          "distanceTravelledMeters": 171.02736407511057,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 3.5666666666666638,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 7.36666666666665,
+          "meanLateralErrorMeters": 11.203399698411497,
+          "reward": 157.0541677743661,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 1.091113645201933,
+          "steps": 221
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-21",
+          "reason": "off-track",
+          "completedLaps": 0,
+          "signedProgressMeters": 272.3288096292341,
+          "distanceTravelledMeters": 272.3288096292341,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 3.5666666666666638,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 17.733333333333373,
+          "meanLateralErrorMeters": 6.46074693527129,
+          "reward": 255.85171671305278,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 117.58209352438426,
+          "steps": 532
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-22",
+          "reason": "off-track",
+          "completedLaps": 0,
+          "signedProgressMeters": 146.2908518464224,
+          "distanceTravelledMeters": 146.2908518464224,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 3.5666666666666638,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 6.43333333333332,
+          "meanLateralErrorMeters": 12.480646014957696,
+          "reward": 132.10588913342798,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 146.2908518464224,
+          "steps": 193
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-23",
+          "reason": "off-track",
+          "completedLaps": 0,
+          "signedProgressMeters": 279.5500970900131,
+          "distanceTravelledMeters": 279.5500970900131,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 2,
+          "offTrackDurationSeconds": 5.2333333333333245,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 12.199999999999967,
+          "meanLateralErrorMeters": 9.831774987321332,
+          "reward": 240.6982047875462,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 152.61606082115495,
+          "steps": 366
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-24",
+          "reason": "off-track",
+          "completedLaps": 0,
+          "signedProgressMeters": 272.32612435256453,
+          "distanceTravelledMeters": 272.32612435256453,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 3.5666666666666638,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 16.866666666666664,
+          "meanLateralErrorMeters": 4.709373001319804,
+          "reward": 258.42028740549114,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 167.85011171669194,
+          "steps": 506
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-25",
+          "reason": "off-track",
+          "completedLaps": 0,
+          "signedProgressMeters": 246.2041744539832,
+          "distanceTravelledMeters": 246.2041744539832,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 3.5666666666666638,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 13.666666666666629,
+          "meanLateralErrorMeters": 5.616833159924687,
+          "reward": 232.1008005119266,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 155.02593363664585,
+          "steps": 410
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-26",
+          "reason": "blocked",
+          "completedLaps": 0,
+          "signedProgressMeters": 0.09184171775058303,
+          "distanceTravelledMeters": 0.09184171775058303,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 0,
+          "offTrackDurationSeconds": 0,
+          "blockedTimeSeconds": 4.033333333333329,
+          "episodeDurationSeconds": 4.033333333333329,
+          "meanLateralErrorMeters": 0.03290653624830839,
+          "reward": -11.633403203184182,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0.09184171775058303,
+          "steps": 121
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-27",
+          "reason": "blocked",
+          "completedLaps": 0,
+          "signedProgressMeters": -0.035603471606521,
+          "distanceTravelledMeters": 0.035603471606521,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 0,
+          "offTrackDurationSeconds": 0,
+          "blockedTimeSeconds": 4.033333333333329,
+          "episodeDurationSeconds": 4.033333333333329,
+          "meanLateralErrorMeters": 0.03278300374934005,
+          "reward": -12.208064064391563,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": -0.035603471606521,
+          "steps": 121
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-28",
+          "reason": "off-track",
+          "completedLaps": 0,
+          "signedProgressMeters": 390.8121212946216,
+          "distanceTravelledMeters": 390.8121212946216,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 3.5666666666666638,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 20.433333333333508,
+          "meanLateralErrorMeters": 9.197842864927482,
+          "reward": 375.797323495266,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 350.6922879017494,
+          "steps": 613
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-29",
+          "reason": "off-track",
+          "completedLaps": 0,
+          "signedProgressMeters": 166.70169133348844,
+          "distanceTravelledMeters": 166.70169133348844,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 3.5666666666666638,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 8.099999999999982,
+          "meanLateralErrorMeters": 10.621777974412112,
+          "reward": 152.5312534539351,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 140.9105812572745,
+          "steps": 243
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-30",
+          "reason": "off-track",
+          "completedLaps": 0,
+          "signedProgressMeters": 121.83370721151454,
+          "distanceTravelledMeters": 121.83370721151454,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 3.5666666666666638,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 6.133333333333321,
+          "meanLateralErrorMeters": 17.068193472811195,
+          "reward": 107.3101494193314,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 116.30954142831578,
+          "steps": 184
+        }
+      ]
+    },
+    {
+      "configuration": "A",
+      "trainingSeed": 2028,
+      "networkWeightsUnchanged": true,
+      "summary": {
+        "scenarioCount": 30,
+        "completion": {
+          "rate": 0.26666666666666666,
+          "ci95": [
+            0.14182663319596317,
+            0.4444796169518888
+          ],
+          "successes": 8,
+          "n": 30
+        },
+        "meanSignedProgressMeters": {
+          "mean": 368.84060074522773,
+          "sd": 331.0897736515799,
+          "ci95": [
+            245.20978552086996,
+            492.4714159695855
+          ],
+          "n": 30
+        },
+        "meanDistanceTravelledMeters": {
+          "mean": 399.77635296480287,
+          "sd": 291.586656676283,
+          "ci95": [
+            290.89622756603467,
+            508.65647836357107
+          ],
+          "n": 30
+        },
+        "successfulLapTimeSeconds": {
+          "mean": 40.416666666666934,
+          "sd": 0.10235326314382596,
+          "ci95": [
+            40.33112292314084,
+            40.50221041019303
+          ],
+          "n": 8
+        },
+        "offTrackEvents": {
+          "mean": 0.5,
+          "sd": 0.572351471472339,
+          "ci95": [
+            0.2862806868585131,
+            0.713719313141487
+          ],
+          "n": 30
+        },
+        "offTrackDurationSeconds": {
+          "mean": 1.7622222222222204,
+          "sd": 1.986693923544663,
+          "ci95": [
+            1.0203793478253278,
+            2.504065096619113
+          ],
+          "n": 30
+        },
+        "blockedTimeSeconds": {
+          "mean": 0.06777777777777777,
+          "sd": 0.10950369868430375,
+          "ci95": [
+            0.026888470357882756,
+            0.10866708519767279
+          ],
+          "n": 30
+        },
+        "reward": {
+          "mean": 391.61967804081326,
+          "sd": 399.81493710485,
+          "ci95": [
+            242.3264936938854,
+            540.9128623877411
+          ],
+          "n": 30
+        },
+        "episodeDurationSeconds": {
+          "mean": 32.20555555555529,
+          "sd": 23.822520790360077,
+          "ci95": [
+            23.31009003413817,
+            41.101021076972415
+          ],
+          "n": 30
+        }
+      },
+      "pairedAgainstSteering": {
+        "interpretation": "Neural minus Steering; percentile bootstrap resamples matched scenario pairs.",
+        "completionRate": {
+          "meanDifference": -0.7333333333333333,
+          "ci95": [
+            -0.870658936132984,
+            -0.3856265532806986
+          ],
+          "intervalMethod": "Conservative Bonferroni difference of marginal 97.5% Wilson score intervals; valid under paired dependence.",
+          "discordantPairs": {
+            "neuralOnly": 0,
+            "steeringOnly": 22
+          },
+          "n": 30
+        },
+        "meanSignedProgressMeters": {
+          "meanDifference": -338.60268419221757,
+          "ci95": [
+            -446.54809039249545,
+            -223.16015052201092
+          ],
+          "n": 30
+        },
+        "successfulLapTimeSeconds": {
+          "meanDifference": 16.983333333333277,
+          "ci95": [
+            16.937499999999947,
+            17.037499999999937
+          ],
+          "n": 8
+        },
+        "offTrackEvents": {
+          "meanDifference": -3.5,
+          "ci95": [
+            -3.9,
+            -3.066666666666667
+          ],
+          "n": 30
+        },
+        "offTrackDurationSeconds": {
+          "meanDifference": -3.8733333333333255,
+          "ci95": [
+            -4.76999999999999,
+            -2.944444444444438
+          ],
+          "n": 30
+        },
+        "reward": {
+          "meanDifference": -467.39210828908574,
+          "ci95": [
+            -615.6993776575334,
+            -328.4051706743499
+          ],
+          "n": 30
+        }
+      },
+      "neuralEpisodes": [
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-01",
+          "reason": "off-track",
+          "completedLaps": 0,
+          "signedProgressMeters": 61.72376163306645,
+          "distanceTravelledMeters": 61.72376163306645,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 3.5666666666666638,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 5.5333333333333234,
+          "meanLateralErrorMeters": 26.362599292663106,
+          "reward": 47.44386453683771,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 61.72376163306645,
+          "steps": 166
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-02",
+          "reason": "off-track",
+          "completedLaps": 0,
+          "signedProgressMeters": -162.1735770080937,
+          "distanceTravelledMeters": 162.1735770080937,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 3.5666666666666638,
+          "blockedTimeSeconds": 0.2333333333333333,
+          "episodeDurationSeconds": 9.666666666666643,
+          "meanLateralErrorMeters": 21.23882230801562,
+          "reward": -322.2513087191832,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": -162.1735770080937,
+          "steps": 290
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-03",
+          "reason": "time-limit",
+          "completedLaps": 0,
+          "signedProgressMeters": 739.1626996218331,
+          "distanceTravelledMeters": 739.1626996218331,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 0,
+          "offTrackDurationSeconds": 0,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 59.999999999999154,
+          "meanLateralErrorMeters": 3.2159295904701724,
+          "reward": 730.7104183754991,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 294.6201240063911,
+          "steps": 1800
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-04",
+          "reason": "time-limit",
+          "completedLaps": 0,
+          "signedProgressMeters": 729.9864980750156,
+          "distanceTravelledMeters": 729.9864980750156,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 0,
+          "offTrackDurationSeconds": 0,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 59.999999999999154,
+          "meanLateralErrorMeters": 3.1704920720942917,
+          "reward": 721.66707592127,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 301.4809321951615,
+          "steps": 1800
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-05",
+          "reason": "off-track",
+          "completedLaps": 0,
+          "signedProgressMeters": -77.02716039520845,
+          "distanceTravelledMeters": 77.0277007962612,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 3.5666666666666638,
+          "blockedTimeSeconds": 0.26666666666666666,
+          "episodeDurationSeconds": 6.833333333333319,
+          "meanLateralErrorMeters": 25.484450263342094,
+          "reward": -159.32666551113385,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": -77.02716039520845,
+          "steps": 205
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-06",
+          "reason": "time-limit",
+          "completedLaps": 0,
+          "signedProgressMeters": 735.9154064765829,
+          "distanceTravelledMeters": 735.9154064765829,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 0,
+          "offTrackDurationSeconds": 0,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 59.999999999999154,
+          "meanLateralErrorMeters": 3.157876459544109,
+          "reward": 727.8957875626528,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 329.3958305238168,
+          "steps": 1800
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-07",
+          "reason": "time-limit",
+          "completedLaps": 0,
+          "signedProgressMeters": 746.6338371504794,
+          "distanceTravelledMeters": 746.6338371504794,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 0,
+          "offTrackDurationSeconds": 0,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 59.999999999999154,
+          "meanLateralErrorMeters": 3.3048085273562147,
+          "reward": 738.2146443981176,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 352.4207675064505,
+          "steps": 1800
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-08",
+          "reason": "time-limit",
+          "completedLaps": 0,
+          "signedProgressMeters": 748.8707454461733,
+          "distanceTravelledMeters": 748.8707454461733,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 0,
+          "offTrackDurationSeconds": 0,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 59.999999999999154,
+          "meanLateralErrorMeters": 3.191602145805002,
+          "reward": 740.9540164980854,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 380.0857590565092,
+          "steps": 1800
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-09",
+          "reason": "time-limit",
+          "completedLaps": 0,
+          "signedProgressMeters": 738.793511670058,
+          "distanceTravelledMeters": 738.793511670058,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 0,
+          "offTrackDurationSeconds": 0,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 59.999999999999154,
+          "meanLateralErrorMeters": 3.2470638191008176,
+          "reward": 730.44432142443,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 384.546906751971,
+          "steps": 1800
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-10",
+          "reason": "time-limit",
+          "completedLaps": 0,
+          "signedProgressMeters": 722.9197280452223,
+          "distanceTravelledMeters": 722.9197280452223,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 0,
+          "offTrackDurationSeconds": 0,
+          "blockedTimeSeconds": 0.19999999999999998,
+          "episodeDurationSeconds": 59.999999999999154,
+          "meanLateralErrorMeters": 3.11240732580352,
+          "reward": 714.4459609006475,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 387.178825330951,
+          "steps": 1800
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-11",
+          "reason": "time-limit",
+          "completedLaps": 0,
+          "signedProgressMeters": 716.2452892784529,
+          "distanceTravelledMeters": 716.2452892784529,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 0,
+          "offTrackDurationSeconds": 0,
+          "blockedTimeSeconds": 0.16666666666666666,
+          "episodeDurationSeconds": 59.999999999999154,
+          "meanLateralErrorMeters": 3.0573362329921503,
+          "reward": 705.683459156598,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 402.4838703230511,
+          "steps": 1800
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-12",
+          "reason": "off-track",
+          "completedLaps": 0,
+          "signedProgressMeters": 74.52738145809985,
+          "distanceTravelledMeters": 74.52738145809985,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 3.5666666666666638,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 8.033333333333315,
+          "meanLateralErrorMeters": 17.436807761478057,
+          "reward": 61.201898230740866,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 74.52738145809985,
+          "steps": 241
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-13",
+          "reason": "off-track",
+          "completedLaps": 0,
+          "signedProgressMeters": 79.27513116814922,
+          "distanceTravelledMeters": 79.27513116814922,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 3.5666666666666638,
+          "blockedTimeSeconds": 0.16666666666666666,
+          "episodeDurationSeconds": 9.799999999999976,
+          "meanLateralErrorMeters": 12.26232323627094,
+          "reward": 66.0175742949061,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 79.27513116814922,
+          "steps": 294
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-14",
+          "reason": "off-track",
+          "completedLaps": 0,
+          "signedProgressMeters": 69.04399026055782,
+          "distanceTravelledMeters": 69.04399026055782,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 3.5666666666666638,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 8.033333333333315,
+          "meanLateralErrorMeters": 15.079179646121522,
+          "reward": 55.447606605461,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 69.04399026055782,
+          "steps": 241
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-15",
+          "reason": "off-track",
+          "completedLaps": 0,
+          "signedProgressMeters": -224.83517604386805,
+          "distanceTravelledMeters": 224.83537533572905,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 3.5666666666666638,
+          "blockedTimeSeconds": 0.26666666666666666,
+          "episodeDurationSeconds": 11.766666666666636,
+          "meanLateralErrorMeters": 13.74330429308901,
+          "reward": -433.6077515821316,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": -224.83517604386805,
+          "steps": 353
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-16",
+          "reason": "off-track",
+          "completedLaps": 0,
+          "signedProgressMeters": 16.21193172802927,
+          "distanceTravelledMeters": 16.21193172802927,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 3.5666666666666638,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 4.799999999999993,
+          "meanLateralErrorMeters": 30.70432104808452,
+          "reward": 1.9926805885753915,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 16.21193172802927,
+          "steps": 144
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-17",
+          "reason": "off-track",
+          "completedLaps": 0,
+          "signedProgressMeters": 146.58311524660013,
+          "distanceTravelledMeters": 146.58311524660013,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 3.5666666666666638,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 9.43333333333331,
+          "meanLateralErrorMeters": 15.779673615689116,
+          "reward": 133.60125046018612,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 146.58311524660013,
+          "steps": 283
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-18",
+          "reason": "off-track",
+          "completedLaps": 0,
+          "signedProgressMeters": 118.60104790101974,
+          "distanceTravelledMeters": 118.60104790101974,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 3.5666666666666638,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 7.266666666666651,
+          "meanLateralErrorMeters": 29.177436255395442,
+          "reward": 104.72375163737362,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 118.60104790101974,
+          "steps": 218
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-19",
+          "reason": "off-track",
+          "completedLaps": 0,
+          "signedProgressMeters": 194.90405821297264,
+          "distanceTravelledMeters": 194.90405821297264,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 2,
+          "offTrackDurationSeconds": 6.499999999999987,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 9.766666666666643,
+          "meanLateralErrorMeters": 14.633461665292588,
+          "reward": 135.3655102576519,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 8.566926950255267,
+          "steps": 293
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-20",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 663.6812501985821,
+          "distanceTravelledMeters": 663.6812501985821,
+          "lapTimeSeconds": 40.300000000000274,
+          "offTrackEvents": 0,
+          "offTrackDurationSeconds": 0,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 52.133333333332935,
+          "meanLateralErrorMeters": 3.2373002751379647,
+          "reward": 840.332017905035,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 1564
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-21",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 648.0320195039518,
+          "distanceTravelledMeters": 648.0320195039518,
+          "lapTimeSeconds": 40.333333333333606,
+          "offTrackEvents": 0,
+          "offTrackDurationSeconds": 0,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 53.13333333333288,
+          "meanLateralErrorMeters": 3.1387917487270456,
+          "reward": 820.9901022807559,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 1594
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-22",
+          "reason": "off-track",
+          "completedLaps": 0,
+          "signedProgressMeters": 69.3782596313539,
+          "distanceTravelledMeters": 69.3782596313539,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 3.5666666666666638,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 5.899999999999989,
+          "meanLateralErrorMeters": 30.851409221630174,
+          "reward": 55.189434154986046,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 69.3782596313539,
+          "steps": 177
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-23",
+          "reason": "off-track",
+          "completedLaps": 0,
+          "signedProgressMeters": 83.1072152801695,
+          "distanceTravelledMeters": 83.1072152801695,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 3.5666666666666638,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 6.733333333333319,
+          "meanLateralErrorMeters": 17.022954194929582,
+          "reward": 69.18622871997495,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 83.1072152801695,
+          "steps": 202
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-24",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 598.09389944069,
+          "distanceTravelledMeters": 598.09389944069,
+          "lapTimeSeconds": 40.36666666666694,
+          "offTrackEvents": 0,
+          "offTrackDurationSeconds": 0,
+          "blockedTimeSeconds": 0.3333333333333333,
+          "episodeDurationSeconds": 48.73333333333313,
+          "meanLateralErrorMeters": 3.172542253001277,
+          "reward": 774.1515403975909,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 1462
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-25",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 584.545506910182,
+          "distanceTravelledMeters": 584.545506910182,
+          "lapTimeSeconds": 40.36666666666694,
+          "offTrackEvents": 0,
+          "offTrackDurationSeconds": 0,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 44.700000000000024,
+          "meanLateralErrorMeters": 3.209663528520587,
+          "reward": 760.801405248632,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 1341
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-26",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 575.2644023989362,
+          "distanceTravelledMeters": 575.2644023989362,
+          "lapTimeSeconds": 40.40000000000027,
+          "offTrackEvents": 0,
+          "offTrackDurationSeconds": 0,
+          "blockedTimeSeconds": 0.16666666666666666,
+          "episodeDurationSeconds": 45.866666666666625,
+          "meanLateralErrorMeters": 3.113502566314993,
+          "reward": 751.2759928440788,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 1376
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-27",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 549.1109965652629,
+          "distanceTravelledMeters": 549.1109965652629,
+          "lapTimeSeconds": 40.4333333333336,
+          "offTrackEvents": 0,
+          "offTrackDurationSeconds": 0,
+          "blockedTimeSeconds": 0.2333333333333333,
+          "episodeDurationSeconds": 45.53333333333331,
+          "meanLateralErrorMeters": 3.1176290354753196,
+          "reward": 723.846760578197,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 1366
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-28",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 533.8648331615462,
+          "distanceTravelledMeters": 533.8648331615462,
+          "lapTimeSeconds": 40.533333333333594,
+          "offTrackEvents": 0,
+          "offTrackDurationSeconds": 0,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 44.10000000000006,
+          "meanLateralErrorMeters": 3.101470335462553,
+          "reward": 708.3541829862664,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 1323
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-29",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 519.0801232342469,
+          "distanceTravelledMeters": 519.0801232342469,
+          "lapTimeSeconds": 40.60000000000026,
+          "offTrackEvents": 0,
+          "offTrackDurationSeconds": 0,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 42.80000000000013,
+          "meanLateralErrorMeters": 3.1005959960187868,
+          "reward": 692.4036960984664,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 1284
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-30",
+          "reason": "off-track",
+          "completedLaps": 0,
+          "signedProgressMeters": 65.69729610676663,
+          "distanceTravelledMeters": 65.69729610676663,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 3.5666666666666638,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 5.59999999999999,
+          "meanLateralErrorMeters": 32.23385005946922,
+          "reward": 51.43488497382918,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 59.90076611640691,
+          "steps": 168
+        }
+      ]
+    },
+    {
+      "configuration": "B",
+      "trainingSeed": 2026,
+      "networkWeightsUnchanged": true,
+      "summary": {
+        "scenarioCount": 30,
+        "completion": {
+          "rate": 0.9,
+          "ci95": [
+            0.7437891742081593,
+            0.9654001112526658
+          ],
+          "successes": 27,
+          "n": 30
+        },
+        "meanSignedProgressMeters": {
+          "mean": 660.5634811753606,
+          "sd": 226.0207696990739,
+          "ci95": [
+            576.1660329928048,
+            744.9609293579164
+          ],
+          "n": 30
+        },
+        "meanDistanceTravelledMeters": {
+          "mean": 661.2788441933507,
+          "sd": 223.8871328041047,
+          "ci95": [
+            577.6781082311953,
+            744.879580155506
+          ],
+          "n": 30
+        },
+        "successfulLapTimeSeconds": {
+          "mean": 31.771604938272347,
+          "sd": 0.47481023683184836,
+          "ci95": [
+            31.583776587917033,
+            31.95943328862766
+          ],
+          "n": 27
+        },
+        "offTrackEvents": {
+          "mean": 0.06666666666666667,
+          "sd": 0.2537081317024625,
+          "ci95": [
+            -0.02806940085208466,
+            0.161402734185418
+          ],
+          "n": 30
+        },
+        "offTrackDurationSeconds": {
+          "mean": 0.2377777777777776,
+          "sd": 0.9048923364054487,
+          "ci95": [
+            -0.10011419637243518,
+            0.5756697519279903
+          ],
+          "n": 30
+        },
+        "blockedTimeSeconds": {
+          "mean": 0.07333333333333332,
+          "sd": 0.1245374583973083,
+          "ci95": [
+            0.02683033404761287,
+            0.11983633261905377
+          ],
+          "n": 30
+        },
+        "reward": {
+          "mean": 819.7488460139385,
+          "sd": 262.72082994236763,
+          "ci95": [
+            721.6473854222402,
+            917.8503066056369
+          ],
+          "n": 30
+        },
+        "episodeDurationSeconds": {
+          "mean": 43.44333333333328,
+          "sd": 13.837491827517685,
+          "ci95": [
+            38.27633473827342,
+            48.61033192839314
+          ],
+          "n": 30
+        }
+      },
+      "pairedAgainstSteering": {
+        "interpretation": "Neural minus Steering; percentile bootstrap resamples matched scenario pairs.",
+        "completionRate": {
+          "meanDifference": -0.1,
+          "ci95": [
+            -0.2846631254855304,
+            0.11335146783821026
+          ],
+          "intervalMethod": "Conservative Bonferroni difference of marginal 97.5% Wilson score intervals; valid under paired dependence.",
+          "discordantPairs": {
+            "neuralOnly": 0,
+            "steeringOnly": 3
+          },
+          "n": 30
+        },
+        "meanSignedProgressMeters": {
+          "meanDifference": -46.87980376208456,
+          "ci95": [
+            -116.21541176007555,
+            -0.41717688911349077
+          ],
+          "n": 30
+        },
+        "successfulLapTimeSeconds": {
+          "meanDifference": 8.393827160494235,
+          "ci95": [
+            8.264197530864605,
+            8.567901234568305
+          ],
+          "n": 27
+        },
+        "offTrackEvents": {
+          "meanDifference": -3.933333333333333,
+          "ci95": [
+            -4.3,
+            -3.566666666666667
+          ],
+          "n": 30
+        },
+        "offTrackDurationSeconds": {
+          "meanDifference": -5.397777777777767,
+          "ci95": [
+            -6.0244444444444305,
+            -4.746666666666658
+          ],
+          "n": 30
+        },
+        "reward": {
+          "meanDifference": -39.26294031596053,
+          "ci95": [
+            -129.31189909441463,
+            25.631497646050704
+          ],
+          "n": 30
+        }
+      },
+      "neuralEpisodes": [
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-01",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 482.60524685471773,
+          "distanceTravelledMeters": 482.60524685471773,
+          "lapTimeSeconds": 30.300000000000665,
+          "offTrackEvents": 0,
+          "offTrackDurationSeconds": 0,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 30.300000000000665,
+          "meanLateralErrorMeters": 2.757208803770329,
+          "reward": 663.5230168032858,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 909
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-02",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 473.6788925600487,
+          "distanceTravelledMeters": 473.6788925600487,
+          "lapTimeSeconds": 33.46666666666733,
+          "offTrackEvents": 0,
+          "offTrackDurationSeconds": 0,
+          "blockedTimeSeconds": 0.3,
+          "episodeDurationSeconds": 33.46666666666733,
+          "meanLateralErrorMeters": 2.5076279624767723,
+          "reward": 649.0415607079661,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 1004
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-03",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 938.5731777354089,
+          "distanceTravelledMeters": 938.5731777354089,
+          "lapTimeSeconds": 31.73333333333407,
+          "offTrackEvents": 0,
+          "offTrackDurationSeconds": 0,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 59.1999999999992,
+          "meanLateralErrorMeters": 2.6389517843265136,
+          "reward": 1118.3732985404977,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 1776
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-04",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 922.2505656485292,
+          "distanceTravelledMeters": 922.2505656485292,
+          "lapTimeSeconds": 31.700000000000735,
+          "offTrackEvents": 0,
+          "offTrackDurationSeconds": 0,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 59.13333333333254,
+          "meanLateralErrorMeters": 2.665329113330898,
+          "reward": 1102.786727755775,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 1774
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-05",
+          "reason": "time-limit",
+          "completedLaps": 0,
+          "signedProgressMeters": 902.2378120732562,
+          "distanceTravelledMeters": 902.2378120732562,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 0,
+          "offTrackDurationSeconds": 0,
+          "blockedTimeSeconds": 0.26666666666666666,
+          "episodeDurationSeconds": 59.999999999999154,
+          "meanLateralErrorMeters": 2.5352550170815924,
+          "reward": 902.2753137376135,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 478.6318339779623,
+          "steps": 1800
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-06",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 900.1528340876333,
+          "distanceTravelledMeters": 900.1528340876333,
+          "lapTimeSeconds": 31.700000000000735,
+          "offTrackEvents": 0,
+          "offTrackDurationSeconds": 0,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 58.73333333333256,
+          "meanLateralErrorMeters": 2.582515493479223,
+          "reward": 1080.6877865043277,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 1762
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-07",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 887.9580694127018,
+          "distanceTravelledMeters": 887.9580694127018,
+          "lapTimeSeconds": 31.700000000000735,
+          "offTrackEvents": 0,
+          "offTrackDurationSeconds": 0,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 55.99999999999938,
+          "meanLateralErrorMeters": 2.7234425897596775,
+          "reward": 1067.5661782552806,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 1680
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-08",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 862.8551400445947,
+          "distanceTravelledMeters": 862.8551400445947,
+          "lapTimeSeconds": 31.73333333333407,
+          "offTrackEvents": 0,
+          "offTrackDurationSeconds": 0,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 56.533333333332685,
+          "meanLateralErrorMeters": 2.5066429039345994,
+          "reward": 1042.2654534556052,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 1696
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-09",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 847.9916046867618,
+          "distanceTravelledMeters": 847.9916046867618,
+          "lapTimeSeconds": 31.700000000000735,
+          "offTrackEvents": 0,
+          "offTrackDurationSeconds": 0,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 54.56666666666613,
+          "meanLateralErrorMeters": 2.6264552735530886,
+          "reward": 1027.1633998075117,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 1637
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-10",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 829.6738394021925,
+          "distanceTravelledMeters": 829.6738394021925,
+          "lapTimeSeconds": 31.73333333333407,
+          "offTrackEvents": 0,
+          "offTrackDurationSeconds": 0,
+          "blockedTimeSeconds": 0.26666666666666666,
+          "episodeDurationSeconds": 55.53333333333274,
+          "meanLateralErrorMeters": 2.4767153461504376,
+          "reward": 1008.1215551434351,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 1666
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-11",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 807.3811443558477,
+          "distanceTravelledMeters": 807.3811443558477,
+          "lapTimeSeconds": 31.700000000000735,
+          "offTrackEvents": 0,
+          "offTrackDurationSeconds": 0,
+          "blockedTimeSeconds": 0.26666666666666666,
+          "episodeDurationSeconds": 54.13333333333282,
+          "meanLateralErrorMeters": 2.4387911413975623,
+          "reward": 985.0820581371295,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 1624
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-12",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 791.7196325496933,
+          "distanceTravelledMeters": 791.7196325496933,
+          "lapTimeSeconds": 31.73333333333407,
+          "offTrackEvents": 0,
+          "offTrackDurationSeconds": 0,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 52.0999999999996,
+          "meanLateralErrorMeters": 2.4521400502980573,
+          "reward": 968.6798540891444,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 1563
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-13",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 773.9675210550968,
+          "distanceTravelledMeters": 773.9675210550968,
+          "lapTimeSeconds": 31.73333333333407,
+          "offTrackEvents": 0,
+          "offTrackDurationSeconds": 0,
+          "blockedTimeSeconds": 0.26666666666666666,
+          "episodeDurationSeconds": 51.99999999999961,
+          "meanLateralErrorMeters": 2.4031041457388835,
+          "reward": 949.4248955662282,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 1560
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-14",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 773.3743736201052,
+          "distanceTravelledMeters": 773.3743736201052,
+          "lapTimeSeconds": 31.73333333333407,
+          "offTrackEvents": 0,
+          "offTrackDurationSeconds": 0,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 49.799999999999734,
+          "meanLateralErrorMeters": 2.6192842783226644,
+          "reward": 950.7480003732762,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 1494
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-15",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 744.6934031527511,
+          "distanceTravelledMeters": 744.6934031527511,
+          "lapTimeSeconds": 31.700000000000735,
+          "offTrackEvents": 0,
+          "offTrackDurationSeconds": 0,
+          "blockedTimeSeconds": 0.3333333333333333,
+          "episodeDurationSeconds": 50.299999999999706,
+          "meanLateralErrorMeters": 2.5493381637510812,
+          "reward": 914.9980615829699,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 1509
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-16",
+          "reason": "off-track",
+          "completedLaps": 0,
+          "signedProgressMeters": 33.07214364147271,
+          "distanceTravelledMeters": 33.07214364147271,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 3.5666666666666638,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 4.833333333333326,
+          "meanLateralErrorMeters": 15.262490188987362,
+          "reward": 18.648271986524545,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 33.07214364147271,
+          "steps": 145
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-17",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 713.5659959431919,
+          "distanceTravelledMeters": 713.5659959431919,
+          "lapTimeSeconds": 31.73333333333407,
+          "offTrackEvents": 0,
+          "offTrackDurationSeconds": 0,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 46.46666666666659,
+          "meanLateralErrorMeters": 2.4549744021175695,
+          "reward": 893.0409811739207,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 1394
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-18",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 696.1598640002571,
+          "distanceTravelledMeters": 696.1598640002571,
+          "lapTimeSeconds": 31.766666666667405,
+          "offTrackEvents": 0,
+          "offTrackDurationSeconds": 0,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 44.40000000000004,
+          "meanLateralErrorMeters": 2.5859888158967097,
+          "reward": 873.707752693413,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 1332
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-19",
+          "reason": "off-track",
+          "completedLaps": 0,
+          "signedProgressMeters": 1.6094562606251088,
+          "distanceTravelledMeters": 23.07034680032683,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 3.5666666666666638,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 5.899999999999989,
+          "meanLateralErrorMeters": 10.101353256610762,
+          "reward": -20.986133091370245,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 1.6094562606251088,
+          "steps": 177
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-20",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 663.9829481121933,
+          "distanceTravelledMeters": 663.9829481121933,
+          "lapTimeSeconds": 31.700000000000735,
+          "offTrackEvents": 0,
+          "offTrackDurationSeconds": 0,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 41.63333333333353,
+          "meanLateralErrorMeters": 2.5225653190214867,
+          "reward": 842.6075307260389,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 1249
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-21",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 648.321759905371,
+          "distanceTravelledMeters": 648.321759905371,
+          "lapTimeSeconds": 31.766666666667405,
+          "offTrackEvents": 0,
+          "offTrackDurationSeconds": 0,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 42.90000000000013,
+          "meanLateralErrorMeters": 2.4742081177910706,
+          "reward": 824.8204707810733,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 1287
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-22",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 640.749926061542,
+          "distanceTravelledMeters": 640.749926061542,
+          "lapTimeSeconds": 31.6666666666674,
+          "offTrackEvents": 0,
+          "offTrackDurationSeconds": 0,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 40.4333333333336,
+          "meanLateralErrorMeters": 2.596375741590834,
+          "reward": 819.9950254519295,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 1213
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-23",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 620.3776650169125,
+          "distanceTravelledMeters": 620.3776650169125,
+          "lapTimeSeconds": 31.766666666667405,
+          "offTrackEvents": 0,
+          "offTrackDurationSeconds": 0,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 40.100000000000286,
+          "meanLateralErrorMeters": 2.551701867551511,
+          "reward": 796.9639769485754,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 1203
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-24",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 598.0628011042355,
+          "distanceTravelledMeters": 598.0628011042355,
+          "lapTimeSeconds": 31.633333333334065,
+          "offTrackEvents": 0,
+          "offTrackDurationSeconds": 0,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 39.70000000000031,
+          "meanLateralErrorMeters": 2.949803919530361,
+          "reward": 778.5596993360588,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 1191
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-25",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 584.775372285956,
+          "distanceTravelledMeters": 584.775372285956,
+          "lapTimeSeconds": 31.80000000000074,
+          "offTrackEvents": 0,
+          "offTrackDurationSeconds": 0,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 37.533333333333765,
+          "meanLateralErrorMeters": 2.4805115737194052,
+          "reward": 764.3118171779175,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 1126
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-26",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 575.4425612631219,
+          "distanceTravelledMeters": 575.4425612631219,
+          "lapTimeSeconds": 31.80000000000074,
+          "offTrackEvents": 0,
+          "offTrackDurationSeconds": 0,
+          "blockedTimeSeconds": 0.26666666666666666,
+          "episodeDurationSeconds": 38.76666666666703,
+          "meanLateralErrorMeters": 2.578502157902989,
+          "reward": 754.5688991882959,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 1163
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-27",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 549.1109965652626,
+          "distanceTravelledMeters": 549.1109965652626,
+          "lapTimeSeconds": 32.06666666666741,
+          "offTrackEvents": 0,
+          "offTrackDurationSeconds": 0,
+          "blockedTimeSeconds": 0.2333333333333333,
+          "episodeDurationSeconds": 37.4666666666671,
+          "meanLateralErrorMeters": 2.5075701208879146,
+          "reward": 727.4189466464851,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 1124
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-28",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 534.158988744511,
+          "distanceTravelledMeters": 534.158988744511,
+          "lapTimeSeconds": 32.30000000000073,
+          "offTrackEvents": 0,
+          "offTrackDurationSeconds": 0,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 35.83333333333386,
+          "meanLateralErrorMeters": 2.467522041542227,
+          "reward": 711.6940346777562,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 1075
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-29",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 519.0526111296206,
+          "distanceTravelledMeters": 519.0526111296206,
+          "lapTimeSeconds": 32.1666666666674,
+          "offTrackEvents": 0,
+          "offTrackDurationSeconds": 0,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 33.9666666666673,
+          "meanLateralErrorMeters": 2.507875887149887,
+          "reward": 696.2658752223036,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 1019
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-30",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 499.34808798720616,
+          "distanceTravelledMeters": 499.34808798720616,
+          "lapTimeSeconds": 31.300000000000715,
+          "offTrackEvents": 0,
+          "offTrackDurationSeconds": 0,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 31.566666666667395,
+          "meanLateralErrorMeters": 2.750966860048047,
+          "reward": 680.1110710391845,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 947
+        }
+      ]
+    },
+    {
+      "configuration": "B",
+      "trainingSeed": 2027,
+      "networkWeightsUnchanged": true,
+      "summary": {
+        "scenarioCount": 30,
+        "completion": {
+          "rate": 0,
+          "ci95": [
+            0,
+            0.11351339317396876
+          ],
+          "successes": 0,
+          "n": 30
+        },
+        "meanSignedProgressMeters": {
+          "mean": 373.22092561408084,
+          "sd": 164.807837481257,
+          "ci95": [
+            311.680736442871,
+            434.76111478529066
+          ],
+          "n": 30
+        },
+        "meanDistanceTravelledMeters": {
+          "mean": 385.68259886766333,
+          "sd": 134.98614455267466,
+          "ci95": [
+            335.278000407905,
+            436.0871973274217
+          ],
+          "n": 30
+        },
+        "successfulLapTimeSeconds": {
+          "mean": null,
+          "sd": null,
+          "ci95": null,
+          "n": 0
+        },
+        "offTrackEvents": {
+          "mean": 1.6,
+          "sd": 0.6214554662658655,
+          "ci95": [
+            1.3679449743412042,
+            1.832055025658796
+          ],
+          "n": 30
+        },
+        "offTrackDurationSeconds": {
+          "mean": 4.047777777777772,
+          "sd": 0.5774619679194088,
+          "ci95": [
+            3.8321501760323087,
+            4.263405379523236
+          ],
+          "n": 30
+        },
+        "blockedTimeSeconds": {
+          "mean": 0.03777777777777778,
+          "sd": 0.06416772402970188,
+          "ci95": [
+            0.013817182603273814,
+            0.06173837295228174
+          ],
+          "n": 30
+        },
+        "reward": {
+          "mean": 362.94324580558686,
+          "sd": 144.8526284719799,
+          "ci95": [
+            308.8544458167732,
+            417.0320457944005
+          ],
+          "n": 30
+        },
+        "episodeDurationSeconds": {
+          "mean": 19.62111111111131,
+          "sd": 7.109787562412421,
+          "ci95": [
+            16.96627576926821,
+            22.27594645295441
+          ],
+          "n": 30
+        }
+      },
+      "pairedAgainstSteering": {
+        "interpretation": "Neural minus Steering; percentile bootstrap resamples matched scenario pairs.",
+        "completionRate": {
+          "meanDifference": -1,
+          "ci95": [
+            -0.9999999999999999,
+            -0.7131165764732035
+          ],
+          "intervalMethod": "Conservative Bonferroni difference of marginal 97.5% Wilson score intervals; valid under paired dependence.",
+          "discordantPairs": {
+            "neuralOnly": 0,
+            "steeringOnly": 30
+          },
+          "n": 30
+        },
+        "meanSignedProgressMeters": {
+          "meanDifference": -334.2223593233643,
+          "ci95": [
+            -421.78409308127283,
+            -245.61065226680924
+          ],
+          "n": 30
+        },
+        "successfulLapTimeSeconds": {
+          "meanDifference": null,
+          "ci95": null,
+          "n": 0
+        },
+        "offTrackEvents": {
+          "meanDifference": -2.4,
+          "ci95": [
+            -2.8666666666666667,
+            -1.9
+          ],
+          "n": 30
+        },
+        "offTrackDurationSeconds": {
+          "meanDifference": -1.5877777777777717,
+          "ci95": [
+            -2.282222222222214,
+            -0.884444444444441
+          ],
+          "n": 30
+        },
+        "reward": {
+          "meanDifference": -496.0685405243122,
+          "ci95": [
+            -576.3133474171244,
+            -408.41162192795616
+          ],
+          "n": 30
+        }
+      },
+      "neuralEpisodes": [
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-01",
+          "reason": "off-track",
+          "completedLaps": 0,
+          "signedProgressMeters": 464.6934872262996,
+          "distanceTravelledMeters": 464.6934872262996,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 2,
+          "offTrackDurationSeconds": 4.7666666666666595,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 23.400000000000322,
+          "meanLateralErrorMeters": 6.896637527322775,
+          "reward": 445.2594401717099,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 464.6934872262996,
+          "steps": 702
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-02",
+          "reason": "off-track",
+          "completedLaps": 0,
+          "signedProgressMeters": 455.7592956571767,
+          "distanceTravelledMeters": 455.7592956571767,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 2,
+          "offTrackDurationSeconds": 4.633333333333327,
+          "blockedTimeSeconds": 0.13333333333333333,
+          "episodeDurationSeconds": 23.033333333333637,
+          "meanLateralErrorMeters": 6.510092468093087,
+          "reward": 432.40684483534653,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 455.7592956571767,
+          "steps": 691
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-03",
+          "reason": "off-track",
+          "completedLaps": 0,
+          "signedProgressMeters": 426.919256904399,
+          "distanceTravelledMeters": 426.919256904399,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 2,
+          "offTrackDurationSeconds": 4.733333333333326,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 20.266666666666833,
+          "meanLateralErrorMeters": 7.117830706029755,
+          "reward": 407.01784512329755,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 426.919256904399,
+          "steps": 608
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-04",
+          "reason": "off-track",
+          "completedLaps": 0,
+          "signedProgressMeters": 411.0734639565428,
+          "distanceTravelledMeters": 411.0734639565428,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 2,
+          "offTrackDurationSeconds": 3.8333333333333295,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 20.066666666666823,
+          "meanLateralErrorMeters": 7.062863337296249,
+          "reward": 393.8357812316233,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 411.0734639565428,
+          "steps": 602
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-05",
+          "reason": "off-track",
+          "completedLaps": 0,
+          "signedProgressMeters": 406.33323470736406,
+          "distanceTravelledMeters": 406.33323470736406,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 2,
+          "offTrackDurationSeconds": 3.933333333333329,
+          "blockedTimeSeconds": 0.16666666666666666,
+          "episodeDurationSeconds": 20.866666666666863,
+          "meanLateralErrorMeters": 6.760383778289413,
+          "reward": 388.7380765299729,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 406.33323470736406,
+          "steps": 626
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-06",
+          "reason": "off-track",
+          "completedLaps": 0,
+          "signedProgressMeters": 388.5905594945075,
+          "distanceTravelledMeters": 388.5905594945075,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 2,
+          "offTrackDurationSeconds": 3.9666666666666623,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 19.600000000000133,
+          "meanLateralErrorMeters": 7.040984633787829,
+          "reward": 371.09669750219183,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 388.5905594945075,
+          "steps": 588
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-07",
+          "reason": "off-track",
+          "completedLaps": 0,
+          "signedProgressMeters": 377.29959768904394,
+          "distanceTravelledMeters": 377.29959768904394,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 2,
+          "offTrackDurationSeconds": 3.933333333333329,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 18.333333333333403,
+          "meanLateralErrorMeters": 7.532641454317307,
+          "reward": 359.2153302794113,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 377.29959768904394,
+          "steps": 550
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-08",
+          "reason": "off-track",
+          "completedLaps": 0,
+          "signedProgressMeters": 351.9853474169083,
+          "distanceTravelledMeters": 351.9853474169083,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 3.5666666666666638,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 18.133333333333393,
+          "meanLateralErrorMeters": 7.314928740295324,
+          "reward": 340.24829161264904,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 351.9853474169083,
+          "steps": 544
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-09",
+          "reason": "off-track",
+          "completedLaps": 0,
+          "signedProgressMeters": 336.5924904642424,
+          "distanceTravelledMeters": 336.5924904642424,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 3.5666666666666638,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 17.133333333333344,
+          "meanLateralErrorMeters": 7.631825826414274,
+          "reward": 324.48524043086934,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 336.5924904642424,
+          "steps": 514
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-10",
+          "reason": "off-track",
+          "completedLaps": 0,
+          "signedProgressMeters": 319.0801720318545,
+          "distanceTravelledMeters": 319.0801720318545,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 3.5666666666666638,
+          "blockedTimeSeconds": 0.13333333333333333,
+          "episodeDurationSeconds": 17.43333333333336,
+          "meanLateralErrorMeters": 7.140515802240437,
+          "reward": 307.07702532588195,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 319.0801720318545,
+          "steps": 523
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-11",
+          "reason": "off-track",
+          "completedLaps": 0,
+          "signedProgressMeters": 297.5441909206302,
+          "distanceTravelledMeters": 297.5441909206302,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 3.5666666666666638,
+          "blockedTimeSeconds": 0.13333333333333333,
+          "episodeDurationSeconds": 16.466666666666644,
+          "meanLateralErrorMeters": 7.248409654404409,
+          "reward": 285.34476591320885,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 297.5441909206302,
+          "steps": 494
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-12",
+          "reason": "off-track",
+          "completedLaps": 0,
+          "signedProgressMeters": 282.27071390774324,
+          "distanceTravelledMeters": 282.27071390774324,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 3.5666666666666638,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 15.166666666666623,
+          "meanLateralErrorMeters": 7.422441993933568,
+          "reward": 270.03042666409607,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 282.27071390774324,
+          "steps": 455
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-13",
+          "reason": "off-track",
+          "completedLaps": 0,
+          "signedProgressMeters": 265.1015970464869,
+          "distanceTravelledMeters": 265.1015970464869,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 3.5666666666666638,
+          "blockedTimeSeconds": 0.13333333333333333,
+          "episodeDurationSeconds": 14.899999999999958,
+          "meanLateralErrorMeters": 7.006188059408721,
+          "reward": 252.61602952599577,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 265.1015970464869,
+          "steps": 447
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-14",
+          "reason": "off-track",
+          "completedLaps": 0,
+          "signedProgressMeters": 264.569721153195,
+          "distanceTravelledMeters": 264.569721153195,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 3.5666666666666638,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 13.933333333333294,
+          "meanLateralErrorMeters": 7.896945472806313,
+          "reward": 251.85058140566076,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 264.569721153195,
+          "steps": 418
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-15",
+          "reason": "off-track",
+          "completedLaps": 0,
+          "signedProgressMeters": 237.05016569774332,
+          "distanceTravelledMeters": 237.05016569774332,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 3.5666666666666638,
+          "blockedTimeSeconds": 0.16666666666666666,
+          "episodeDurationSeconds": 13.033333333333298,
+          "meanLateralErrorMeters": 7.152891275314985,
+          "reward": 219.89420044384775,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 237.05016569774332,
+          "steps": 391
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-16",
+          "reason": "off-track",
+          "completedLaps": 0,
+          "signedProgressMeters": 227.0228207270982,
+          "distanceTravelledMeters": 227.0228207270982,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 3.5666666666666638,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 11.933333333333302,
+          "meanLateralErrorMeters": 7.771830110240441,
+          "reward": 214.06327374926786,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 227.0228207270982,
+          "steps": 358
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-17",
+          "reason": "off-track",
+          "completedLaps": 0,
+          "signedProgressMeters": 203.35420715620626,
+          "distanceTravelledMeters": 203.35420715620626,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 3.5666666666666638,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 9.966666666666642,
+          "meanLateralErrorMeters": 8.003580228877613,
+          "reward": 190.1262267222104,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 203.35420715620626,
+          "steps": 299
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-18",
+          "reason": "off-track",
+          "completedLaps": 0,
+          "signedProgressMeters": 183.51995503914242,
+          "distanceTravelledMeters": 183.51995503914242,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 3.5666666666666638,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 8.099999999999982,
+          "meanLateralErrorMeters": 10.365322863884575,
+          "reward": 169.59554769022336,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 183.51995503914242,
+          "steps": 243
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-19",
+          "reason": "off-track",
+          "completedLaps": 0,
+          "signedProgressMeters": -154.2306203717053,
+          "distanceTravelledMeters": 219.61957723576938,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 3.5666666666666638,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 5.099999999999992,
+          "meanLateralErrorMeters": 21.423227539814754,
+          "reward": 10.026928014657328,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": -154.2306203717053,
+          "steps": 153
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-20",
+          "reason": "off-track",
+          "completedLaps": 0,
+          "signedProgressMeters": 253.74685610158537,
+          "distanceTravelledMeters": 253.74685610158537,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 3.5666666666666638,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 14.09999999999996,
+          "meanLateralErrorMeters": 7.1566766509847906,
+          "reward": 240.75908567844164,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 82.81831160836212,
+          "steps": 423
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-21",
+          "reason": "off-track",
+          "completedLaps": 0,
+          "signedProgressMeters": 630.4087591050925,
+          "distanceTravelledMeters": 630.4087591050925,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 3,
+          "offTrackDurationSeconds": 5.633333333333323,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 32.83333333333403,
+          "meanLateralErrorMeters": 5.8728988306491425,
+          "reward": 605.8811036727228,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 475.36357180083877,
+          "steps": 985
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-22",
+          "reason": "off-track",
+          "completedLaps": 0,
+          "signedProgressMeters": 229.8452869417025,
+          "distanceTravelledMeters": 229.8452869417025,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 3.5666666666666638,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 13.333333333333297,
+          "meanLateralErrorMeters": 7.126714335658495,
+          "reward": 216.66047968599938,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 81.87890631084815,
+          "steps": 400
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-23",
+          "reason": "off-track",
+          "completedLaps": 0,
+          "signedProgressMeters": 602.4710260766526,
+          "distanceTravelledMeters": 602.4710260766526,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 3,
+          "offTrackDurationSeconds": 4.966666666666659,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 31.033333333334035,
+          "meanLateralErrorMeters": 5.969700895957215,
+          "reward": 579.0567118508009,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 475.840352441652,
+          "steps": 931
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-24",
+          "reason": "off-track",
+          "completedLaps": 0,
+          "signedProgressMeters": 580.3823287084267,
+          "distanceTravelledMeters": 580.3823287084267,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 2,
+          "offTrackDurationSeconds": 4.799999999999993,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 29.80000000000064,
+          "meanLateralErrorMeters": 5.914405460658174,
+          "reward": 562.5705806684025,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 475.6408647490816,
+          "steps": 894
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-25",
+          "reason": "off-track",
+          "completedLaps": 0,
+          "signedProgressMeters": 566.9437740485805,
+          "distanceTravelledMeters": 566.9437740485805,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 2,
+          "offTrackDurationSeconds": 4.399999999999994,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 27.966666666667216,
+          "meanLateralErrorMeters": 6.178092528685442,
+          "reward": 549.6263686938788,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 475.49235330191175,
+          "steps": 839
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-26",
+          "reason": "off-track",
+          "completedLaps": 0,
+          "signedProgressMeters": 557.6795378932247,
+          "distanceTravelledMeters": 557.6795378932247,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 2,
+          "offTrackDurationSeconds": 4.133333333333328,
+          "blockedTimeSeconds": 0.13333333333333333,
+          "episodeDurationSeconds": 28.700000000000585,
+          "meanLateralErrorMeters": 6.06803213696862,
+          "reward": 541.2894144736975,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 475.5952932381378,
+          "steps": 861
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-27",
+          "reason": "off-track",
+          "completedLaps": 0,
+          "signedProgressMeters": 531.4875820905105,
+          "distanceTravelledMeters": 531.4875820905105,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 2,
+          "offTrackDurationSeconds": 4.199999999999995,
+          "blockedTimeSeconds": 0.13333333333333333,
+          "episodeDurationSeconds": 27.6666666666672,
+          "meanLateralErrorMeters": 6.113488413269877,
+          "reward": 514.5959708362985,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 475.6310618478778,
+          "steps": 830
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-28",
+          "reason": "off-track",
+          "completedLaps": 0,
+          "signedProgressMeters": 516.2916919997924,
+          "distanceTravelledMeters": 516.2916919997924,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 2,
+          "offTrackDurationSeconds": 4.099999999999995,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 26.500000000000476,
+          "meanLateralErrorMeters": 6.2005915575011565,
+          "reward": 499.7961879162704,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 475.88909490361675,
+          "steps": 795
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-29",
+          "reason": "off-track",
+          "completedLaps": 0,
+          "signedProgressMeters": 501.4279739502888,
+          "distanceTravelledMeters": 501.4279739502888,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 2,
+          "offTrackDurationSeconds": 4.733333333333326,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 25.46666666666709,
+          "meanLateralErrorMeters": 6.384016415423165,
+          "reward": 482.80893101922226,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 476.07809355746764,
+          "steps": 764
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-30",
+          "reason": "off-track",
+          "completedLaps": 0,
+          "signedProgressMeters": 481.4132946816902,
+          "distanceTravelledMeters": 481.4132946816902,
+          "lapTimeSeconds": null,
+          "offTrackEvents": 2,
+          "offTrackDurationSeconds": 4.733333333333326,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 24.366666666667037,
+          "meanLateralErrorMeters": 6.704215198098186,
+          "reward": 462.32398649974743,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 475.6371373884966,
+          "steps": 731
+        }
+      ]
+    },
+    {
+      "configuration": "B",
+      "trainingSeed": 2028,
+      "networkWeightsUnchanged": true,
+      "summary": {
+        "scenarioCount": 30,
+        "completion": {
+          "rate": 1,
+          "ci95": [
+            0.8864866068260312,
+            0.9999999999999999
+          ],
+          "successes": 30,
+          "n": 30
+        },
+        "meanSignedProgressMeters": {
+          "mean": 707.2630952779485,
+          "sd": 144.08818496322067,
+          "ci95": [
+            653.4597428677132,
+            761.0664476881839
+          ],
+          "n": 30
+        },
+        "meanDistanceTravelledMeters": {
+          "mean": 707.2630952779485,
+          "sd": 144.08818496322067,
+          "ci95": [
+            653.4597428677132,
+            761.0664476881839
+          ],
+          "n": 30
+        },
+        "successfulLapTimeSeconds": {
+          "mean": 28.586666666667238,
+          "sd": 0.16668965358722657,
+          "ci95": [
+            28.524423796598587,
+            28.64890953673589
+          ],
+          "n": 30
+        },
+        "offTrackEvents": {
+          "mean": 0.5,
+          "sd": 0.5085476277156078,
+          "ci95": [
+            0.31010540705779427,
+            0.6898945929422058
+          ],
+          "n": 30
+        },
+        "offTrackDurationSeconds": {
+          "mean": 0.18000000000000002,
+          "sd": 0.19428619723691543,
+          "ci95": [
+            0.10745242268788027,
+            0.25254757731211974
+          ],
+          "n": 30
+        },
+        "blockedTimeSeconds": {
+          "mean": 0.05444444444444444,
+          "sd": 0.09242718303331447,
+          "ci95": [
+            0.01993160564162305,
+            0.08895728324726583
+          ],
+          "n": 30
+        },
+        "reward": {
+          "mean": 891.2506195588601,
+          "sd": 145.03774273477646,
+          "ci95": [
+            837.0926968455153,
+            945.4085422722048
+          ],
+          "n": 30
+        },
+        "episodeDurationSeconds": {
+          "mean": 41.58777777777792,
+          "sd": 8.535773193461159,
+          "ci95": [
+            38.40047124505383,
+            44.77508431050202
+          ],
+          "n": 30
+        }
+      },
+      "pairedAgainstSteering": {
+        "interpretation": "Neural minus Steering; percentile bootstrap resamples matched scenario pairs.",
+        "completionRate": {
+          "meanDifference": 0,
+          "ci95": [
+            -0.14344171176339815,
+            0.14344171176339815
+          ],
+          "intervalMethod": "Conservative Bonferroni difference of marginal 97.5% Wilson score intervals; valid under paired dependence.",
+          "discordantPairs": {
+            "neuralOnly": 0,
+            "steeringOnly": 0
+          },
+          "n": 30
+        },
+        "meanSignedProgressMeters": {
+          "meanDifference": -0.1801896594966763,
+          "ci95": [
+            -0.24959408769758512,
+            -0.10450141506593506
+          ],
+          "n": 30
+        },
+        "successfulLapTimeSeconds": {
+          "meanDifference": 5.208888888889147,
+          "ci95": [
+            5.177777777778035,
+            5.234444444444706
+          ],
+          "n": 30
+        },
+        "offTrackEvents": {
+          "meanDifference": -3.5,
+          "ci95": [
+            -3.8666666666666667,
+            -3.1333333333333333
+          ],
+          "n": 30
+        },
+        "offTrackDurationSeconds": {
+          "meanDifference": -5.455555555555545,
+          "ci95": [
+            -5.984444444444431,
+            -4.881111111111102
+          ],
+          "n": 30
+        },
+        "reward": {
+          "meanDifference": 32.23883322896122,
+          "ci95": [
+            28.80989182156145,
+            35.47906593585
+          ],
+          "n": 30
+        }
+      },
+      "neuralEpisodes": [
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-01",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 482.76408171082585,
+          "distanceTravelledMeters": 482.76408171082585,
+          "lapTimeSeconds": 27.766666666667206,
+          "offTrackEvents": 0,
+          "offTrackDurationSeconds": 0,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 27.766666666667206,
+          "meanLateralErrorMeters": 2.284181268814796,
+          "reward": 667.1101694328629,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 833
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-02",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 473.71698913054917,
+          "distanceTravelledMeters": 473.71698913054917,
+          "lapTimeSeconds": 28.40000000000057,
+          "offTrackEvents": 0,
+          "offTrackDurationSeconds": 0,
+          "blockedTimeSeconds": 0.2333333333333333,
+          "episodeDurationSeconds": 28.40000000000057,
+          "meanLateralErrorMeters": 1.9481235486977708,
+          "reward": 654.0627972488297,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 852
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-03",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 938.6576847132321,
+          "distanceTravelledMeters": 938.6576847132321,
+          "lapTimeSeconds": 28.60000000000058,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 0.49999999999999994,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 53.23333333333287,
+          "meanLateralErrorMeters": 2.0488088471433388,
+          "reward": 1121.7576231128116,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 1597
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-04",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 922.7031190327252,
+          "distanceTravelledMeters": 922.7031190327252,
+          "lapTimeSeconds": 28.60000000000058,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 0.19999999999999998,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 53.09999999999955,
+          "meanLateralErrorMeters": 2.0395596436031522,
+          "reward": 1106.9145043820117,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 1593
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-05",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 917.4197679015394,
+          "distanceTravelledMeters": 917.4197679015394,
+          "lapTimeSeconds": 28.60000000000058,
+          "offTrackEvents": 0,
+          "offTrackDurationSeconds": 0,
+          "blockedTimeSeconds": 0.19999999999999998,
+          "episodeDurationSeconds": 54.199999999999484,
+          "meanLateralErrorMeters": 2.0194139568467673,
+          "reward": 1107.2174055303992,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 1626
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-06",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 900.6121811125251,
+          "distanceTravelledMeters": 900.6121811125251,
+          "lapTimeSeconds": 28.66666666666725,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 0.4666666666666666,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 52.799999999999564,
+          "meanLateralErrorMeters": 2.0550673639730865,
+          "reward": 1084.2938991530075,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 1584
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-07",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 888.3882941964891,
+          "distanceTravelledMeters": 888.3882941964891,
+          "lapTimeSeconds": 28.66666666666725,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 0.39999999999999997,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 51.033333333333,
+          "meanLateralErrorMeters": 2.124823725308065,
+          "reward": 1071.3963610974524,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 1531
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-08",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 862.8999439339665,
+          "distanceTravelledMeters": 862.8999439339665,
+          "lapTimeSeconds": 28.60000000000058,
+          "offTrackEvents": 0,
+          "offTrackDurationSeconds": 0,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 51.09999999999966,
+          "meanLateralErrorMeters": 2.086092064064599,
+          "reward": 1052.3268013199615,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 1533
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-09",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 848.4382587557345,
+          "distanceTravelledMeters": 848.4382587557345,
+          "lapTimeSeconds": 28.66666666666725,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 0.4666666666666666,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 49.833333333333066,
+          "meanLateralErrorMeters": 2.104830963846805,
+          "reward": 1031.2464920279028,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 1495
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-10",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 829.7255812020367,
+          "distanceTravelledMeters": 829.7255812020367,
+          "lapTimeSeconds": 28.633333333333916,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 0.2333333333333333,
+          "blockedTimeSeconds": 0.19999999999999998,
+          "episodeDurationSeconds": 50.266666666666374,
+          "meanLateralErrorMeters": 2.0771920929645384,
+          "reward": 1013.1010995718152,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 1508
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-11",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 807.7520490164833,
+          "distanceTravelledMeters": 807.7520490164833,
+          "lapTimeSeconds": 28.60000000000058,
+          "offTrackEvents": 0,
+          "offTrackDurationSeconds": 0,
+          "blockedTimeSeconds": 0.19999999999999998,
+          "episodeDurationSeconds": 49.133333333333105,
+          "meanLateralErrorMeters": 2.09020218909372,
+          "reward": 996.3996801200595,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 1474
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-12",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 791.6116585951697,
+          "distanceTravelledMeters": 791.6116585951697,
+          "lapTimeSeconds": 28.60000000000058,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 0.19999999999999998,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 47.56666666666653,
+          "meanLateralErrorMeters": 2.1322608401104812,
+          "reward": 974.7805953273045,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 1427
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-13",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 774.3846867783807,
+          "distanceTravelledMeters": 774.3846867783807,
+          "lapTimeSeconds": 28.60000000000058,
+          "offTrackEvents": 0,
+          "offTrackDurationSeconds": 0,
+          "blockedTimeSeconds": 0.19999999999999998,
+          "episodeDurationSeconds": 47.13333333333322,
+          "meanLateralErrorMeters": 2.0754378304361514,
+          "reward": 961.7623035339501,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 1414
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-14",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 773.652714240898,
+          "distanceTravelledMeters": 773.652714240898,
+          "lapTimeSeconds": 28.60000000000058,
+          "offTrackEvents": 0,
+          "offTrackDurationSeconds": 0,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 45.899999999999956,
+          "meanLateralErrorMeters": 2.121533327291538,
+          "reward": 961.4757398433986,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 1377
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-15",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 745.0577903498668,
+          "distanceTravelledMeters": 745.0577903498668,
+          "lapTimeSeconds": 28.66666666666725,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 0.3333333333333333,
+          "blockedTimeSeconds": 0.2333333333333333,
+          "episodeDurationSeconds": 44.83333333333335,
+          "meanLateralErrorMeters": 2.1379845548965135,
+          "reward": 921.8011955505036,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 1345
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-16",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 733.5319904451619,
+          "distanceTravelledMeters": 733.5319904451619,
+          "lapTimeSeconds": 28.66666666666725,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 0.39999999999999997,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 44.000000000000064,
+          "meanLateralErrorMeters": 2.118353759565317,
+          "reward": 915.3912520140028,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 1320
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-17",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 713.8017829327811,
+          "distanceTravelledMeters": 713.8017829327811,
+          "lapTimeSeconds": 28.60000000000058,
+          "offTrackEvents": 0,
+          "offTrackDurationSeconds": 0,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 41.733333333333526,
+          "meanLateralErrorMeters": 2.1191012131509623,
+          "reward": 901.6166738707337,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 1252
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-18",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 696.2144043403761,
+          "distanceTravelledMeters": 696.2144043403761,
+          "lapTimeSeconds": 28.66666666666725,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 0.39999999999999997,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 39.833333333333634,
+          "meanLateralErrorMeters": 2.2164460666540307,
+          "reward": 877.0756821540639,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 1195
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-19",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 680.4486251166409,
+          "distanceTravelledMeters": 680.4486251166409,
+          "lapTimeSeconds": 28.66666666666725,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 0.3,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 40.20000000000028,
+          "meanLateralErrorMeters": 2.1411429497512917,
+          "reward": 862.0288866736962,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 1206
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-20",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 664.0483027820217,
+          "distanceTravelledMeters": 664.0483027820217,
+          "lapTimeSeconds": 28.60000000000058,
+          "offTrackEvents": 0,
+          "offTrackDurationSeconds": 0,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 38.16666666666706,
+          "meanLateralErrorMeters": 2.1823156657673035,
+          "reward": 850.4295009921284,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 1145
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-21",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 648.4035806737745,
+          "distanceTravelledMeters": 648.4035806737745,
+          "lapTimeSeconds": 28.66666666666725,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 0.36666666666666664,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 38.233333333333725,
+          "meanLateralErrorMeters": 2.1200095042392295,
+          "reward": 828.7904742226111,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 1147
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-22",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 641.1192075102929,
+          "distanceTravelledMeters": 641.1192075102929,
+          "lapTimeSeconds": 28.60000000000058,
+          "offTrackEvents": 0,
+          "offTrackDurationSeconds": 0,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 37.13333333333379,
+          "meanLateralErrorMeters": 2.209126800507166,
+          "reward": 827.3058448148757,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 1114
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-23",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 620.5150684564524,
+          "distanceTravelledMeters": 620.5150684564524,
+          "lapTimeSeconds": 28.60000000000058,
+          "offTrackEvents": 0,
+          "offTrackDurationSeconds": 0,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 35.666666666667204,
+          "meanLateralErrorMeters": 2.0983081553002068,
+          "reward": 805.5774288149667,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 1070
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-24",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 598.5121171317721,
+          "distanceTravelledMeters": 598.5121171317721,
+          "lapTimeSeconds": 28.60000000000058,
+          "offTrackEvents": 0,
+          "offTrackDurationSeconds": 0,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 35.233333333333896,
+          "meanLateralErrorMeters": 1.9213378054940935,
+          "reward": 785.0476983633303,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 1057
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-25",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 584.9873699601656,
+          "distanceTravelledMeters": 584.9873699601656,
+          "lapTimeSeconds": 28.633333333333916,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 0.39999999999999997,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 33.333333333334004,
+          "meanLateralErrorMeters": 2.0375919497212562,
+          "reward": 764.883457350494,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 1000
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-26",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 575.699317006352,
+          "distanceTravelledMeters": 575.699317006352,
+          "lapTimeSeconds": 28.66666666666725,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 0.39999999999999997,
+          "blockedTimeSeconds": 0.19999999999999998,
+          "episodeDurationSeconds": 34.33333333333395,
+          "meanLateralErrorMeters": 2.0072986454047377,
+          "reward": 755.6625215097912,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 1030
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-27",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 549.5736641196245,
+          "distanceTravelledMeters": 549.5736641196245,
+          "lapTimeSeconds": 28.66666666666725,
+          "offTrackEvents": 0,
+          "offTrackDurationSeconds": 0,
+          "blockedTimeSeconds": 0.16666666666666666,
+          "episodeDurationSeconds": 33.06666666666735,
+          "meanLateralErrorMeters": 2.054988460013113,
+          "reward": 735.4098829024931,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 992
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-28",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 534.3529536169191,
+          "distanceTravelledMeters": 534.3529536169191,
+          "lapTimeSeconds": 28.633333333333916,
+          "offTrackEvents": 0,
+          "offTrackDurationSeconds": 0,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 31.500000000000725,
+          "meanLateralErrorMeters": 2.0803509314487982,
+          "reward": 720.0094138897521,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 945
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-29",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 519.4901020155968,
+          "distanceTravelledMeters": 519.4901020155968,
+          "lapTimeSeconds": 28.433333333333906,
+          "offTrackEvents": 0,
+          "offTrackDurationSeconds": 0,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 30.00000000000065,
+          "meanLateralErrorMeters": 2.0879360680417336,
+          "reward": 704.5960094023154,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 900
+        },
+        {
+          "controller": "NeuralController",
+          "scenarioId": "phase8-chicane-test-30",
+          "reason": "objective",
+          "completedLaps": 1,
+          "signedProgressMeters": 499.4095715601012,
+          "distanceTravelledMeters": 499.4095715601012,
+          "lapTimeSeconds": 28.633333333333916,
+          "offTrackEvents": 1,
+          "offTrackDurationSeconds": 0.3333333333333333,
+          "blockedTimeSeconds": 0,
+          "episodeDurationSeconds": 28.900000000000595,
+          "meanLateralErrorMeters": 2.2104024752828315,
+          "reward": 678.0471925382797,
+          "lapValidationDistanceMeters": 469.05774978024,
+          "signedDistanceSinceStartCrossingMeters": 0,
+          "steps": 867
+        }
+      ]
+    }
+  ],
+  "limits": "One newly generated held-out circuit and 30 paired scenarios per network; results are conditional on this test sample and do not estimate performance across all possible tracks.",
+  "historicalArtifactsUnchanged": true
+}

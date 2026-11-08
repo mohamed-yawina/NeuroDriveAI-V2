@@ -1,0 +1,31 @@
+{
+  "name": "neurodriveai-v2",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "validate:training": "node scripts/run-scientific-validation.js",
+    "validate:generalization": "node scripts/run-generalization-validation.js",
+    "train:multitrack": "node scripts/run-multitrack-training.js",
+    "train:phase8-b": "node scripts/run-phase8-configuration-b.js",
+    "validate:phase8-b": "node scripts/validate-phase8-configuration-b.js",
+    "test:phase8-heldout": "node scripts/run-phase8-heldout-test.js",
+    "export:phase8-ai-lab": "node scripts/export-phase8-ai-lab.js",
+    "train:phase8-c": "node scripts/run-phase8-configuration-c.js",
+    "validate:phase8-abc": "node scripts/validate-phase8-a-b-c.js",
+    "test:phase8-c-heldout": "node scripts/test-phase8-c-heldout.js",
+    "retry:phase8-c-seed-2028": "node scripts/recover-phase8-c-seed-2028.js",
+    "recover:phase8-c": "node scripts/recover-phase8-c-seed-2028.js"
+  },
+  "dependencies": {
+    "three": "^0.180.0"
+  },
+  "devDependencies": {
+    "vite": "^7.1.7",
+    "vitest": "^3.2.4"
+  }
+}

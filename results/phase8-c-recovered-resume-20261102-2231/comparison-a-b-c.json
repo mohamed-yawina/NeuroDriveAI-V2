@@ -1,0 +1,3355 @@
+{
+  "protocol": {
+    "split": "independent-validation",
+    "scenarioSeed": 731001,
+    "scenariosPerNetworkPerCircuit": 30,
+    "fixedDeltaTime": 0.03333333333333333,
+    "maxEpisodeTime": 60,
+    "sameScenariosAcrossConfigurations": true,
+    "networksTrainedDuringEvaluation": false,
+    "rewardAndFitnessUnchanged": true,
+    "intervalLimitations": "Per-network confidence intervals are conditional on 30 generated scenarios. Across-seed standard deviations use n=3 trained networks and are descriptive. Scenarios within the same circuit/network and models across circuits are not independent populations."
+  },
+  "trainingByConfiguration": {
+    "A": {
+      "protocol": {
+        "generations": 50,
+        "populationSize": 8,
+        "eliteCount": 3,
+        "architecture": [
+          7,
+          16,
+          16,
+          2
+        ],
+        "mutationRate": 0.08,
+        "mutationSigma": 0.12,
+        "fitnessUnchanged": true
+      },
+      "perSeed": [
+        {
+          "seed": 2026,
+          "generations": 50,
+          "candidateEvaluations": 400,
+          "physicalEpisodeEvaluations": 1200,
+          "wallSeconds": null,
+          "bestFitness": 111.14544957868976,
+          "lastGenerationMeanFitness": 68.10962528087558,
+          "lastGenerationBestFitness": 111.14544957868976,
+          "lastGenerationCompletionRate": 0.16666666666666666,
+          "lastGenerationMeanOffTrackEvents": 0.3163251023698311,
+          "peak": {
+            "generation": 50,
+            "fitness": 111.14544957868976
+          }
+        },
+        {
+          "seed": 2027,
+          "generations": 50,
+          "candidateEvaluations": 400,
+          "physicalEpisodeEvaluations": 1200,
+          "wallSeconds": null,
+          "bestFitness": 37.103735720602344,
+          "lastGenerationMeanFitness": 17.351080007792472,
+          "lastGenerationBestFitness": 21.346040060187406,
+          "lastGenerationCompletionRate": 0,
+          "lastGenerationMeanOffTrackEvents": 2.1823832347273466,
+          "peak": {
+            "generation": 49,
+            "fitness": 37.103735720602344
+          }
+        },
+        {
+          "seed": 2028,
+          "generations": 50,
+          "candidateEvaluations": 400,
+          "physicalEpisodeEvaluations": 1200,
+          "wallSeconds": null,
+          "bestFitness": 79.09571016280564,
+          "lastGenerationMeanFitness": 58.6723406729399,
+          "lastGenerationBestFitness": 78.81954644191721,
+          "lastGenerationCompletionRate": 0.20833333333333331,
+          "lastGenerationMeanOffTrackEvents": 0.36115190286058463,
+          "peak": {
+            "generation": 48,
+            "fitness": 79.09571016280564
+          }
+        }
+      ],
+      "acrossSeeds": {
+        "bestFitness": {
+          "n": 3,
+          "mean": 75.78163182069925,
+          "sd": 37.13194290909025,
+          "min": 37.103735720602344,
+          "max": 111.14544957868976
+        },
+        "lastGenerationMeanFitness": {
+          "n": 3,
+          "mean": 48.04434865386932,
+          "sd": 26.99672462221997,
+          "min": 17.351080007792472,
+          "max": 68.10962528087558
+        },
+        "runtimeSeconds": {
+          "n": 0,
+          "mean": null,
+          "sd": null,
+          "min": null,
+          "max": null
+        },
+        "physicalEpisodeEvaluations": {
+          "n": 3,
+          "mean": 1200,
+          "sd": 0,
+          "min": 1200,
+          "max": 1200
+        },
+        "lastGenerationCompletionRate": {
+          "n": 3,
+          "mean": 0.125,
+          "sd": 0.1102396379610246,
+          "min": 0,
+          "max": 0.20833333333333331
+        }
+      }
+    },
+    "B": {
+      "protocol": {
+        "generations": 100,
+        "populationSize": 16,
+        "eliteCount": 6,
+        "architecture": [
+          7,
+          16,
+          16,
+          2
+        ],
+        "mutationRate": 0.08,
+        "mutationSigma": 0.12,
+        "fitnessUnchanged": true
+      },
+      "perSeed": [
+        {
+          "seed": 2026,
+          "generations": 100,
+          "candidateEvaluations": 1600,
+          "physicalEpisodeEvaluations": 4800,
+          "wallSeconds": 674.8022339999999,
+          "bestFitness": 111.23302126645619,
+          "lastGenerationMeanFitness": 79.66978901686865,
+          "lastGenerationBestFitness": 111.23302126645619,
+          "lastGenerationCompletionRate": 0.14583333333333331,
+          "lastGenerationMeanOffTrackEvents": 0.18754388517263326,
+          "peak": {
+            "generation": 100,
+            "fitness": 111.23302126645619
+          }
+        },
+        {
+          "seed": 2027,
+          "generations": 100,
+          "candidateEvaluations": 1600,
+          "physicalEpisodeEvaluations": 4800,
+          "wallSeconds": 618.7100950000001,
+          "bestFitness": 122.50527162338189,
+          "lastGenerationMeanFitness": 88.14306571813148,
+          "lastGenerationBestFitness": 106.28548110396812,
+          "lastGenerationCompletionRate": 0.75,
+          "lastGenerationMeanOffTrackEvents": 0.5449698233097825,
+          "peak": {
+            "generation": 81,
+            "fitness": 122.50527162338189
+          }
+        },
+        {
+          "seed": 2028,
+          "generations": 100,
+          "candidateEvaluations": 1600,
+          "physicalEpisodeEvaluations": 4800,
+          "wallSeconds": 737.5701757,
+          "bestFitness": 121.84239972832775,
+          "lastGenerationMeanFitness": 103.41161847988427,
+          "lastGenerationBestFitness": 112.9119508134994,
+          "lastGenerationCompletionRate": 0.8541666666666666,
+          "lastGenerationMeanOffTrackEvents": 0.2883540562424043,
+          "peak": {
+            "generation": 90,
+            "fitness": 121.84239972832775
+          }
+        }
+      ],
+      "acrossSeeds": {
+        "bestFitness": {
+          "n": 3,
+          "mean": 118.5268975393886,
+          "sd": 6.325371380476251,
+          "min": 111.23302126645619,
+          "max": 122.50527162338189
+        },
+        "lastGenerationMeanFitness": {
+          "n": 3,
+          "mean": 90.4081577382948,
+          "sd": 12.031899183320345,
+          "min": 79.66978901686865,
+          "max": 103.41161847988427
+        },
+        "runtimeSeconds": {
+          "n": 3,
+          "mean": 677.0275015666667,
+          "sd": 59.46127780169265,
+          "min": 618.7100950000001,
+          "max": 737.5701757
+        },
+        "physicalEpisodeEvaluations": {
+          "n": 3,
+          "mean": 4800,
+          "sd": 0,
+          "min": 4800,
+          "max": 4800
+        },
+        "lastGenerationCompletionRate": {
+          "n": 3,
+          "mean": 0.5833333333333334,
+          "sd": 0.3824491614726212,
+          "min": 0.14583333333333331,
+          "max": 0.8541666666666666
+        }
+      }
+    },
+    "C": {
+      "protocol": {
+        "generations": 250,
+        "populationSize": 16,
+        "eliteCount": 6,
+        "architecture": [
+          7,
+          16,
+          16,
+          2
+        ],
+        "mutationRate": 0.08,
+        "mutationSigma": 0.12,
+        "fitnessUnchanged": true
+      },
+      "perSeed": [
+        {
+          "seed": 2026,
+          "generations": 250,
+          "candidateEvaluations": 4000,
+          "physicalEpisodeEvaluations": 12000,
+          "wallSeconds": 26223.3505066,
+          "bestFitness": 130.2763195394304,
+          "lastGenerationMeanFitness": 107.78707315863802,
+          "lastGenerationBestFitness": 112.32532148839076,
+          "lastGenerationCompletionRate": 0.9583333333333334,
+          "lastGenerationMeanOffTrackEvents": 0.11169806781806292,
+          "peak": {
+            "generation": 232,
+            "fitness": 130.2763195394304
+          }
+        },
+        {
+          "seed": 2027,
+          "generations": 250,
+          "candidateEvaluations": 4000,
+          "physicalEpisodeEvaluations": 12000,
+          "wallSeconds": 1622.4035593000017,
+          "bestFitness": 130.89112425732066,
+          "lastGenerationMeanFitness": 123.5865488288506,
+          "lastGenerationBestFitness": 123.7462158169973,
+          "lastGenerationCompletionRate": 1,
+          "lastGenerationMeanOffTrackEvents": 0,
+          "peak": {
+            "generation": 128,
+            "fitness": 130.89112425732066
+          }
+        },
+        {
+          "seed": 2028,
+          "generations": 250,
+          "candidateEvaluations": 4000,
+          "physicalEpisodeEvaluations": 12000,
+          "wallSeconds": 29684.216776999998,
+          "bestFitness": 130.89572773908526,
+          "lastGenerationMeanFitness": 118.04263330558528,
+          "lastGenerationBestFitness": 120.79689016655206,
+          "lastGenerationCompletionRate": 0.9791666666666666,
+          "lastGenerationMeanOffTrackEvents": 0.051144651294141266,
+          "peak": {
+            "generation": 174,
+            "fitness": 130.89572773908526
+          }
+        }
+      ],
+      "acrossSeeds": {
+        "bestFitness": {
+          "n": 3,
+          "mean": 130.68772384527878,
+          "sd": 0.3562940150550149,
+          "min": 130.2763195394304,
+          "max": 130.89572773908526
+        },
+        "lastGenerationMeanFitness": {
+          "n": 3,
+          "mean": 116.4720850976913,
+          "sd": 8.015973061232117,
+          "min": 107.78707315863802,
+          "max": 123.5865488288506
+        },
+        "runtimeSeconds": {
+          "n": 3,
+          "mean": 19176.656947633335,
+          "sd": 15300.596650188427,
+          "min": 1622.4035593000017,
+          "max": 29684.216776999998
+        },
+        "physicalEpisodeEvaluations": {
+          "n": 3,
+          "mean": 12000,
+          "sd": 0,
+          "min": 12000,
+          "max": 12000
+        },
+        "lastGenerationCompletionRate": {
+          "n": 3,
+          "mean": 0.9791666666666666,
+          "sd": 0.020833333333333315,
+          "min": 0.9583333333333334,
+          "max": 1
+        }
+      }
+    }
+  },
+  "validationByCircuit": [
+    {
+      "circuit": "original",
+      "steering": {
+        "scenarioCount": 30,
+        "completion": {
+          "rate": 1,
+          "ci95": [
+            0.8864866068260312,
+            0.9999999999999999
+          ],
+          "successes": 30,
+          "n": 30
+        },
+        "meanSignedProgressMeters": {
+          "mean": 705.4998664219662,
+          "sd": 144.91019723259583,
+          "ci95": [
+            651.389569928661,
+            759.6101629152714
+          ],
+          "n": 30
+        },
+        "meanDistanceTravelledMeters": {
+          "mean": 705.4998664219662,
+          "sd": 144.91019723259583,
+          "ci95": [
+            651.389569928661,
+            759.6101629152714
+          ],
+          "n": 30
+        },
+        "successfulLapTimeSeconds": {
+          "mean": 23.417777777778102,
+          "sd": 0.10675762405441193,
+          "ci95": [
+            23.377913870331803,
+            23.457641685224402
+          ],
+          "n": 30
+        },
+        "offTrackEvents": {
+          "mean": 1.7333333333333334,
+          "sd": 0.784915252764901,
+          "ci95": [
+            1.4402414884505716,
+            2.026425178216095
+          ],
+          "n": 30
+        },
+        "offTrackDurationSeconds": {
+          "mean": 0.7911111111111115,
+          "sd": 0.32506213179553634,
+          "ci95": [
+            0.6697310518322616,
+            0.9124911703899615
+          ],
+          "n": 30
+        },
+        "blockedTimeSeconds": {
+          "mean": 0.06222222222222222,
+          "sd": 0.10494783719205417,
+          "ci95": [
+            0.02303409954181361,
+            0.10141034490263083
+          ],
+          "n": 30
+        },
+        "reward": {
+          "mean": 881.4684599482134,
+          "sd": 142.54568112683867,
+          "ci95": [
+            828.2410872931827,
+            934.6958326032442
+          ],
+          "n": 30
+        },
+        "episodeDurationSeconds": {
+          "mean": 33.99888888888931,
+          "sd": 6.728924716597236,
+          "ci95": [
+            31.486269912104802,
+            36.51150786567382
+          ],
+          "n": 30
+        }
+      },
+      "configurations": {
+        "A": {
+          "perSeed": [
+            {
+              "seed": 2026,
+              "scenarioCount": 30,
+              "completion": {
+                "rate": 0.9333333333333333,
+                "ci95": [
+                  0.7867654163738308,
+                  0.9815229762087295
+                ],
+                "successes": 28,
+                "n": 30
+              },
+              "meanSignedProgressMeters": {
+                "mean": 703.8356942510123,
+                "sd": 142.80702976040408,
+                "ci95": [
+                  650.5107325213656,
+                  757.160655980659
+                ],
+                "n": 30
+              },
+              "meanDistanceTravelledMeters": {
+                "mean": 703.8356942510123,
+                "sd": 142.80702976040408,
+                "ci95": [
+                  650.5107325213656,
+                  757.160655980659
+                ],
+                "n": 30
+              },
+              "successfulLapTimeSeconds": {
+                "mean": 31.915476190476937,
+                "sd": 0.15726105863936377,
+                "ci95": [
+                  31.854496808331948,
+                  31.976455572621926
+                ],
+                "n": 28
+              },
+              "offTrackEvents": {
+                "mean": 0,
+                "sd": 0,
+                "ci95": [
+                  0,
+                  0
+                ],
+                "n": 30
+              },
+              "offTrackDurationSeconds": {
+                "mean": 0,
+                "sd": 0,
+                "ci95": [
+                  0,
+                  0
+                ],
+                "n": 30
+              },
+              "blockedTimeSeconds": {
+                "mean": 0.060000000000000005,
+                "sd": 0.10148325268098496,
+                "ci95": [
+                  0.022105572992499482,
+                  0.09789442700750053
+                ],
+                "n": 30
+              },
+              "reward": {
+                "mean": 880.2991080583874,
+                "sd": 133.31581928318207,
+                "ci95": [
+                  830.5182186080608,
+                  930.0799975087141
+                ],
+                "n": 30
+              },
+              "episodeDurationSeconds": {
+                "mean": 46.085555555555516,
+                "sd": 9.002948360543991,
+                "ci95": [
+                  42.72380314332864,
+                  49.44730796778239
+                ],
+                "n": 30
+              }
+            },
+            {
+              "seed": 2027,
+              "scenarioCount": 30,
+              "completion": {
+                "rate": 0,
+                "ci95": [
+                  0,
+                  0.11351339317396876
+                ],
+                "successes": 0,
+                "n": 30
+              },
+              "meanSignedProgressMeters": {
+                "mean": 267.8680472209276,
+                "sd": 116.39036178567426,
+                "ci95": [
+                  224.40722040915338,
+                  311.32887403270183
+                ],
+                "n": 30
+              },
+              "meanDistanceTravelledMeters": {
+                "mean": 267.8680479287121,
+                "sd": 116.39036010079384,
+                "ci95": [
+                  224.40722174608183,
+                  311.3288741113423
+                ],
+                "n": 30
+              },
+              "successfulLapTimeSeconds": {
+                "mean": null,
+                "sd": null,
+                "ci95": null,
+                "n": 0
+              },
+              "offTrackEvents": {
+                "mean": 0.9333333333333333,
+                "sd": 0.2537081317024625,
+                "ci95": [
+                  0.838597265814582,
+                  1.0280694008520848
+                ],
+                "n": 30
+              },
+              "offTrackDurationSeconds": {
+                "mean": 3.3288888888888857,
+                "sd": 0.9048923364054487,
+                "ci95": [
+                  2.990996914738673,
+                  3.6667808630390986
+                ],
+                "n": 30
+              },
+              "blockedTimeSeconds": {
+                "mean": 0.8555555555555551,
+                "sd": 1.4737117455824549,
+                "ci95": [
+                  0.305263160527362,
+                  1.4058479505837482
+                ],
+                "n": 30
+              },
+              "reward": {
+                "mean": 250.62887330503943,
+                "sd": 112.83054559445945,
+                "ci95": [
+                  208.4973022202388,
+                  292.7604443898401
+                ],
+                "n": 30
+              },
+              "episodeDurationSeconds": {
+                "mean": 17.57111111111121,
+                "sd": 11.769610628863141,
+                "ci95": [
+                  13.17627118334326,
+                  21.96595103887916
+                ],
+                "n": 30
+              }
+            },
+            {
+              "seed": 2028,
+              "scenarioCount": 30,
+              "completion": {
+                "rate": 0.43333333333333335,
+                "ci95": [
+                  0.2737748557646652,
+                  0.6080269299918639
+                ],
+                "successes": 13,
+                "n": 30
+              },
+              "meanSignedProgressMeters": {
+                "mean": 458.3078818890526,
+                "sd": 325.7576403763857,
+                "ci95": [
+                  336.66811572799486,
+                  579.9476480501104
+                ],
+                "n": 30
+              },
+              "meanDistanceTravelledMeters": {
+                "mean": 502.306113399329,
+                "sd": 249.7905287286899,
+                "ci95": [
+                  409.03290123860074,
+                  595.5793255600572
+                ],
+                "n": 30
+              },
+              "successfulLapTimeSeconds": {
+                "mean": 40.784615384615634,
+                "sd": 0.4173584001646719,
+                "ci95": [
+                  40.53241746607097,
+                  41.0368133031603
+                ],
+                "n": 13
+              },
+              "offTrackEvents": {
+                "mean": 0.26666666666666666,
+                "sd": 0.4497764451088035,
+                "ci95": [
+                  0.0987175694649155,
+                  0.4346157638684178
+                ],
+                "n": 30
+              },
+              "offTrackDurationSeconds": {
+                "mean": 0.9511111111111102,
+                "sd": 1.6042026542213987,
+                "ci95": [
+                  0.35209266442486453,
+                  1.550129557797356
+                ],
+                "n": 30
+              },
+              "blockedTimeSeconds": {
+                "mean": 0.08888888888888888,
+                "sd": 0.12203050097129504,
+                "ci95": [
+                  0.043322001845151885,
+                  0.13445577593262587
+                ],
+                "n": 30
+              },
+              "reward": {
+                "mean": 512.4016301040377,
+                "sd": 409.570621287045,
+                "ci95": [
+                  359.4656174836357,
+                  665.3376427244398
+                ],
+                "n": 30
+              },
+              "episodeDurationSeconds": {
+                "mean": 40.908888888888576,
+                "sd": 21.306489816518166,
+                "ci95": [
+                  32.95292372411234,
+                  48.864854053664814
+                ],
+                "n": 30
+              }
+            }
+          ],
+          "acrossSeeds": {
+            "completionRate": {
+              "n": 3,
+              "mean": 0.45555555555555555,
+              "sd": 0.4670633234885267,
+              "min": 0,
+              "max": 0.9333333333333333
+            },
+            "meanProgressMeters": {
+              "n": 3,
+              "mean": 476.6705411203309,
+              "sd": 218.5631207563851,
+              "min": 267.8680472209276,
+              "max": 703.8356942510123
+            },
+            "successfulLapTimeSeconds": {
+              "n": 2,
+              "mean": 36.350045787546286,
+              "sd": 6.271428467462864,
+              "min": 31.915476190476937,
+              "max": 40.784615384615634
+            },
+            "offTrackEventsPerEpisode": {
+              "n": 3,
+              "mean": 0.39999999999999997,
+              "sd": 0.4807401700618653,
+              "min": 0,
+              "max": 0.9333333333333333
+            },
+            "offTrackSecondsPerEpisode": {
+              "n": 3,
+              "mean": 1.4266666666666652,
+              "sd": 1.7146399398873178,
+              "min": 0,
+              "max": 3.3288888888888857
+            },
+            "reward": {
+              "n": 3,
+              "mean": 547.7765371558215,
+              "sd": 316.32212880270623,
+              "min": 250.62887330503943,
+              "max": 880.2991080583874
+            },
+            "totalCompleted": 41,
+            "totalScenarios": 90
+          }
+        },
+        "B": {
+          "perSeed": [
+            {
+              "seed": 2026,
+              "scenarioCount": 30,
+              "completion": {
+                "rate": 0.9333333333333333,
+                "ci95": [
+                  0.7867654163738308,
+                  0.9815229762087295
+                ],
+                "successes": 28,
+                "n": 30
+              },
+              "meanSignedProgressMeters": {
+                "mean": 675.0025681834707,
+                "sd": 179.108541207225,
+                "ci95": [
+                  608.1224144448744,
+                  741.8827219220669
+                ],
+                "n": 30
+              },
+              "meanDistanceTravelledMeters": {
+                "mean": 675.0025681834707,
+                "sd": 179.108541207225,
+                "ci95": [
+                  608.1224144448744,
+                  741.8827219220669
+                ],
+                "n": 30
+              },
+              "successfulLapTimeSeconds": {
+                "mean": 31.92976190476264,
+                "sd": 0.35268975696471966,
+                "ci95": [
+                  31.793003296785216,
+                  32.06652051274006
+                ],
+                "n": 28
+              },
+              "offTrackEvents": {
+                "mean": 0.03333333333333333,
+                "sd": 0.18257418583505525,
+                "ci95": [
+                  -0.03484091193183319,
+                  0.10150757859849985
+                ],
+                "n": 30
+              },
+              "offTrackDurationSeconds": {
+                "mean": 0.1188888888888888,
+                "sd": 0.6511812628116965,
+                "ci95": [
+                  -0.12426591922353825,
+                  0.36204369700131583
+                ],
+                "n": 30
+              },
+              "blockedTimeSeconds": {
+                "mean": 0.07333333333333332,
+                "sd": 0.12422942562682514,
+                "ci95": [
+                  0.02694535524597439,
+                  0.11972131142069226
+                ],
+                "n": 30
+              },
+              "reward": {
+                "mean": 838.045207308253,
+                "sd": 198.82451865211345,
+                "ci95": [
+                  763.8029948217423,
+                  912.2874197947637
+                ],
+                "n": 30
+              },
+              "episodeDurationSeconds": {
+                "mean": 44.58111111111107,
+                "sd": 11.373605538148919,
+                "ci95": [
+                  40.33414174925651,
+                  48.82808047296563
+                ],
+                "n": 30
+              }
+            },
+            {
+              "seed": 2027,
+              "scenarioCount": 30,
+              "completion": {
+                "rate": 1,
+                "ci95": [
+                  0.8864866068260312,
+                  0.9999999999999999
+                ],
+                "successes": 30,
+                "n": 30
+              },
+              "meanSignedProgressMeters": {
+                "mean": 705.0905760364182,
+                "sd": 144.90994156121823,
+                "ci95": [
+                  650.9803750122677,
+                  759.2007770605686
+                ],
+                "n": 30
+              },
+              "meanDistanceTravelledMeters": {
+                "mean": 705.0905760364182,
+                "sd": 144.90994156121823,
+                "ci95": [
+                  650.9803750122677,
+                  759.2007770605686
+                ],
+                "n": 30
+              },
+              "successfulLapTimeSeconds": {
+                "mean": 24.095555555555908,
+                "sd": 0.16945559287488898,
+                "ci95": [
+                  24.03227986793683,
+                  24.158831243174987
+                ],
+                "n": 30
+              },
+              "offTrackEvents": {
+                "mean": 0,
+                "sd": 0,
+                "ci95": [
+                  0,
+                  0
+                ],
+                "n": 30
+              },
+              "offTrackDurationSeconds": {
+                "mean": 0,
+                "sd": 0,
+                "ci95": [
+                  0,
+                  0
+                ],
+                "n": 30
+              },
+              "blockedTimeSeconds": {
+                "mean": 0.03666666666666666,
+                "sd": 0.06211471281341257,
+                "ci95": [
+                  0.013472677622987195,
+                  0.05986065571034613
+                ],
+                "n": 30
+              },
+              "reward": {
+                "mean": 891.1387843026656,
+                "sd": 146.19971513748817,
+                "ci95": [
+                  836.5469744479842,
+                  945.730594157347
+                ],
+                "n": 30
+              },
+              "episodeDurationSeconds": {
+                "mean": 34.828888888889296,
+                "sd": 6.983207736688049,
+                "ci95": [
+                  32.22131917797362,
+                  37.43645859980497
+                ],
+                "n": 30
+              }
+            },
+            {
+              "seed": 2028,
+              "scenarioCount": 30,
+              "completion": {
+                "rate": 1,
+                "ci95": [
+                  0.8864866068260312,
+                  0.9999999999999999
+                ],
+                "successes": 30,
+                "n": 30
+              },
+              "meanSignedProgressMeters": {
+                "mean": 705.2204098546525,
+                "sd": 144.9011465607611,
+                "ci95": [
+                  651.1134929339778,
+                  759.3273267753273
+                ],
+                "n": 30
+              },
+              "meanDistanceTravelledMeters": {
+                "mean": 705.2204098546525,
+                "sd": 144.9011465607611,
+                "ci95": [
+                  651.1134929339778,
+                  759.3273267753273
+                ],
+                "n": 30
+              },
+              "successfulLapTimeSeconds": {
+                "mean": 26.113333333333784,
+                "sd": 0.22379519920620375,
+                "ci95": [
+                  26.02976692590292,
+                  26.19689974076465
+                ],
+                "n": 30
+              },
+              "offTrackEvents": {
+                "mean": 0,
+                "sd": 0,
+                "ci95": [
+                  0,
+                  0
+                ],
+                "n": 30
+              },
+              "offTrackDurationSeconds": {
+                "mean": 0,
+                "sd": 0,
+                "ci95": [
+                  0,
+                  0
+                ],
+                "n": 30
+              },
+              "blockedTimeSeconds": {
+                "mean": 0.05333333333333333,
+                "sd": 0.0903802100876012,
+                "ci95": [
+                  0.019584845936566092,
+                  0.08708182073010057
+                ],
+                "n": 30
+              },
+              "reward": {
+                "mean": 891.4844454814978,
+                "sd": 146.6726544593688,
+                "ci95": [
+                  836.7160373789428,
+                  946.2528535840528
+                ],
+                "n": 30
+              },
+              "episodeDurationSeconds": {
+                "mean": 37.882222222222524,
+                "sd": 7.619936209813734,
+                "ci95": [
+                  35.03689445752918,
+                  40.72754998691587
+                ],
+                "n": 30
+              }
+            }
+          ],
+          "acrossSeeds": {
+            "completionRate": {
+              "n": 3,
+              "mean": 0.9777777777777779,
+              "sd": 0.03849001794597504,
+              "min": 0.9333333333333333,
+              "max": 1
+            },
+            "meanProgressMeters": {
+              "n": 3,
+              "mean": 695.1045180248472,
+              "sd": 17.40892026445065,
+              "min": 675.0025681834707,
+              "max": 705.2204098546525
+            },
+            "successfulLapTimeSeconds": {
+              "n": 3,
+              "mean": 27.379550264550776,
+              "sd": 4.067699136878636,
+              "min": 24.095555555555908,
+              "max": 31.92976190476264
+            },
+            "offTrackEventsPerEpisode": {
+              "n": 3,
+              "mean": 0.011111111111111112,
+              "sd": 0.019245008972987525,
+              "min": 0,
+              "max": 0.03333333333333333
+            },
+            "offTrackSecondsPerEpisode": {
+              "n": 3,
+              "mean": 0.0396296296296296,
+              "sd": 0.06864053200365546,
+              "min": 0,
+              "max": 0.1188888888888888
+            },
+            "reward": {
+              "n": 3,
+              "mean": 873.5561456974721,
+              "sd": 30.7538603979212,
+              "min": 838.045207308253,
+              "max": 891.4844454814978
+            },
+            "totalCompleted": 88,
+            "totalScenarios": 90
+          }
+        },
+        "C": {
+          "perSeed": [
+            {
+              "seed": 2026,
+              "scenarioCount": 30,
+              "completion": {
+                "rate": 1,
+                "ci95": [
+                  0.8864866068260312,
+                  0.9999999999999999
+                ],
+                "successes": 30,
+                "n": 30
+              },
+              "meanSignedProgressMeters": {
+                "mean": 705.1702624093734,
+                "sd": 144.85961359602337,
+                "ci95": [
+                  651.0788541352889,
+                  759.261670683458
+                ],
+                "n": 30
+              },
+              "meanDistanceTravelledMeters": {
+                "mean": 705.1702624093734,
+                "sd": 144.85961359602337,
+                "ci95": [
+                  651.0788541352889,
+                  759.261670683458
+                ],
+                "n": 30
+              },
+              "successfulLapTimeSeconds": {
+                "mean": 20.7111111111113,
+                "sd": 0.12904997200536927,
+                "ci95": [
+                  20.662923113433987,
+                  20.759299108788614
+                ],
+                "n": 30
+              },
+              "offTrackEvents": {
+                "mean": 0,
+                "sd": 0,
+                "ci95": [
+                  0,
+                  0
+                ],
+                "n": 30
+              },
+              "offTrackDurationSeconds": {
+                "mean": 0,
+                "sd": 0,
+                "ci95": [
+                  0,
+                  0
+                ],
+                "n": 30
+              },
+              "blockedTimeSeconds": {
+                "mean": 0.035555555555555556,
+                "sd": 0.0599701926811738,
+                "ci95": [
+                  0.013162342595322066,
+                  0.05794876851578905
+                ],
+                "n": 30
+              },
+              "reward": {
+                "mean": 890.1959895910016,
+                "sd": 146.32763257374395,
+                "ci95": [
+                  835.5564146339697,
+                  944.8355645480336
+                ],
+                "n": 30
+              },
+              "episodeDurationSeconds": {
+                "mean": 30.038888888889364,
+                "sd": 5.993905482856819,
+                "ci95": [
+                  27.800730298092308,
+                  32.27704747968642
+                ],
+                "n": 30
+              }
+            },
+            {
+              "seed": 2027,
+              "scenarioCount": 30,
+              "completion": {
+                "rate": 1,
+                "ci95": [
+                  0.8864866068260312,
+                  0.9999999999999999
+                ],
+                "successes": 30,
+                "n": 30
+              },
+              "meanSignedProgressMeters": {
+                "mean": 705.2615716322264,
+                "sd": 144.84743899978682,
+                "ci95": [
+                  651.1747094220119,
+                  759.3484338424408
+                ],
+                "n": 30
+              },
+              "meanDistanceTravelledMeters": {
+                "mean": 705.2615716322264,
+                "sd": 144.84743899978682,
+                "ci95": [
+                  651.1747094220119,
+                  759.3484338424408
+                ],
+                "n": 30
+              },
+              "successfulLapTimeSeconds": {
+                "mean": 22.003333333333572,
+                "sd": 0.1718392726712578,
+                "ci95": [
+                  21.93916756604453,
+                  22.067499100622612
+                ],
+                "n": 30
+              },
+              "offTrackEvents": {
+                "mean": 0,
+                "sd": 0,
+                "ci95": [
+                  0,
+                  0
+                ],
+                "n": 30
+              },
+              "offTrackDurationSeconds": {
+                "mean": 0,
+                "sd": 0,
+                "ci95": [
+                  0,
+                  0
+                ],
+                "n": 30
+              },
+              "blockedTimeSeconds": {
+                "mean": 0.035555555555555556,
+                "sd": 0.0599701926811738,
+                "ci95": [
+                  0.013162342595322066,
+                  0.05794876851578905
+                ],
+                "n": 30
+              },
+              "reward": {
+                "mean": 890.6261028603186,
+                "sd": 146.12481148270263,
+                "ci95": [
+                  836.0622624587626,
+                  945.1899432618746
+                ],
+                "n": 30
+              },
+              "episodeDurationSeconds": {
+                "mean": 31.85555555555601,
+                "sd": 6.342566369234771,
+                "ci95": [
+                  29.487204995540612,
+                  34.2239061155714
+                ],
+                "n": 30
+              }
+            },
+            {
+              "seed": 2028,
+              "scenarioCount": 30,
+              "completion": {
+                "rate": 1,
+                "ci95": [
+                  0.8864866068260312,
+                  0.9999999999999999
+                ],
+                "successes": 30,
+                "n": 30
+              },
+              "meanSignedProgressMeters": {
+                "mean": 705.3263489483749,
+                "sd": 144.80263622547486,
+                "ci95": [
+                  651.2562163503482,
+                  759.3964815464016
+                ],
+                "n": 30
+              },
+              "meanDistanceTravelledMeters": {
+                "mean": 705.3263489483749,
+                "sd": 144.80263622547486,
+                "ci95": [
+                  651.2562163503482,
+                  759.3964815464016
+                ],
+                "n": 30
+              },
+              "successfulLapTimeSeconds": {
+                "mean": 21.191111111111322,
+                "sd": 0.12221873906566445,
+                "ci95": [
+                  21.14547393488648,
+                  21.236748287336166
+                ],
+                "n": 30
+              },
+              "offTrackEvents": {
+                "mean": 0,
+                "sd": 0,
+                "ci95": [
+                  0,
+                  0
+                ],
+                "n": 30
+              },
+              "offTrackDurationSeconds": {
+                "mean": 0,
+                "sd": 0,
+                "ci95": [
+                  0,
+                  0
+                ],
+                "n": 30
+              },
+              "blockedTimeSeconds": {
+                "mean": 0.035555555555555556,
+                "sd": 0.0599701926811738,
+                "ci95": [
+                  0.013162342595322066,
+                  0.05794876851578905
+                ],
+                "n": 30
+              },
+              "reward": {
+                "mean": 890.6696209738927,
+                "sd": 145.942439959917,
+                "ci95": [
+                  836.1738791420601,
+                  945.1653628057254
+                ],
+                "n": 30
+              },
+              "episodeDurationSeconds": {
+                "mean": 30.703333333333795,
+                "sd": 6.1411266703765115,
+                "ci95": [
+                  28.410201509052,
+                  32.99646515761559
+                ],
+                "n": 30
+              }
+            }
+          ],
+          "acrossSeeds": {
+            "completionRate": {
+              "n": 3,
+              "mean": 1,
+              "sd": 0,
+              "min": 1,
+              "max": 1
+            },
+            "meanProgressMeters": {
+              "n": 3,
+              "mean": 705.2527276633249,
+              "sd": 0.07841819784851234,
+              "min": 705.1702624093734,
+              "max": 705.3263489483749
+            },
+            "successfulLapTimeSeconds": {
+              "n": 3,
+              "mean": 21.301851851852064,
+              "sd": 0.6531900195548939,
+              "min": 20.7111111111113,
+              "max": 22.003333333333572
+            },
+            "offTrackEventsPerEpisode": {
+              "n": 3,
+              "mean": 0,
+              "sd": 0,
+              "min": 0,
+              "max": 0
+            },
+            "offTrackSecondsPerEpisode": {
+              "n": 3,
+              "mean": 0,
+              "sd": 0,
+              "min": 0,
+              "max": 0
+            },
+            "reward": {
+              "n": 3,
+              "mean": 890.4972378084043,
+              "sd": 0.26179442873843384,
+              "min": 890.1959895910016,
+              "max": 890.6696209738927
+            },
+            "totalCompleted": 90,
+            "totalScenarios": 90
+          }
+        }
+      }
+    },
+    {
+      "circuit": "technical",
+      "steering": {
+        "scenarioCount": 30,
+        "completion": {
+          "rate": 1,
+          "ci95": [
+            0.8864866068260312,
+            0.9999999999999999
+          ],
+          "successes": 30,
+          "n": 30
+        },
+        "meanSignedProgressMeters": {
+          "mean": 595.8291311952381,
+          "sd": 122.86852845133863,
+          "ci95": [
+            549.9493198971651,
+            641.7089424933112
+          ],
+          "n": 30
+        },
+        "meanDistanceTravelledMeters": {
+          "mean": 595.8291311952381,
+          "sd": 122.86852845133863,
+          "ci95": [
+            549.9493198971651,
+            641.7089424933112
+          ],
+          "n": 30
+        },
+        "successfulLapTimeSeconds": {
+          "mean": 20.085555555555718,
+          "sd": 0.06930599225133224,
+          "ci95": [
+            20.05967630163777,
+            20.111434809473668
+          ],
+          "n": 30
+        },
+        "offTrackEvents": {
+          "mean": 4.066666666666666,
+          "sd": 0.9802650357071223,
+          "ci95": [
+            3.7006300954860047,
+            4.432703237847329
+          ],
+          "n": 30
+        },
+        "offTrackDurationSeconds": {
+          "mean": 5.244444444444435,
+          "sd": 1.406561888926986,
+          "ci95": [
+            4.719226189970189,
+            5.7696626989186806
+          ],
+          "n": 30
+        },
+        "blockedTimeSeconds": {
+          "mean": 0.06222222222222222,
+          "sd": 0.10494783719205418,
+          "ci95": [
+            0.023034099541813603,
+            0.10141034490263084
+          ],
+          "n": 30
+        },
+        "reward": {
+          "mean": 744.053709482472,
+          "sd": 115.24885291874567,
+          "ci95": [
+            701.0191286107271,
+            787.0882903542168
+          ],
+          "n": 30
+        },
+        "episodeDurationSeconds": {
+          "mean": 29.151111111111582,
+          "sd": 5.816864985805664,
+          "ci95": [
+            26.9790604545366,
+            31.323161767686564
+          ],
+          "n": 30
+        }
+      },
+      "configurations": {
+        "A": {
+          "perSeed": [
+            {
+              "seed": 2026,
+              "scenarioCount": 30,
+              "completion": {
+                "rate": 0.9333333333333333,
+                "ci95": [
+                  0.7867654163738308,
+                  0.9815229762087295
+                ],
+                "successes": 28,
+                "n": 30
+              },
+              "meanSignedProgressMeters": {
+                "mean": 554.6460129565801,
+                "sd": 192.62869736448746,
+                "ci95": [
+                  482.7173555772704,
+                  626.5746703358898
+                ],
+                "n": 30
+              },
+              "meanDistanceTravelledMeters": {
+                "mean": 559.384572887716,
+                "sd": 177.91072300576556,
+                "ci95": [
+                  492.95169131673686,
+                  625.8174544586951
+                ],
+                "n": 30
+              },
+              "successfulLapTimeSeconds": {
+                "mean": 29.284523809524433,
+                "sd": 0.14415416497772568,
+                "ci95": [
+                  29.228626742634358,
+                  29.34042087641451
+                ],
+                "n": 28
+              },
+              "offTrackEvents": {
+                "mean": 0.06666666666666667,
+                "sd": 0.2537081317024625,
+                "ci95": [
+                  -0.02806940085208466,
+                  0.161402734185418
+                ],
+                "n": 30
+              },
+              "offTrackDurationSeconds": {
+                "mean": 0.2377777777777776,
+                "sd": 0.9048923364054489,
+                "ci95": [
+                  -0.10011419637243524,
+                  0.5756697519279904
+                ],
+                "n": 30
+              },
+              "blockedTimeSeconds": {
+                "mean": 0.05999999999999999,
+                "sd": 0.10186009487136294,
+                "ci95": [
+                  0.02196485796317818,
+                  0.0980351420368218
+                ],
+                "n": 30
+              },
+              "reward": {
+                "mean": 726.2143078202743,
+                "sd": 239.0767759631211,
+                "ci95": [
+                  636.941672221942,
+                  815.4869434186065
+                ],
+                "n": 30
+              },
+              "episodeDurationSeconds": {
+                "mean": 39.7266666666668,
+                "sd": 12.549358182974574,
+                "ci95": [
+                  35.040664542251115,
+                  44.41266879108249
+                ],
+                "n": 30
+              }
+            },
+            {
+              "seed": 2027,
+              "scenarioCount": 30,
+              "completion": {
+                "rate": 0,
+                "ci95": [
+                  0,
+                  0.11351339317396876
+                ],
+                "successes": 0,
+                "n": 30
+              },
+              "meanSignedProgressMeters": {
+                "mean": 207.6744913168582,
+                "sd": 92.522929545231,
+                "ci95": [
+                  173.12590021884336,
+                  242.22308241487303
+                ],
+                "n": 30
+              },
+              "meanDistanceTravelledMeters": {
+                "mean": 207.67449177829107,
+                "sd": 92.52292847396143,
+                "ci95": [
+                  173.1259010802944,
+                  242.22308247628774
+                ],
+                "n": 30
+              },
+              "successfulLapTimeSeconds": {
+                "mean": null,
+                "sd": null,
+                "ci95": null,
+                "n": 0
+              },
+              "offTrackEvents": {
+                "mean": 1.0333333333333334,
+                "sd": 0.49013251785356104,
+                "ci95": [
+                  0.8503150477430026,
+                  1.2163516189236643
+                ],
+                "n": 30
+              },
+              "offTrackDurationSeconds": {
+                "mean": 3.3688888888888853,
+                "sd": 0.9352170372532977,
+                "ci95": [
+                  3.0196734979930993,
+                  3.7181042797846713
+                ],
+                "n": 30
+              },
+              "blockedTimeSeconds": {
+                "mean": 0.762222222222222,
+                "sd": 1.3744447386923302,
+                "ci95": [
+                  0.24899669534690305,
+                  1.275447749097541
+                ],
+                "n": 30
+              },
+              "reward": {
+                "mean": 187.47615427721772,
+                "sd": 85.62157620304394,
+                "ci95": [
+                  155.50456799102713,
+                  219.4477405634083
+                ],
+                "n": 30
+              },
+              "episodeDurationSeconds": {
+                "mean": 15.237777777777906,
+                "sd": 9.556966660488314,
+                "ci95": [
+                  11.669151763518826,
+                  18.806403792036985
+                ],
+                "n": 30
+              }
+            },
+            {
+              "seed": 2028,
+              "scenarioCount": 30,
+              "completion": {
+                "rate": 0.3333333333333333,
+                "ci95": [
+                  0.19230498083676134,
+                  0.5121994835545616
+                ],
+                "successes": 10,
+                "n": 30
+              },
+              "meanSignedProgressMeters": {
+                "mean": 344.40176615902817,
+                "sd": 329.9698839016089,
+                "ci95": [
+                  221.18912417277232,
+                  467.614408145284
+                ],
+                "n": 30
+              },
+              "meanDistanceTravelledMeters": {
+                "mean": 395.6753230453889,
+                "sd": 264.3584240827846,
+                "ci95": [
+                  296.9623754350688,
+                  494.388270655709
+                ],
+                "n": 30
+              },
+              "successfulLapTimeSeconds": {
+                "mean": 36.59333333333382,
+                "sd": 0.10517475169954275,
+                "ci95": [
+                  36.518104357979674,
+                  36.66856230868796
+                ],
+                "n": 10
+              },
+              "offTrackEvents": {
+                "mean": 0.4666666666666667,
+                "sd": 0.5713464637233658,
+                "ci95": [
+                  0.25332262916701553,
+                  0.6800107041663178
+                ],
+                "n": 30
+              },
+              "offTrackDurationSeconds": {
+                "mean": 1.6155555555555539,
+                "sd": 1.9160290460314697,
+                "ci95": [
+                  0.9000993506058399,
+                  2.331011760505268
+                ],
+                "n": 30
+              },
+              "blockedTimeSeconds": {
+                "mean": 0.09444444444444443,
+                "sd": 0.14597625727623667,
+                "ci95": [
+                  0.03993607503327216,
+                  0.1489528138556167
+                ],
+                "n": 30
+              },
+              "reward": {
+                "mean": 368.1135986827264,
+                "sd": 415.6126362984069,
+                "ci95": [
+                  212.92146309841016,
+                  523.3057342670426
+                ],
+                "n": 30
+              },
+              "episodeDurationSeconds": {
+                "mean": 33.788888888888614,
+                "sd": 23.782735187015795,
+                "ci95": [
+                  24.908279539323004,
+                  42.669498238454224
+                ],
+                "n": 30
+              }
+            }
+          ],
+          "acrossSeeds": {
+            "completionRate": {
+              "n": 3,
+              "mean": 0.4222222222222222,
+              "sd": 0.4729732589731725,
+              "min": 0,
+              "max": 0.9333333333333333
+            },
+            "meanProgressMeters": {
+              "n": 3,
+              "mean": 368.90742347748875,
+              "sd": 174.77901658295073,
+              "min": 207.6744913168582,
+              "max": 554.6460129565801
+            },
+            "successfulLapTimeSeconds": {
+              "n": 2,
+              "mean": 32.93892857142912,
+              "sd": 5.168108776686436,
+              "min": 29.284523809524433,
+              "max": 36.59333333333382
+            },
+            "offTrackEventsPerEpisode": {
+              "n": 3,
+              "mean": 0.5222222222222223,
+              "sd": 0.4857220665420977,
+              "min": 0.06666666666666667,
+              "max": 1.0333333333333334
+            },
+            "offTrackSecondsPerEpisode": {
+              "n": 3,
+              "mean": 1.740740740740739,
+              "sd": 1.5693048446599678,
+              "min": 0.2377777777777776,
+              "max": 3.3688888888888853
+            },
+            "reward": {
+              "n": 3,
+              "mean": 427.2680202600728,
+              "sd": 274.19725329561254,
+              "min": 187.47615427721772,
+              "max": 726.2143078202743
+            },
+            "totalCompleted": 38,
+            "totalScenarios": 90
+          }
+        },
+        "B": {
+          "perSeed": [
+            {
+              "seed": 2026,
+              "scenarioCount": 30,
+              "completion": {
+                "rate": 0.9,
+                "ci95": [
+                  0.7437891742081593,
+                  0.9654001112526658
+                ],
+                "successes": 27,
+                "n": 30
+              },
+              "meanSignedProgressMeters": {
+                "mean": 543.2082938339032,
+                "sd": 205.47645290565723,
+                "ci95": [
+                  466.4822110498766,
+                  619.9343766179298
+                ],
+                "n": 30
+              },
+              "meanDistanceTravelledMeters": {
+                "mean": 544.8615633689252,
+                "sd": 201.36716810617511,
+                "ci95": [
+                  469.66991103300916,
+                  620.0532157048413
+                ],
+                "n": 30
+              },
+              "successfulLapTimeSeconds": {
+                "mean": 27.37283950617336,
+                "sd": 0.427178882948785,
+                "ci95": [
+                  27.203853459397557,
+                  27.541825552949163
+                ],
+                "n": 27
+              },
+              "offTrackEvents": {
+                "mean": 0.13333333333333333,
+                "sd": 0.43417248545530474,
+                "ci95": [
+                  -0.028789156083424305,
+                  0.29545582275009097
+                ],
+                "n": 30
+              },
+              "offTrackDurationSeconds": {
+                "mean": 0.4688888888888882,
+                "sd": 1.5190472244098343,
+                "ci95": [
+                  -0.09833203323997503,
+                  1.0361098110177513
+                ],
+                "n": 30
+              },
+              "blockedTimeSeconds": {
+                "mean": 0.07666666666666666,
+                "sd": 0.13047217521658447,
+                "ci95": [
+                  0.027947610175673113,
+                  0.12538572315766022
+                ],
+                "n": 30
+              },
+              "reward": {
+                "mean": 697.3554309350899,
+                "sd": 257.0691804901372,
+                "ci95": [
+                  601.364328574742,
+                  793.3465332954378
+                ],
+                "n": 30
+              },
+              "episodeDurationSeconds": {
+                "mean": 36.943333333333534,
+                "sd": 12.484000948953922,
+                "ci95": [
+                  32.281735973926644,
+                  41.604930692740425
+                ],
+                "n": 30
+              }
+            },
+            {
+              "seed": 2027,
+              "scenarioCount": 30,
+              "completion": {
+                "rate": 0.4666666666666667,
+                "ci95": [
+                  0.30232388907699753,
+                  0.638577003801267
+                ],
+                "successes": 14,
+                "n": 30
+              },
+              "meanSignedProgressMeters": {
+                "mean": 363.5129363757926,
+                "sd": 157.05254132216814,
+                "ci95": [
+                  304.8686191485573,
+                  422.1572536030279
+                ],
+                "n": 30
+              },
+              "meanDistanceTravelledMeters": {
+                "mean": 371.9500766190332,
+                "sd": 136.4491569055339,
+                "ci95": [
+                  320.9991809786871,
+                  422.90097225937933
+                ],
+                "n": 30
+              },
+              "successfulLapTimeSeconds": {
+                "mean": 21.95238095238121,
+                "sd": 0.1738032514298084,
+                "ci95": [
+                  21.852032625579067,
+                  22.05272927918335
+                ],
+                "n": 14
+              },
+              "offTrackEvents": {
+                "mean": 1.0666666666666667,
+                "sd": 0.2537081317024625,
+                "ci95": [
+                  0.9719305991479154,
+                  1.161402734185418
+                ],
+                "n": 30
+              },
+              "offTrackDurationSeconds": {
+                "mean": 3.532222222222218,
+                "sd": 0.2905251333860642,
+                "ci95": [
+                  3.42373847569164,
+                  3.640705968752796
+                ],
+                "n": 30
+              },
+              "blockedTimeSeconds": {
+                "mean": 0.041111111111111105,
+                "sd": 0.0709450887617495,
+                "ci95": [
+                  0.014619809180989832,
+                  0.06760241304123238
+                ],
+                "n": 30
+              },
+              "reward": {
+                "mean": 434.2695627898122,
+                "sd": 237.88110118862878,
+                "ci95": [
+                  345.4433989912077,
+                  523.0957265884167
+                ],
+                "n": 30
+              },
+              "episodeDurationSeconds": {
+                "mean": 20.072222222222447,
+                "sd": 7.0927467312832135,
+                "ci95": [
+                  17.42375002419188,
+                  22.720694420253015
+                ],
+                "n": 30
+              }
+            },
+            {
+              "seed": 2028,
+              "scenarioCount": 30,
+              "completion": {
+                "rate": 0.9333333333333333,
+                "ci95": [
+                  0.7867654163738308,
+                  0.9815229762087295
+                ],
+                "successes": 28,
+                "n": 30
+              },
+              "meanSignedProgressMeters": {
+                "mean": 558.7785252697356,
+                "sd": 194.49541786057486,
+                "ci95": [
+                  486.15282378005674,
+                  631.4042267594145
+                ],
+                "n": 30
+              },
+              "meanDistanceTravelledMeters": {
+                "mean": 558.7785380179662,
+                "sd": 194.4953799768402,
+                "ci95": [
+                  486.1528506742905,
+                  631.4042253616418
+                ],
+                "n": 30
+              },
+              "successfulLapTimeSeconds": {
+                "mean": 24.947619047619447,
+                "sd": 0.17007105061561323,
+                "ci95": [
+                  24.88167247650376,
+                  25.013565618735136
+                ],
+                "n": 28
+              },
+              "offTrackEvents": {
+                "mean": 0,
+                "sd": 0,
+                "ci95": [
+                  0,
+                  0
+                ],
+                "n": 30
+              },
+              "offTrackDurationSeconds": {
+                "mean": 0,
+                "sd": 0,
+                "ci95": [
+                  0,
+                  0
+                ],
+                "n": 30
+              },
+              "blockedTimeSeconds": {
+                "mean": 0.30999999999999966,
+                "sd": 1.0156307139538634,
+                "ci95": [
+                  -0.06924231771999223,
+                  0.6892423177199916
+                ],
+                "n": 30
+              },
+              "reward": {
+                "mean": 729.2405779977356,
+                "sd": 238.4669975622731,
+                "ci95": [
+                  640.1956371420455,
+                  818.2855188534257
+                ],
+                "n": 30
+              },
+              "episodeDurationSeconds": {
+                "mean": 34.21555555555586,
+                "sd": 10.984136012158046,
+                "ci95": [
+                  30.114016342365346,
+                  38.31709476874637
+                ],
+                "n": 30
+              }
+            }
+          ],
+          "acrossSeeds": {
+            "completionRate": {
+              "n": 3,
+              "mean": 0.7666666666666666,
+              "sd": 0.2603416558635551,
+              "min": 0.4666666666666667,
+              "max": 0.9333333333333333
+            },
+            "meanProgressMeters": {
+              "n": 3,
+              "mean": 488.49991849314375,
+              "sd": 108.52150616741203,
+              "min": 363.5129363757926,
+              "max": 558.7785252697356
+            },
+            "successfulLapTimeSeconds": {
+              "n": 3,
+              "mean": 24.757613168724674,
+              "sd": 2.7152199558885757,
+              "min": 21.95238095238121,
+              "max": 27.37283950617336
+            },
+            "offTrackEventsPerEpisode": {
+              "n": 3,
+              "mean": 0.39999999999999997,
+              "sd": 0.5811865258054232,
+              "min": 0,
+              "max": 1.0666666666666667
+            },
+            "offTrackSecondsPerEpisode": {
+              "n": 3,
+              "mean": 1.333703703703702,
+              "sd": 1.9183526669339248,
+              "min": 0,
+              "max": 3.532222222222218
+            },
+            "reward": {
+              "n": 3,
+              "mean": 620.2885239075459,
+              "sd": 161.88408220789447,
+              "min": 434.2695627898122,
+              "max": 729.2405779977356
+            },
+            "totalCompleted": 69,
+            "totalScenarios": 90
+          }
+        },
+        "C": {
+          "perSeed": [
+            {
+              "seed": 2026,
+              "scenarioCount": 30,
+              "completion": {
+                "rate": 0.9666666666666667,
+                "ci95": [
+                  0.8332960900859082,
+                  0.9940914096183874
+                ],
+                "successes": 29,
+                "n": 30
+              },
+              "meanSignedProgressMeters": {
+                "mean": 574.0736263643271,
+                "sd": 175.17559216968885,
+                "ci95": [
+                  508.6620582917385,
+                  639.4851944369157
+                ],
+                "n": 30
+              },
+              "meanDistanceTravelledMeters": {
+                "mean": 581.1796135282443,
+                "sd": 149.91974459594454,
+                "ci95": [
+                  525.1987233962253,
+                  637.1605036602633
+                ],
+                "n": 30
+              },
+              "successfulLapTimeSeconds": {
+                "mean": 20.071264367816248,
+                "sd": 0.14134392871646353,
+                "ci95": [
+                  20.017500081731335,
+                  20.12502865390116
+                ],
+                "n": 29
+              },
+              "offTrackEvents": {
+                "mean": 0.13333333333333333,
+                "sd": 0.3457459036417605,
+                "ci95": [
+                  0.004229835341591187,
+                  0.26243683132507545
+                ],
+                "n": 30
+              },
+              "offTrackDurationSeconds": {
+                "mean": 0.19444444444444434,
+                "sd": 0.6772201084959104,
+                "ci95": [
+                  -0.058433417581536445,
+                  0.44732230647042515
+                ],
+                "n": 30
+              },
+              "blockedTimeSeconds": {
+                "mean": 0.035555555555555556,
+                "sd": 0.05997019268117381,
+                "ci95": [
+                  0.013162342595322063,
+                  0.05794876851578905
+                ],
+                "n": 30
+              },
+              "reward": {
+                "mean": 754.1245828556142,
+                "sd": 191.33469733760145,
+                "ci95": [
+                  682.6791124876696,
+                  825.5700532235588
+                ],
+                "n": 30
+              },
+              "episodeDurationSeconds": {
+                "mean": 28.30333333333379,
+                "sd": 7.3716155946371735,
+                "ci95": [
+                  25.550729906673304,
+                  31.055936759994275
+                ],
+                "n": 30
+              }
+            },
+            {
+              "seed": 2027,
+              "scenarioCount": 30,
+              "completion": {
+                "rate": 0.9333333333333333,
+                "ci95": [
+                  0.7867654163738308,
+                  0.9815229762087295
+                ],
+                "successes": 28,
+                "n": 30
+              },
+              "meanSignedProgressMeters": {
+                "mean": 553.2857958660403,
+                "sd": 211.41999920129447,
+                "ci95": [
+                  474.3403588997652,
+                  632.2312328323154
+                ],
+                "n": 30
+              },
+              "meanDistanceTravelledMeters": {
+                "mean": 565.4472820144056,
+                "sd": 175.57501630393602,
+                "ci95": [
+                  499.8865666854924,
+                  631.0079973433187
+                ],
+                "n": 30
+              },
+              "successfulLapTimeSeconds": {
+                "mean": 21.264285714285933,
+                "sd": 0.12698743381938302,
+                "ci95": [
+                  21.215045200954265,
+                  21.3135262276176
+                ],
+                "n": 28
+              },
+              "offTrackEvents": {
+                "mean": 0.13333333333333333,
+                "sd": 0.507416263404925,
+                "ci95": [
+                  -0.05613880170416932,
+                  0.322805468370836
+                ],
+                "n": 30
+              },
+              "offTrackDurationSeconds": {
+                "mean": 0.2788888888888886,
+                "sd": 1.0628697989174534,
+                "ci95": [
+                  -0.11799277335114045,
+                  0.6757705511289176
+                ],
+                "n": 30
+              },
+              "blockedTimeSeconds": {
+                "mean": 0.041111111111111105,
+                "sd": 0.07201709744493566,
+                "ci95": [
+                  0.01421951500709195,
+                  0.06800270721513026
+                ],
+                "n": 30
+              },
+              "reward": {
+                "mean": 719.4752629120009,
+                "sd": 273.5660010681068,
+                "ci95": [
+                  617.3241533905419,
+                  821.6263724334598
+                ],
+                "n": 30
+              },
+              "episodeDurationSeconds": {
+                "mean": 29.41888888888931,
+                "sd": 8.355133248274731,
+                "ci95": [
+                  26.299034344908854,
+                  32.538743432869765
+                ],
+                "n": 30
+              }
+            },
+            {
+              "seed": 2028,
+              "scenarioCount": 30,
+              "completion": {
+                "rate": 1,
+                "ci95": [
+                  0.8864866068260312,
+                  0.9999999999999999
+                ],
+                "successes": 30,
+                "n": 30
+              },
+              "meanSignedProgressMeters": {
+                "mean": 595.8507683199771,
+                "sd": 122.69113608043925,
+                "ci95": [
+                  550.0371963478337,
+                  641.6643402921204
+                ],
+                "n": 30
+              },
+              "meanDistanceTravelledMeters": {
+                "mean": 595.8507683199771,
+                "sd": 122.69113608043925,
+                "ci95": [
+                  550.0371963478337,
+                  641.6643402921204
+                ],
+                "n": 30
+              },
+              "successfulLapTimeSeconds": {
+                "mean": 20.02666666666682,
+                "sd": 0.07499680708401853,
+                "ci95": [
+                  19.998662429940445,
+                  20.054670903393195
+                ],
+                "n": 30
+              },
+              "offTrackEvents": {
+                "mean": 0,
+                "sd": 0,
+                "ci95": [
+                  0,
+                  0
+                ],
+                "n": 30
+              },
+              "offTrackDurationSeconds": {
+                "mean": 0,
+                "sd": 0,
+                "ci95": [
+                  0,
+                  0
+                ],
+                "n": 30
+              },
+              "blockedTimeSeconds": {
+                "mean": 0.03777777777777778,
+                "sd": 0.06416772402970188,
+                "ci95": [
+                  0.013817182603273814,
+                  0.06173837295228174
+                ],
+                "n": 30
+              },
+              "reward": {
+                "mean": 780.2101230421027,
+                "sd": 124.15311584040755,
+                "ci95": [
+                  733.8506394654632,
+                  826.5696066187422
+                ],
+                "n": 30
+              },
+              "episodeDurationSeconds": {
+                "mean": 29.033333333333797,
+                "sd": 5.919854249008447,
+                "ci95": [
+                  26.822825896808506,
+                  31.243840769859087
+                ],
+                "n": 30
+              }
+            }
+          ],
+          "acrossSeeds": {
+            "completionRate": {
+              "n": 3,
+              "mean": 0.9666666666666667,
+              "sd": 0.033333333333333326,
+              "min": 0.9333333333333333,
+              "max": 1
+            },
+            "meanProgressMeters": {
+              "n": 3,
+              "mean": 574.4033968501147,
+              "sd": 21.284402303825015,
+              "min": 553.2857958660403,
+              "max": 595.8507683199771
+            },
+            "successfulLapTimeSeconds": {
+              "n": 3,
+              "mean": 20.454072249589668,
+              "sd": 0.702019681004955,
+              "min": 20.02666666666682,
+              "max": 21.264285714285933
+            },
+            "offTrackEventsPerEpisode": {
+              "n": 3,
+              "mean": 0.08888888888888889,
+              "sd": 0.0769800358919501,
+              "min": 0,
+              "max": 0.13333333333333333
+            },
+            "offTrackSecondsPerEpisode": {
+              "n": 3,
+              "mean": 0.15777777777777766,
+              "sd": 0.14301428746720743,
+              "min": 0,
+              "max": 0.2788888888888886
+            },
+            "reward": {
+              "n": 3,
+              "mean": 751.2699896032392,
+              "sd": 30.467890240926398,
+              "min": 719.4752629120009,
+              "max": 780.2101230421027
+            },
+            "totalCompleted": 87,
+            "totalScenarios": 90
+          }
+        }
+      }
+    },
+    {
+      "circuit": "fast-oval",
+      "steering": {
+        "scenarioCount": 30,
+        "completion": {
+          "rate": 1,
+          "ci95": [
+            0.8864866068260312,
+            0.9999999999999999
+          ],
+          "successes": 30,
+          "n": 30
+        },
+        "meanSignedProgressMeters": {
+          "mean": 753.6733235817534,
+          "sd": 154.57864359520823,
+          "ci95": [
+            695.9527739157826,
+            811.3938732477242
+          ],
+          "n": 30
+        },
+        "meanDistanceTravelledMeters": {
+          "mean": 753.6733235817534,
+          "sd": 154.57864359520823,
+          "ci95": [
+            695.9527739157826,
+            811.3938732477242
+          ],
+          "n": 30
+        },
+        "successfulLapTimeSeconds": {
+          "mean": 24.53333333333371,
+          "sd": 0.2007648211464492,
+          "ci95": [
+            24.458366600797817,
+            24.608300065869606
+          ],
+          "n": 30
+        },
+        "offTrackEvents": {
+          "mean": 2.3,
+          "sd": 0.5959634332684376,
+          "ci95": [
+            2.077463845269893,
+            2.5225361547301066
+          ],
+          "n": 30
+        },
+        "offTrackDurationSeconds": {
+          "mean": 2.3511111111111114,
+          "sd": 0.7435924672450278,
+          "ci95": [
+            2.0734494306964897,
+            2.628772791525733
+          ],
+          "n": 30
+        },
+        "blockedTimeSeconds": {
+          "mean": 0.06222222222222222,
+          "sd": 0.10494783719205418,
+          "ci95": [
+            0.023034099541813603,
+            0.10141034490263084
+          ],
+          "n": 30
+        },
+        "reward": {
+          "mean": 922.9526606096491,
+          "sd": 151.99951493868534,
+          "ci95": [
+            866.1951723359338,
+            979.7101488833645
+          ],
+          "n": 30
+        },
+        "episodeDurationSeconds": {
+          "mean": 35.54000000000039,
+          "sd": 7.199783947375515,
+          "ci95": [
+            32.85155949325739,
+            38.22844050674339
+          ],
+          "n": 30
+        }
+      },
+      "configurations": {
+        "A": {
+          "perSeed": [
+            {
+              "seed": 2026,
+              "scenarioCount": 30,
+              "completion": {
+                "rate": 0.9,
+                "ci95": [
+                  0.7437891742081593,
+                  0.9654001112526658
+                ],
+                "successes": 27,
+                "n": 30
+              },
+              "meanSignedProgressMeters": {
+                "mean": 748.6816113781175,
+                "sd": 146.68243467829103,
+                "ci95": [
+                  693.9095512858768,
+                  803.4536714703582
+                ],
+                "n": 30
+              },
+              "meanDistanceTravelledMeters": {
+                "mean": 748.6816113781175,
+                "sd": 146.68243467829103,
+                "ci95": [
+                  693.9095512858768,
+                  803.4536714703582
+                ],
+                "n": 30
+              },
+              "successfulLapTimeSeconds": {
+                "mean": 33.50740740740807,
+                "sd": 0.3743179933077591,
+                "ci95": [
+                  33.359332396093166,
+                  33.65548241872297
+                ],
+                "n": 27
+              },
+              "offTrackEvents": {
+                "mean": 0,
+                "sd": 0,
+                "ci95": [
+                  0,
+                  0
+                ],
+                "n": 30
+              },
+              "offTrackDurationSeconds": {
+                "mean": 0,
+                "sd": 0,
+                "ci95": [
+                  0,
+                  0
+                ],
+                "n": 30
+              },
+              "blockedTimeSeconds": {
+                "mean": 0.06222222222222222,
+                "sd": 0.10494783719205418,
+                "ci95": [
+                  0.023034099541813603,
+                  0.10141034490263084
+                ],
+                "n": 30
+              },
+              "reward": {
+                "mean": 919.6898197408528,
+                "sd": 133.7080927960174,
+                "ci95": [
+                  869.7624531171364,
+                  969.6171863645693
+                ],
+                "n": 30
+              },
+              "episodeDurationSeconds": {
+                "mean": 47.95222222222206,
+                "sd": 9.295447257610556,
+                "ci95": [
+                  44.48124904881692,
+                  51.423195395627204
+                ],
+                "n": 30
+              }
+            },
+            {
+              "seed": 2027,
+              "scenarioCount": 30,
+              "completion": {
+                "rate": 0,
+                "ci95": [
+                  0,
+                  0.11351339317396876
+                ],
+                "successes": 0,
+                "n": 30
+              },
+              "meanSignedProgressMeters": {
+                "mean": 179.6506267448931,
+                "sd": 126.94577940255303,
+                "ci95": [
+                  132.24834662087747,
+                  227.0529068689087
+                ],
+                "n": 30
+              },
+              "meanDistanceTravelledMeters": {
+                "mean": 179.65063474488022,
+                "sd": 126.94576769258896,
+                "ci95": [
+                  132.24835899343216,
+                  227.05291049632828
+                ],
+                "n": 30
+              },
+              "successfulLapTimeSeconds": {
+                "mean": null,
+                "sd": null,
+                "ci95": null,
+                "n": 0
+              },
+              "offTrackEvents": {
+                "mean": 0.8,
+                "sd": 0.4842341981115023,
+                "ci95": [
+                  0.619184180738128,
+                  0.9808158192618721
+                ],
+                "n": 30
+              },
+              "offTrackDurationSeconds": {
+                "mean": 2.7588888888888863,
+                "sd": 1.553754156733223,
+                "ci95": [
+                  2.178708199716319,
+                  3.3390695780614537
+                ],
+                "n": 30
+              },
+              "blockedTimeSeconds": {
+                "mean": 1.0622222222222208,
+                "sd": 1.792956276502811,
+                "ci95": [
+                  0.3927220933570543,
+                  1.7317223510873874
+                ],
+                "n": 30
+              },
+              "reward": {
+                "mean": 165.65058815344284,
+                "sd": 126.29154216249714,
+                "ci95": [
+                  118.49260395692198,
+                  212.8085723499637
+                ],
+                "n": 30
+              },
+              "episodeDurationSeconds": {
+                "mean": 12.385555555555595,
+                "sd": 8.38242863578173,
+                "ci95": [
+                  9.255508757757884,
+                  15.515602353353305
+                ],
+                "n": 30
+              }
+            },
+            {
+              "seed": 2028,
+              "scenarioCount": 30,
+              "completion": {
+                "rate": 0.4,
+                "ci95": [
+                  0.24590628116801852,
+                  0.5767963974667752
+                ],
+                "successes": 12,
+                "n": 30
+              },
+              "meanSignedProgressMeters": {
+                "mean": 556.7080391797614,
+                "sd": 310.4373831563156,
+                "ci95": [
+                  440.7889446923546,
+                  672.6271336671682
+                ],
+                "n": 30
+              },
+              "meanDistanceTravelledMeters": {
+                "mean": 588.7486576571176,
+                "sd": 241.67059852955597,
+                "ci95": [
+                  498.50747387652365,
+                  678.9898414377117
+                ],
+                "n": 30
+              },
+              "successfulLapTimeSeconds": {
+                "mean": 41.54166666666686,
+                "sd": 0.27418382096097343,
+                "ci95": [
+                  41.36746755939285,
+                  41.71586577394088
+                ],
+                "n": 12
+              },
+              "offTrackEvents": {
+                "mean": 0.2,
+                "sd": 0.4068381021724863,
+                "ci95": [
+                  0.04808432564623541,
+                  0.3519156743537646
+                ],
+                "n": 30
+              },
+              "offTrackDurationSeconds": {
+                "mean": 0.7133333333333327,
+                "sd": 1.4510558977485328,
+                "ci95": [
+                  0.1715007614715729,
+                  1.2551659051950925
+                ],
+                "n": 30
+              },
+              "blockedTimeSeconds": {
+                "mean": 0.06555555555555555,
+                "sd": 0.10558479127292977,
+                "ci95": [
+                  0.026129590578145026,
+                  0.10498152053296607
+                ],
+                "n": 30
+              },
+              "reward": {
+                "mean": 605.8696055206487,
+                "sd": 385.21062450113317,
+                "ci95": [
+                  462.02975503261837,
+                  749.7094560086791
+                ],
+                "n": 30
+              },
+              "episodeDurationSeconds": {
+                "mean": 46.24555555555509,
+                "sd": 19.9149638253114,
+                "ci95": [
+                  38.80919415504316,
+                  53.68191695606703
+                ],
+                "n": 30
+              }
+            }
+          ],
+          "acrossSeeds": {
+            "completionRate": {
+              "n": 3,
+              "mean": 0.43333333333333335,
+              "sd": 0.4509249752822894,
+              "min": 0,
+              "max": 0.9
+            },
+            "meanProgressMeters": {
+              "n": 3,
+              "mean": 495.01342576759066,
+              "sd": 289.48874651913866,
+              "min": 179.6506267448931,
+              "max": 748.6816113781175
+            },
+            "successfulLapTimeSeconds": {
+              "n": 2,
+              "mean": 37.52453703703746,
+              "sd": 5.681079204032703,
+              "min": 33.50740740740807,
+              "max": 41.54166666666686
+            },
+            "offTrackEventsPerEpisode": {
+              "n": 3,
+              "mean": 0.3333333333333333,
+              "sd": 0.4163331998932266,
+              "min": 0,
+              "max": 0.8
+            },
+            "offTrackSecondsPerEpisode": {
+              "n": 3,
+              "mean": 1.1574074074074063,
+              "sd": 1.4320503876460484,
+              "min": 0,
+              "max": 2.7588888888888863
+            },
+            "reward": {
+              "n": 3,
+              "mean": 563.7366711383148,
+              "sd": 378.78117536776097,
+              "min": 165.65058815344284,
+              "max": 919.6898197408528
+            },
+            "totalCompleted": 39,
+            "totalScenarios": 90
+          }
+        },
+        "B": {
+          "perSeed": [
+            {
+              "seed": 2026,
+              "scenarioCount": 30,
+              "completion": {
+                "rate": 0.8666666666666667,
+                "ci95": [
+                  0.703186733179637,
+                  0.9469034451594526
+                ],
+                "successes": 26,
+                "n": 30
+              },
+              "meanSignedProgressMeters": {
+                "mean": 723.762007963239,
+                "sd": 192.40105536025015,
+                "ci95": [
+                  651.9183534103614,
+                  795.6056625161165
+                ],
+                "n": 30
+              },
+              "meanDistanceTravelledMeters": {
+                "mean": 723.762007963239,
+                "sd": 192.40105536025015,
+                "ci95": [
+                  651.9183534103614,
+                  795.6056625161165
+                ],
+                "n": 30
+              },
+              "successfulLapTimeSeconds": {
+                "mean": 33.25000000000068,
+                "sd": 0.4196559437337817,
+                "ci95": [
+                  33.0804976373478,
+                  33.41950236265357
+                ],
+                "n": 26
+              },
+              "offTrackEvents": {
+                "mean": 0.06666666666666667,
+                "sd": 0.2537081317024625,
+                "ci95": [
+                  -0.02806940085208466,
+                  0.161402734185418
+                ],
+                "n": 30
+              },
+              "offTrackDurationSeconds": {
+                "mean": 0.20555555555555546,
+                "sd": 0.7924975474457533,
+                "ci95": [
+                  -0.0903675615296862,
+                  0.5014786726407972
+                ],
+                "n": 30
+              },
+              "blockedTimeSeconds": {
+                "mean": 0.07333333333333332,
+                "sd": 0.12422942562682514,
+                "ci95": [
+                  0.02694535524597439,
+                  0.11972131142069226
+                ],
+                "n": 30
+              },
+              "reward": {
+                "mean": 878.7037089979617,
+                "sd": 204.7103308335197,
+                "ci95": [
+                  802.2637005776797,
+                  955.1437174182437
+                ],
+                "n": 30
+              },
+              "episodeDurationSeconds": {
+                "mean": 46.6966666666665,
+                "sd": 11.810127318521326,
+                "ci95": [
+                  42.28669757523581,
+                  51.10663575809719
+                ],
+                "n": 30
+              }
+            },
+            {
+              "seed": 2027,
+              "scenarioCount": 30,
+              "completion": {
+                "rate": 1,
+                "ci95": [
+                  0.8864866068260312,
+                  0.9999999999999999
+                ],
+                "successes": 30,
+                "n": 30
+              },
+              "meanSignedProgressMeters": {
+                "mean": 753.9423927845484,
+                "sd": 154.5530740113907,
+                "ci95": [
+                  696.231390947426,
+                  811.6533946216707
+                ],
+                "n": 30
+              },
+              "meanDistanceTravelledMeters": {
+                "mean": 753.9423927845484,
+                "sd": 154.5530740113907,
+                "ci95": [
+                  696.231390947426,
+                  811.6533946216707
+                ],
+                "n": 30
+              },
+              "successfulLapTimeSeconds": {
+                "mean": 24.586666666667043,
+                "sd": 0.2906723610114095,
+                "ci95": [
+                  24.478127944499057,
+                  24.695205388835028
+                ],
+                "n": 30
+              },
+              "offTrackEvents": {
+                "mean": 0.8666666666666667,
+                "sd": 0.507416263404925,
+                "ci95": [
+                  0.6771945316291641,
+                  1.0561388017041693
+                ],
+                "n": 30
+              },
+              "offTrackDurationSeconds": {
+                "mean": 0.2966666666666667,
+                "sd": 0.18535458407894978,
+                "ci95": [
+                  0.2274542047941132,
+                  0.36587912853922017
+                ],
+                "n": 30
+              },
+              "blockedTimeSeconds": {
+                "mean": 0.03777777777777778,
+                "sd": 0.06416772402970188,
+                "ci95": [
+                  0.013817182603273814,
+                  0.06173837295228174
+                ],
+                "n": 30
+              },
+              "reward": {
+                "mean": 935.1109195320331,
+                "sd": 155.32872648511824,
+                "ci95": [
+                  877.1102846247012,
+                  993.111554439365
+                ],
+                "n": 30
+              },
+              "episodeDurationSeconds": {
+                "mean": 35.264444444444834,
+                "sd": 7.166380284752789,
+                "ci95": [
+                  32.58847705638496,
+                  37.94041183250471
+                ],
+                "n": 30
+              }
+            },
+            {
+              "seed": 2028,
+              "scenarioCount": 30,
+              "completion": {
+                "rate": 1,
+                "ci95": [
+                  0.8864866068260312,
+                  0.9999999999999999
+                ],
+                "successes": 30,
+                "n": 30
+              },
+              "meanSignedProgressMeters": {
+                "mean": 754.1007756010114,
+                "sd": 154.58459401961252,
+                "ci95": [
+                  696.3780040125332,
+                  811.8235471894895
+                ],
+                "n": 30
+              },
+              "meanDistanceTravelledMeters": {
+                "mean": 754.1007756010114,
+                "sd": 154.58459401961252,
+                "ci95": [
+                  696.3780040125332,
+                  811.8235471894895
+                ],
+                "n": 30
+              },
+              "successfulLapTimeSeconds": {
+                "mean": 27.585555555556088,
+                "sd": 0.2853623539508512,
+                "ci95": [
+                  27.4789996203963,
+                  27.692111490715874
+                ],
+                "n": 30
+              },
+              "offTrackEvents": {
+                "mean": 0,
+                "sd": 0,
+                "ci95": [
+                  0,
+                  0
+                ],
+                "n": 30
+              },
+              "offTrackDurationSeconds": {
+                "mean": 0,
+                "sd": 0,
+                "ci95": [
+                  0,
+                  0
+                ],
+                "n": 30
+              },
+              "blockedTimeSeconds": {
+                "mean": 0.05222222222222221,
+                "sd": 0.08956400709291067,
+                "ci95": [
+                  0.018778509692130088,
+                  0.08566593475231433
+                ],
+                "n": 30
+              },
+              "reward": {
+                "mean": 941.283991455126,
+                "sd": 156.17981461049524,
+                "ci95": [
+                  882.9655553737873,
+                  999.6024275364648
+                ],
+                "n": 30
+              },
+              "episodeDurationSeconds": {
+                "mean": 39.63888888888912,
+                "sd": 8.102197248612386,
+                "ci95": [
+                  36.61348209390725,
+                  42.66429568387099
+                ],
+                "n": 30
+              }
+            }
+          ],
+          "acrossSeeds": {
+            "completionRate": {
+              "n": 3,
+              "mean": 0.9555555555555556,
+              "sd": 0.07698003589195009,
+              "min": 0.8666666666666667,
+              "max": 1
+            },
+            "meanProgressMeters": {
+              "n": 3,
+              "mean": 743.935058782933,
+              "sd": 17.470553964016247,
+              "min": 723.762007963239,
+              "max": 754.1007756010114
+            },
+            "successfulLapTimeSeconds": {
+              "n": 3,
+              "mean": 28.474074074074604,
+              "sd": 4.39948121707835,
+              "min": 24.586666666667043,
+              "max": 33.25000000000068
+            },
+            "offTrackEventsPerEpisode": {
+              "n": 3,
+              "mean": 0.3111111111111111,
+              "sd": 0.48227854253801566,
+              "min": 0,
+              "max": 0.8666666666666667
+            },
+            "offTrackSecondsPerEpisode": {
+              "n": 3,
+              "mean": 0.16740740740740737,
+              "sd": 0.15196788701277508,
+              "min": 0,
+              "max": 0.2966666666666667
+            },
+            "reward": {
+              "n": 3,
+              "mean": 918.366206661707,
+              "sd": 34.48712796010806,
+              "min": 878.7037089979617,
+              "max": 941.283991455126
+            },
+            "totalCompleted": 86,
+            "totalScenarios": 90
+          }
+        },
+        "C": {
+          "perSeed": [
+            {
+              "seed": 2026,
+              "scenarioCount": 30,
+              "completion": {
+                "rate": 1,
+                "ci95": [
+                  0.8864866068260312,
+                  0.9999999999999999
+                ],
+                "successes": 30,
+                "n": 30
+              },
+              "meanSignedProgressMeters": {
+                "mean": 754.2188687858485,
+                "sd": 154.60509772252283,
+                "ci95": [
+                  696.488440997428,
+                  811.9492965742689
+                ],
+                "n": 30
+              },
+              "meanDistanceTravelledMeters": {
+                "mean": 754.2188687858485,
+                "sd": 154.60509772252283,
+                "ci95": [
+                  696.488440997428,
+                  811.9492965742689
+                ],
+                "n": 30
+              },
+              "successfulLapTimeSeconds": {
+                "mean": 22.2933333333336,
+                "sd": 0.23883497565029158,
+                "ci95": [
+                  22.20415098735511,
+                  22.38251567931209
+                ],
+                "n": 30
+              },
+              "offTrackEvents": {
+                "mean": 0,
+                "sd": 0,
+                "ci95": [
+                  0,
+                  0
+                ],
+                "n": 30
+              },
+              "offTrackDurationSeconds": {
+                "mean": 0,
+                "sd": 0,
+                "ci95": [
+                  0,
+                  0
+                ],
+                "n": 30
+              },
+              "blockedTimeSeconds": {
+                "mean": 0.035555555555555556,
+                "sd": 0.05997019268117381,
+                "ci95": [
+                  0.013162342595322063,
+                  0.05794876851578905
+                ],
+                "n": 30
+              },
+              "reward": {
+                "mean": 940.0499355119014,
+                "sd": 155.91341616275113,
+                "ci95": [
+                  881.8309741346764,
+                  998.2688968891264
+                ],
+                "n": 30
+              },
+              "episodeDurationSeconds": {
+                "mean": 32.073333333333785,
+                "sd": 6.549858294509927,
+                "ci95": [
+                  29.627578782767586,
+                  34.519087883899985
+                ],
+                "n": 30
+              }
+            },
+            {
+              "seed": 2027,
+              "scenarioCount": 30,
+              "completion": {
+                "rate": 1,
+                "ci95": [
+                  0.8864866068260312,
+                  0.9999999999999999
+                ],
+                "successes": 30,
+                "n": 30
+              },
+              "meanSignedProgressMeters": {
+                "mean": 753.9485994416568,
+                "sd": 154.53066742813678,
+                "ci95": [
+                  696.2459643508811,
+                  811.6512345324326
+                ],
+                "n": 30
+              },
+              "meanDistanceTravelledMeters": {
+                "mean": 753.9485994416568,
+                "sd": 154.53066742813678,
+                "ci95": [
+                  696.2459643508811,
+                  811.6512345324326
+                ],
+                "n": 30
+              },
+              "successfulLapTimeSeconds": {
+                "mean": 22.825555555555855,
+                "sd": 0.2787057297228381,
+                "ci95": [
+                  22.721485241956877,
+                  22.929625869154833
+                ],
+                "n": 30
+              },
+              "offTrackEvents": {
+                "mean": 0,
+                "sd": 0,
+                "ci95": [
+                  0,
+                  0
+                ],
+                "n": 30
+              },
+              "offTrackDurationSeconds": {
+                "mean": 0,
+                "sd": 0,
+                "ci95": [
+                  0,
+                  0
+                ],
+                "n": 30
+              },
+              "blockedTimeSeconds": {
+                "mean": 0.035555555555555556,
+                "sd": 0.05997019268117381,
+                "ci95": [
+                  0.013162342595322063,
+                  0.05794876851578905
+                ],
+                "n": 30
+              },
+              "reward": {
+                "mean": 939.6950609127532,
+                "sd": 155.95848824621316,
+                "ci95": [
+                  881.4592693617635,
+                  997.9308524637429
+                ],
+                "n": 30
+              },
+              "episodeDurationSeconds": {
+                "mean": 32.81444444444489,
+                "sd": 6.682651430419249,
+                "ci95": [
+                  30.319104177389768,
+                  35.30978471150001
+                ],
+                "n": 30
+              }
+            },
+            {
+              "seed": 2028,
+              "scenarioCount": 30,
+              "completion": {
+                "rate": 1,
+                "ci95": [
+                  0.8864866068260312,
+                  0.9999999999999999
+                ],
+                "successes": 30,
+                "n": 30
+              },
+              "meanSignedProgressMeters": {
+                "mean": 753.7912125649642,
+                "sd": 154.58205642851613,
+                "ci95": [
+                  696.0693885275158,
+                  811.5130366024126
+                ],
+                "n": 30
+              },
+              "meanDistanceTravelledMeters": {
+                "mean": 753.7912125649642,
+                "sd": 154.58205642851613,
+                "ci95": [
+                  696.0693885275158,
+                  811.5130366024126
+                ],
+                "n": 30
+              },
+              "successfulLapTimeSeconds": {
+                "mean": 21.645555555555788,
+                "sd": 0.22968966792272622,
+                "ci95": [
+                  21.559788119791428,
+                  21.731322991320148
+                ],
+                "n": 30
+              },
+              "offTrackEvents": {
+                "mean": 0,
+                "sd": 0,
+                "ci95": [
+                  0,
+                  0
+                ],
+                "n": 30
+              },
+              "offTrackDurationSeconds": {
+                "mean": 0,
+                "sd": 0,
+                "ci95": [
+                  0,
+                  0
+                ],
+                "n": 30
+              },
+              "blockedTimeSeconds": {
+                "mean": 0.035555555555555556,
+                "sd": 0.05997019268117381,
+                "ci95": [
+                  0.013162342595322063,
+                  0.05794876851578905
+                ],
+                "n": 30
+              },
+              "reward": {
+                "mean": 939.5552174197057,
+                "sd": 155.8352287776915,
+                "ci95": [
+                  881.3654516592725,
+                  997.744983180139
+                ],
+                "n": 30
+              },
+              "episodeDurationSeconds": {
+                "mean": 31.21000000000046,
+                "sd": 6.263438579187091,
+                "ci95": [
+                  28.871196209378162,
+                  33.548803790622756
+                ],
+                "n": 30
+              }
+            }
+          ],
+          "acrossSeeds": {
+            "completionRate": {
+              "n": 3,
+              "mean": 1,
+              "sd": 0,
+              "min": 1,
+              "max": 1
+            },
+            "meanProgressMeters": {
+              "n": 3,
+              "mean": 753.9862269308231,
+              "sd": 0.21629686028922704,
+              "min": 753.7912125649642,
+              "max": 754.2188687858485
+            },
+            "successfulLapTimeSeconds": {
+              "n": 3,
+              "mean": 22.25481481481508,
+              "sd": 0.5909422621556912,
+              "min": 21.645555555555788,
+              "max": 22.825555555555855
+            },
+            "offTrackEventsPerEpisode": {
+              "n": 3,
+              "mean": 0,
+              "sd": 0,
+              "min": 0,
+              "max": 0
+            },
+            "offTrackSecondsPerEpisode": {
+              "n": 3,
+              "mean": 0,
+              "sd": 0,
+              "min": 0,
+              "max": 0
+            },
+            "reward": {
+              "n": 3,
+              "mean": 939.7667379481201,
+              "sd": 0.2550288135400796,
+              "min": 939.5552174197057,
+              "max": 940.0499355119014
+            },
+            "totalCompleted": 90,
+            "totalScenarios": 90
+          }
+        }
+      }
+    }
+  ],
+  "trainingBudget": {
+    "A": 3600,
+    "B": 14400,
+    "C": 36000
+  },
+  "historicalArtifactsUnchanged": true,
+  "historicalArtifactSha256": {
+    "results/phase7-multitrack-training.json": "a6c838b8320d2a3b550f97cc2ed19ca413dec3a1f20a5107d59cf9b3bde45cfb",
+    "results/phase7-multitrack-generation-statistics.csv": "7da1ae454ffd713a7cdc1c2bc6224776d4d52754890d93e6b075651076aacf52",
+    "results/phase7-multitrack-validation.json": "53001f6136141f4a799b729c69e6d128eb795b386c32dce4c794207af7e9f36b",
+    "results/phase7-multitrack-validation.csv": "a5ae90f573f694148228f11675d614a767eff3ab7da69bfd15d31868d44167c6",
+    "results/phase7-multitrack-test.json": "1600cb5c206b1726b6304d06585a6bdfffe5b67bb73488458b2c37261ea37714",
+    "results/phase7-multitrack-test.csv": "fc78193e7c797f1c848a1664ba8006b2a80ca379846e6b98cad1a8f0a4724bac",
+    "results/phase8-b/training.json": "b589a5c62cf04c74ecfcc84ab7bbdd9275a747b04f2272e7b4135bed8e041f37",
+    "results/phase8-b/generation-statistics.csv": "d19a55c09781cb304aae031bb3bde93765429a13bc4e1480d182a53c5803f299",
+    "results/phase8-b/generation-statistics.json": "337b185f69ff40066ca36532c1a757f3b8450debd7fc8231af82e20b8bb29309",
+    "results/phase8-b/generation-circuit-statistics.csv": "55f1aaba5cbb6ee1a31d2a2e47b2f814689a143681327b90c62b6c93074d222b",
+    "results/phase8-b/validation.json": "b1a26d644023a082252f6b05df5a578115fed28b852f0a59940ff8bc55acf225",
+    "results/phase8-b/validation.csv": "49a23ddcedb7eabf73ca78cc58a0ffeaa7107b9bf1bcd66e58ebfff376468941",
+    "results/phase8-b/comparison-summary.json": "71473fbaeab67407f74a904ce4987bc080c8ed37951badb477332ef8be2637bc",
+    "results/phase8-b/held-out-final.json": "03025426c22abc2adabf2746c0d16534ccd38a0f75679f2a8ad8f65b59ef521e",
+    "results/phase8-b/held-out-final.csv": "bb9665e8b174b680b545a305d64d42592807ada60c5bbf9bac27ac78dea2a40e",
+    "results/phase8-b/models/seed-2026.json": "c7b977200132a658f13f760ccb48900d4e9533ebd697a1c666a97a4eec73fff3",
+    "results/phase8-b/models/seed-2027.json": "b008e832e226e69a2c80a9157abb7957326eff343a13f36e35d639f42aa9fe64",
+    "results/phase8-b/models/seed-2028.json": "183593d529423e53d7fb6ff54a7cf22e4f053423cead61e7da8e567ae72edeee"
+  }
+}

@@ -1,0 +1,30 @@
+.home-panel[data-panel=career]{max-height:calc(100vh - 106px);overflow:auto;scrollbar-color:#a11318 #111318}
+.career-season-builder,.tutorial-academy{margin:16px 0;padding:16px;border:1px solid #41444b;border-top:2px solid #e10600;background:linear-gradient(140deg,rgba(33,37,44,.94),rgba(13,15,19,.96));}
+.career-season-builder h3,.tutorial-academy h3{margin-top:0;color:#f5f5f5}
+.career-season-builder fieldset{display:flex;flex-wrap:wrap;gap:10px 18px;margin:12px 0;padding:12px;border:1px solid #42464e;color:#d8d9dc}
+.career-season-builder legend,.career-season-builder label,.tutorial-academy label{font:600 11px/1.5 'DM Mono',monospace;letter-spacing:.03em}
+.career-season-options{display:grid;grid-template-columns:repeat(4,minmax(100px,1fr));gap:8px;align-items:end}
+.career-season-options .menu-field{margin:0}
+.career-season-options select{width:100%;margin-top:5px}
+.career-calendar{display:grid;gap:7px;padding:0;list-style:none}
+.career-calendar li{display:grid;grid-template-columns:34px minmax(0,1fr) auto;align-items:center;gap:12px;padding:11px;border:1px solid #393d45;background:#13161b}
+.career-calendar li.current{border-color:#e10600;background:linear-gradient(90deg,#451317,#15171c 60%)}
+.career-calendar li.locked{opacity:.62}
+.career-calendar li>div{display:grid;gap:4px}.career-calendar small,.career-round-status{color:#b5b8bf;font:9px 'DM Mono',monospace}
+.career-round-number{color:#e10600;font:800 14px 'DM Mono',monospace}
+.career-calendar button,.career-chapter-button{border:1px solid #e10600;background:#201619;color:#fff;padding:9px 11px;font:700 9px 'DM Mono',monospace;cursor:pointer}
+.career-calendar button:hover,.tutorial-chapter:hover{border-color:#ff4840;transform:translateY(-1px)}
+.career-points-note,.career-season-complete{padding:10px;border-left:2px solid #e10600;background:#171a1f;color:#d6d8dc;font-size:11px}
+.career-standings{width:100%;border-collapse:collapse;background:#111318;color:#eee;font-size:11px}
+.career-standings th,.career-standings td{padding:8px;border-bottom:1px solid #343840;text-align:left}
+.career-standings th{color:#aeb1b8;font:700 9px 'DM Mono',monospace}
+.career-standings td:nth-child(n+3){text-align:center;font-variant-numeric:tabular-nums}
+.career-standings td:nth-child(2){display:flex;align-items:center;gap:8px}.career-standings i{width:7px;height:19px;background:var(--driver-color);box-shadow:0 0 8px color-mix(in srgb,var(--driver-color),transparent 35%)}
+#career-tutorial-progress{width:100%;height:8px;accent-color:#e10600}
+.tutorial-chapters{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:12px 0}
+.tutorial-chapter{display:grid;gap:6px;min-height:88px;padding:11px;border:1px solid #3a3e46;background:#15181d;color:#f5f5f5;text-align:left;cursor:pointer;transition:transform .16s,border-color .16s}
+.tutorial-chapter b{font:700 11px 'DM Mono',monospace}.tutorial-chapter span,.tutorial-chapter small{color:#b9bbc2;font-size:10px;line-height:1.4}
+.tutorial-chapter.complete{border-color:#8c080c;background:#241518}.tutorial-chapter.complete small{color:#ff7c75}
+.tutorial-current{display:grid;gap:7px;margin:12px 0;padding:12px;border-left:3px solid #e10600;background:#101216;color:#f5f5f5}
+.tutorial-current small{color:#ff7870;font:8px 'DM Mono',monospace}.tutorial-current b{font-size:13px}.tutorial-current span{color:#c6c8ce;font-size:11px;line-height:1.5}
+@media(max-width:640px){.home-panel[data-panel=career]{max-height:calc(100dvh - 76px);padding:14px}.career-season-options{grid-template-columns:repeat(2,minmax(0,1fr))}.career-calendar li{grid-template-columns:26px minmax(0,1fr);gap:8px}.career-calendar li button,.career-round-status{grid-column:2;justify-self:start}.career-standings th,.career-standings td{padding:6px 4px;font-size:9px}.tutorial-chapters{grid-template-columns:1fr}}

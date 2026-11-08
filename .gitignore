@@ -1,0 +1,27 @@
+# Dependencies and generated build output
+node_modules/
+dist/
+.npm-cache/
+
+# Local editor and operating-system files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Test and tool caches
+coverage/
+.vite/
+*.log
+
+# Temporary and interrupted atomic writes
+*.tmp
+*.tmp-*
+*.swp
+*.swo
+
+# Local Phase 14 PDF renders, browser screenshots and temporary browser profile
+tmp/phase14-wireframe/
+tmp/phase14-*.png
+tmp/phase14-cdp-profile/
