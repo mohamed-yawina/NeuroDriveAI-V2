@@ -1,8 +1,53 @@
+<div align="center">
+
 # NeuroDriveAI V2 — F1 Ultimate Edition
 
-NeuroDriveAI est un projet pédagogique en JavaScript qui réunit une course arcade en 3D, des démonstrations de Steering Behaviors et l’inspection de réseaux neuronaux historiques. Les courses et laboratoires intégrés partagent le rendu NeuroDrive F1; les moteurs et protocoles scientifiques historiques restent séparés du gameplay arcade.
+**3D Racing · Steering Behaviors · Neural Networks · Scientific AI Labs**
 
-> **État académique :** ce dépôt documente des notions et des démonstrations. Il ne prétend pas certifier les exigences officielles ou le barème de Casablanca G1. La matrice de preuves et les éléments non vérifiables sont dans [`docs/modification-28-final-academic-audit.md`](docs/modification-28-final-academic-audit.md).
+An interactive JavaScript and Three.js project combining an F1-style arcade racing experience with educational simulations and historical neural-network experiments.
+
+![JavaScript](https://img.shields.io/badge/JavaScript-ES_Modules-F7DF1E?logo=javascript&logoColor=black)
+![Three.js](https://img.shields.io/badge/Three.js-3D_Rendering-000000?logo=threedotjs&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-7-646CFF?logo=vite&logoColor=white)
+![Vitest](https://img.shields.io/badge/Vitest-3-6E9F18?logo=vitest&logoColor=white)
+![GitHub Actions](https://img.shields.io/badge/CI-GitHub_Actions-2088FF?logo=githubactions&logoColor=white)
+
+[Features](#fonctionnalités) · [Architecture](#architecture) · [Installation](#prérequis-et-installation) · [Research](#réseaux-neuronaux-et-résultats-scientifiques) · [Academic context](#auteur-et-contexte)
+
+</div>
+
+## Project at a glance
+
+| Area | What the repository demonstrates |
+| :--- | :--- |
+| **3D game development** | Interactive F1-style racing, cameras, HUD, tracks, and car dynamics |
+| **Autonomous behaviors** | Path following, obstacle avoidance, separation, and pursuit |
+| **Neural networks** | Historical MLP models (7–16–16–2), observations, activations, and control outputs |
+| **Educational tooling** | Steering Lab, Neural Lab, Circuit Studio, and guided professor demonstration |
+| **Engineering** | ES modules, modular architecture, automated tests, and a GitHub Pages deployment workflow |
+
+> **Scope:** This is an educational project. Arcade gameplay and historical scientific experiments have distinct dynamics and validation protocols; gameplay is not evidence of scientific generalization.
+
+### Quick start (English)
+
+Requires Node.js compatible with Vite 7 and npm.
+
+```bash
+git clone https://github.com/mohamed-yawina/NeuroDriveAI-V2.git
+cd NeuroDriveAI-V2
+npm ci
+npm run dev
+```
+
+Open the local URL printed by Vite. Run `npm test` for the Vitest suite or `npm run build` to produce a distributable build.
+
+**CI/CD:** The repository includes `.github/workflows/deploy.yml`, configured to run `npm ci`, tests, build, and GitHub Pages deployment on pushes to `main`. The presence of this workflow does not by itself confirm a successful deployment.
+
+**Research note:** Scientific training and recovery scripts can write result artifacts; they are **not** needed to start the game. Consult the French research documentation before running them.
+
+---
+
+## Documentation détaillée (français)
 
 ## Objectifs pédagogiques
 
